@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="id">id:</string>
+    <string name="sign_in">Sign in</string>
+
+    <string name="title_activity_logged__in__user">Logged_In_User</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="Employees">Employees</string>
+    <string name="Projects">Projects</string>
+
+</resources>
