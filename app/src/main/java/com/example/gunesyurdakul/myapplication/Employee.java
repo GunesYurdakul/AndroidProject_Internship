@@ -5,14 +5,18 @@ package com.example.gunesyurdakul.myapplication;
  */
 
 public class Employee {
+    int person_id;
     String name;
     String surname;
+    String Department;
     Task [] tasks;
     Project[]projects;
 
-    Employee(String name_in,String surname_in){//constructorwith inputs
+    Employee(int id, String name_in,String surname_in,String department_in){//constructorwith inputs
+        person_id=id;
         this.name=name_in;
         this.surname=surname_in;
+        this.Department=department_in;
     }
     Employee(){}
 }
