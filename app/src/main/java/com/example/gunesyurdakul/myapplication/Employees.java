@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TableLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,18 +17,22 @@ public class Employees extends AppCompatActivity {
         setContentView(R.layout.activity_employees);
 
         List<String>employee_list=new ArrayList<String>();
-        List<Employee>employee_obj_list=new ArrayList<Employee>();
         ListView employee_listView=(ListView)findViewById(R.id.listView);
+        Singleton singleton =Singleton.getSingleton();
 
-//        employee_obj_list.add(new Employee(1,"Güneş","Yurdakul","Mobile Devolopment"));
-//        employee_obj_list.add(new Employee(1,"Melis","Gülenay","Mobile Devolopment"));
-//        employee_obj_list.add(new Employee(1,"Jane","Doe","Analist"));
+        if(singleton.Employees.size()==0) {
+            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
+        }
+        for (Employee i:singleton.Employees) {
+            employee_list.add(i.person_id + " "+i.name + " " + i.surname + "---" + i.Department);
+        }
 
-        employee_list.add("Güneş Yurdakul");
-        employee_list.add("Melis Gülenay");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.activity_employees,R.id.Employees_Header,employee_list);
         employee_listView.setAdapter(arrayAdapter);
-
     }
+
+
 
 }

@@ -7,9 +7,9 @@ import java.util.Date;
  */
 
 public class Task {
+    static int counter=0;
     int task_id;
     String task_name;
-    String belonged_project;
     Date start_date;
     Date end_date;
     Date due_date;
@@ -21,15 +21,16 @@ public class Task {
 
     Task(){};
 
-    Task(int t_id, String name_in,String project_name_in,Date start_date_in,Date due_date_in,float estimated_cost_in){
+    Task(String name_in,Employee assigned, Date start_date_in,Date due_date_in,float estimated_cost_in){
 
         task_name=name_in;
-        belonged_project=project_name_in;
-        task_id=t_id;
+        assigned_person=assigned;
+        task_id=++counter;
         start_date=start_date_in;
         due_date=due_date_in;
         estimated_cost=estimated_cost_in;
         remaining_cost=estimated_cost;
+        completed_ratio=0;
 
     };
 }
