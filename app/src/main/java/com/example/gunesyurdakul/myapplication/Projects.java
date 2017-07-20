@@ -1,13 +1,21 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Color;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -21,20 +29,20 @@ import java.util.List;
 
 public class Projects extends AppCompatActivity {
 
-    TableRow row;
     TableLayout table;
-    List<String> projects_list=new ArrayList<String>();
     Singleton singleton =Singleton.getSingleton();
 
+    private ListView listView;
+    private ViewGroup viewGroup;
+    private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projects);
-
-        table = (TableLayout)findViewById(R.id.table);
-        addHeaders();
         Calendar today=Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
+        final DateFormat formatter=DateFormat.getDateInstance();
+
 
         if(singleton.Projects.isEmpty()) {
             singleton.Projects.add(new Project("Kurumsal", today.getTime(), today.getTime()));
@@ -49,103 +57,100 @@ public class Projects extends AppCompatActivity {
 
             singleton.Projects.get(2).addTaskToProject(new Task("bla bla task", singleton.Employees.get(1), today.getTime(), today.getTime(), 76));
         }
-        addData();
+
+        listView = (ListView) findViewById(R.id.listView);
+        addHeader();
 
 
-        DateFormat formatter=DateFormat.getDateInstance();
+        listView.setAdapter(new BaseAdapter() {
+           @Override
+           public int getCount() {
+               if(singleton.Projects == null) {
+                   return 0;
+               }else {
+                   return singleton.Projects.size();
+               }
+           }
 
-      /*  projects_list.add("id    " + "Project " + "\t\tStart Date\t" + "\t\tDue Date");
-        for (Project i:singleton.Projects) {
-            projects_list.add(i.project_id+ "-  " + i.name + "   " + formatter.format(i.start_date)  + "    " +  formatter.format(i.due_date));
-        }
+           @Override
+           public Object getItem(int i) {
+               return null;
+           }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.activity_projects,R.id.projects_header,projects_list);
-        projects_listView.setAdapter(arrayAdapter);
-*/
+           @Override
+           public long getItemId(int i) {
+               return 0;
+           }
+
+           @Override
+           public View getView(int i, View view, ViewGroup viewGroup) {
+               if(view == null) {
+                   LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService( getBaseContext().LAYOUT_INFLATER_SERVICE );
+                   view = inflater.inflate(R.layout.view_project_cell,viewGroup,false);
+                   MyViewElements  mymodel = new MyViewElements();
+                   mymodel.id = (TextView) view.findViewById(R.id.id);
+                   mymodel.name = (TextView) view.findViewById(R.id.name);
+                   mymodel.startDate = (TextView) view.findViewById(R.id.startDate);
+                   mymodel.dueDate = (TextView) view.findViewById(R.id.dueDate);
+
+                   view.setTag(mymodel);
+
+               }
+
+               MyViewElements mymodel = (MyViewElements) view.getTag();
+               Project project = singleton.Projects.get(i);
+               mymodel.id.setText(Integer.toString(i+1));
+               mymodel.name.setText(project.name);
+               mymodel.startDate.setText(formatter.format(project.start_date));
+               mymodel.dueDate.setText(formatter.format(project.due_date));
+
+               return view;
+           }
+       });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id){
+                Log.d("INFO","Clicked on a Project");
+                    ProjectFragment fragment = new ProjectFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
+                    transaction.commit();
+                    //openDetails();
+                }
+
+
+        });
+        //notify all gerekebilir
     }
-    public void addHeaders(){
-        TextView id,project,startDate,dueDate;
-        TableRow t_row=new TableRow(this);
 
-        id=new TextView(this);
-        id.setText("id ");
-        id.setPadding(5,5,5,0);
-        id.setTextColor(Color.RED);
-        id.setTextSize(20);
-        t_row.addView(id);
 
-        project=new TextView(this);
-        project.setText("Project ");
-        project.setPadding(5,5,5,0);
-        project.setTextColor(Color.RED);
-        project.setTextSize(20);
-        t_row.addView(project);
-
-        startDate=new TextView(this);
-        startDate.setText("Start Date ");
-        startDate.setPadding(5,5,5,0);
-        startDate.setTextColor(Color.RED);
-        startDate.setTextSize(20);
-        t_row.addView(startDate);
-
-        dueDate=new TextView(this);
-        dueDate.setText("Due Date");
-        dueDate.setPadding(5,5,5,0);
-        dueDate.setTextColor(Color.RED);
-        dueDate.setTextSize(20);
-        t_row.addView(dueDate);
-
-        t_row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT,TableLayout.LayoutParams.WRAP_CONTENT));
-
-        table.addView(t_row,new TableLayout.LayoutParams(
-                TableLayout.LayoutParams.FILL_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT));
+    public class MyViewElements {
+        TextView id;
+        TextView name;
+        TextView startDate;
+        TextView dueDate;
+        TextView endDate;
 
     }
-    public void addData(){
-        DateFormat formatter=DateFormat.getDateInstance();
-        Log.d("INFO","addData");
-        for (Project i:singleton.Projects) {
 
-            TextView id,project,startDate,dueDate;
-            TableRow t_row=new TableRow(this);
+    public void addHeader(){
+        View view;
+        LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService( getBaseContext().LAYOUT_INFLATER_SERVICE );
+        view = inflater.inflate(R.layout.view_project_cell,null);
+        MyViewElements  mymodel = new MyViewElements();
+        mymodel.id = (TextView) view.findViewById(R.id.id);
+        mymodel.name = (TextView) view.findViewById(R.id.name);
+        mymodel.startDate = (TextView) view.findViewById(R.id.startDate);
+        mymodel.dueDate = (TextView) view.findViewById(R.id.dueDate);
 
-            id=new TextView(this);
-            id.setText(Integer.toString(i.project_id));
-            id.setPadding(5,5,5,0);
-            id.setTextSize(17);
-            t_row.addView(id);
+        view.setTag(mymodel);
+        listView.addHeaderView(view);
+    }
 
-            project=new TextView(this);
-            project.setText(i.name);
-            project.setPadding(5,5,5,0);
-            project.setTextSize(17);
-            t_row.addView(project);
-
-            startDate=new TextView(this);
-            startDate.setText(formatter.format(i.start_date));
-            startDate.setPadding(5,5,5,0);
-            startDate.setTextSize(17);
-            t_row.addView(startDate);
-
-            dueDate=new TextView(this);
-            dueDate.setText(formatter.format(i.due_date));
-            dueDate.setPadding(5,5,5,0);
-            dueDate.setTextSize(17);
-            t_row.addView(dueDate);
-
-
-            t_row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT,TableLayout.LayoutParams.WRAP_CONTENT));
-            t_row.setId(i.project_id);
-            t_row.setOnClickListener(
-                    new View.OnClickListener(){
-                public void onClick(View v) {
-                    Log.d("INFO","onclick works");
-                }});
-            table.addView(t_row,new TableLayout.LayoutParams(
-                    TableLayout.LayoutParams.FILL_PARENT,
-                    TableLayout.LayoutParams.WRAP_CONTENT));
-        }
+    public void openDetails(){
+        Intent intent = new Intent(this,HavingFragment.class);
+        startActivity(intent);
     }
 }
 

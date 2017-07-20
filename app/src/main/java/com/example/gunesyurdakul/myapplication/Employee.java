@@ -12,7 +12,7 @@ public class Employee {
     int person_id;
     String name;
     String surname;
-    String Department;
+    String department;
     List<Task> Tasks=new ArrayList<Task>();
     Project[]projects;
 
@@ -20,7 +20,7 @@ public class Employee {
         person_id=counter++;
         this.name=name_in;
         this.surname=surname_in;
-        this.Department=department_in;
+        this.department=department_in;
     }
     Employee(){}
 }

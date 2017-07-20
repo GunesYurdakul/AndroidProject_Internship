@@ -10,5 +10,15 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="Employees">Employees</string>
     <string name="Projects">Projects</string>
+    <string name="Id">Id</string>
+    <string name="Name">Name</string>
+    <string name="Department">Department</string>
+    <string name="StartDate">Start Date</string>
+    <string name="DueDate">Due Date</string>
+    <string name="Project">Project</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_having_fragment">HavingFragment</string>
 
 </resources>
