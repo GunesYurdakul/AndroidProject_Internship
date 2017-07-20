@@ -5,10 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TextView;
 
 
 /**
@@ -19,7 +24,7 @@ import android.view.ViewGroup;
  * Use the {@link ProjectFragment newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProjectFragment extends Fragment {
+public class ProjectFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -48,14 +53,76 @@ public class ProjectFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    Singleton singleton =Singleton.getSingleton();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.d("Info","hey");
-        return inflater.inflate(R.layout.fragment_project, container, false);
+        Log.d("Info", "hey");
+        ListView viewGroup = (ListView) inflater.inflate(R.layout.activity_projects, container, false);
+        Log.d("Info", "hey");
+        TableLayout table;
+        ListView listView;
+        Log.d("Info", "hey");
+
+//        listView = (ListView) findViewById(R.id.listView);
+        Log.d("Info", "hey");
+
+
+        setListAdapter(new BaseAdapter() {
+            @Override
+            public int getCount() {
+                if (singleton.Employees == null) {
+                    return 0;
+                } else {
+                    return singleton.Employees.size();
+                }
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return null;
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                if (view == null) {
+                    view = inflater.inflate(R.layout.view_employee_cell, null);
+                    Employee_View mymodel = new Employee_View();
+                    mymodel.id = (TextView) view.findViewById(R.id.id);
+                    mymodel.name = (TextView) view.findViewById(R.id.name);
+                    mymodel.department = (TextView) view.findViewById(R.id.department);
+
+                    view.setTag(mymodel);
+
+                }
+
+                Employees.Employee_View mymodel = (Employees.Employee_View) view.getTag();
+                Employee employee = singleton.Employees.get(i);
+                mymodel.id.setText(Integer.toString(i + 1));
+                mymodel.name.setText(employee.name);
+                mymodel.department.setText(employee.department);
+
+                return view;
+            }
+        });
+        Log.d("Info", "heyssss");
+
+        return viewGroup;
+
+
     }
+    public class Employee_View {
+        TextView id;
+        TextView name;
+        TextView department;
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

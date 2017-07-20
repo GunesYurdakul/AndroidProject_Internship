@@ -114,7 +114,7 @@ public class Projects extends AppCompatActivity {
                 Log.d("INFO","Clicked on a Project");
                     ProjectFragment fragment = new ProjectFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().add(R.id.listView, fragment).commit();
                     transaction.commit();
                     //openDetails();
                 }
@@ -148,9 +148,9 @@ public class Projects extends AppCompatActivity {
         listView.addHeaderView(view);
     }
 
-    public void openDetails(){
-        Intent intent = new Intent(this,HavingFragment.class);
-        startActivity(intent);
-    }
+//    public void openDetails(){
+//        Intent intent = new Intent(this,HavingFragment.class);
+//        startActivity(intent);
+//    }
 }
 
