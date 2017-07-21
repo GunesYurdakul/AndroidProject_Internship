@@ -121,7 +121,7 @@ public class ProjectFragment extends Fragment implements View.OnClickListener{
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id){
 
-                if(position>0){
+
                 ProjectDetails detailsFragment = new ProjectDetails();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -131,7 +131,7 @@ public class ProjectFragment extends Fragment implements View.OnClickListener{
                 ft.replace(R.id.fragment_layout, detailsFragment);
                 ft.addToBackStack("pdetails");
                 ft.commit();
-                }
+
             }
         });
         Log.d("Info", "hey");

@@ -23,7 +23,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 
-public class ProjectDetails extends Fragment implements View.OnClickListener{
+public class EmployeeDetails extends Fragment implements View.OnClickListener{
 
 
     Singleton singleton =Singleton.getSingleton();
@@ -31,15 +31,15 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
 
     int position;
 
-    public static ProjectDetails newInstance(int param1) {
-        ProjectDetails fragment = new ProjectDetails();
+    public static EmployeeDetails newInstance(int param1) {
+        EmployeeDetails fragment = new EmployeeDetails();
         Bundle args = new Bundle();
         args.putInt("position", param1);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public ProjectDetails() {
+    public EmployeeDetails() {
         // Required empty public constructor
     }
 
@@ -56,21 +56,21 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d("Info", "hey");
-        View view = inflater.inflate(R.layout.project_details, container, false);
+        View view = inflater.inflate(R.layout.employee_details, container, false);
         Log.d("Info", "hey");
         TableLayout table;
         final ListView listView;
 
-        TextView projectName = (TextView) view.findViewById(R.id.projectName);
-        TextView startDate= (TextView) view.findViewById(R.id.startDate);
-        TextView dueDate= (TextView) view.findViewById(R.id.dueDate);
+        TextView name = (TextView) view.findViewById(R.id.employee_name);
+        TextView department= (TextView) view.findViewById(R.id.department);
         TextView id=(TextView)view.findViewById(R.id.id);
-        final DateFormat formatter=DateFormat.getDateInstance();
+        final TextView tasks=(TextView)view.findViewById(R.id.tasksHeader);
 
-//        id.setText(singleton.Projects.get(position).project_id);
-        projectName.setText(singleton.Projects.get(position).name);
-        startDate.setText(formatter.format(singleton.Projects.get(position).start_date));
-        dueDate.setText(formatter.format(singleton.Projects.get(position).due_date));
+        final DateFormat formatter=DateFormat.getDateInstance();
+        final Employee currentEmployee = singleton.Employees.get(position);
+        name.setText(currentEmployee.name+" "+currentEmployee.surname);
+        department.setText(currentEmployee.department);
+        id.setText(Integer.toString(currentEmployee.person_id));
         listView = (ListView) view.findViewById(R.id.tasksList);
 
 
@@ -78,10 +78,14 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                if(singleton.Projects.get(position).Tasks == null) {
+                if(currentEmployee.Tasks == null) {
                     return 0;
                 }else {
-                    return singleton.Projects.get(position).Tasks.size();
+                    if(currentEmployee.Tasks.size()==0)
+                        tasks.setText("No task found!");
+                    else
+                        tasks.setText("Tasks");
+                    return currentEmployee.Tasks.size();
                 }
             }
 
@@ -115,7 +119,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
 
                 MyViewElements mymodel = (MyViewElements) view.getTag();
                 Log.d("fg",Integer.toString(i));
-                Task task = singleton.Projects.get(position).Tasks.get(i);
+                Task task = singleton.Employees.get(position).Tasks.get(i);
 
                 mymodel.id.setText(Integer.toString(task.task_id));
                 mymodel.name.setText(task.task_name);

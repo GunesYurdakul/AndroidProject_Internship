@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -21,14 +22,6 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProjectFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ProjectFragment newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EmployeeFragment extends Fragment implements View.OnClickListener{
 
     // TODO: Rename and change types and number of parameters
@@ -128,8 +121,15 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id){
                 Log.d("INFO","Clicked on a Employee");
-               // if(position>0){}
-
+                    EmployeeDetails detailsFragment = new EmployeeDetails();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Bundle args = new Bundle();
+                    args.putInt("position",position);
+                    detailsFragment.setArguments(args);
+                    ft.replace(R.id.fragment_layout, detailsFragment);
+                    ft.addToBackStack("pdetails");
+                    ft.commit();
 
                 //openDetails();
             }
