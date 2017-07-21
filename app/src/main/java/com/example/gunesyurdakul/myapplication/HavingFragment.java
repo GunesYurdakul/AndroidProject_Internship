@@ -18,7 +18,7 @@ public class HavingFragment extends AppCompatActivity {
         ProjectFragment fragment = new ProjectFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         getSupportFragmentManager().beginTransaction()
-                  .add(R.id.fragment, fragment).commit();
+                  .add(R.id.listView, fragment).commit();
 
         transaction.commit();
     }

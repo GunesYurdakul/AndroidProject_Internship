@@ -5,15 +5,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.util.Calendar;
 
 
 /**
@@ -24,58 +30,65 @@ import android.widget.TextView;
  * Use the {@link ProjectFragment newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProjectFragment extends ListFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class ProjectFragment extends Fragment implements View.OnClickListener{
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    public ProjectFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-
-     * @return A new instance of fragment ProjectFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProjectFragment setArguments(Project p) {
-        ProjectFragment fragment = new ProjectFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+   // TODO: Rename and change types and number of parameters
+//    public static ProjectFragment setArguments(Project p) {
+//        ProjectFragment fragment = new ProjectFragment();
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
     Singleton singleton =Singleton.getSingleton();
-
+    ListView listView;
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d("Info", "hey");
-        ListView viewGroup = (ListView) inflater.inflate(R.layout.activity_projects, container, false);
+        View view = inflater.inflate(R.layout.activity_projects, container, false);
         Log.d("Info", "hey");
         TableLayout table;
-        ListView listView;
-        Log.d("Info", "hey");
+        final ListView listView;
 
-//        listView = (ListView) findViewById(R.id.listView);
-        Log.d("Info", "hey");
+        listView = (ListView) view.findViewById(R.id.listView);
+
+        Calendar today=Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        final DateFormat formatter=DateFormat.getDateInstance();
 
 
-        setListAdapter(new BaseAdapter() {
+        if(singleton.Projects.isEmpty()) {
+            singleton.Projects.add(new Project("Kurumsal", today.getTime(), today.getTime()));
+            singleton.Projects.add(new Project("Bireysel", today.getTime(), today.getTime()));
+            singleton.Projects.add(new Project("Ticari", today.getTime(), today.getTime()));
+            singleton.Projects.get(0).addTaskToProject(new Task("Main page design", singleton.Employees.get(0), today.getTime(), today.getTime(), 76));
+            singleton.Projects.get(0).addTaskToProject(new Task("back end", singleton.Employees.get(1), today.getTime(), today.getTime(), 3));
+            singleton.Projects.get(0).addTaskToProject(new Task("group management", singleton.Employees.get(2), today.getTime(), today.getTime(), 6));
+
+            singleton.Projects.get(1).addTaskToProject(new Task("Main page design", singleton.Employees.get(0), today.getTime(), today.getTime(), 76));
+            singleton.Projects.get(1).addTaskToProject(new Task("back end fggf", singleton.Employees.get(2), today.getTime(), today.getTime(), 3));
+
+            singleton.Projects.get(2).addTaskToProject(new Task("bla bla task", singleton.Employees.get(1), today.getTime(), today.getTime(), 76));
+        }
+
+        View v;
+        v = inflater.inflate(R.layout.view_project_cell,null);
+        MyViewElements mymodel = new MyViewElements();
+        mymodel.id = (TextView) v.findViewById(R.id.id);
+        mymodel.name = (TextView) v.findViewById(R.id.name);
+        mymodel.startDate = (TextView) v.findViewById(R.id.startDate);
+        mymodel.dueDate = (TextView) v.findViewById(R.id.dueDate);
+
+        v.setTag(mymodel);
+        listView.addHeaderView(v);
+
+        listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                if (singleton.Employees == null) {
+                if(singleton.Projects == null) {
                     return 0;
-                } else {
-                    return singleton.Employees.size();
+                }else {
+                    return singleton.Projects.size();
                 }
             }
 
@@ -91,45 +104,66 @@ public class ProjectFragment extends ListFragment {
 
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
-                if (view == null) {
-                    view = inflater.inflate(R.layout.view_employee_cell, null);
-                    Employee_View mymodel = new Employee_View();
+                if(view == null) {
+                    view = inflater.inflate(R.layout.view_project_cell,viewGroup,false);
+                    MyViewElements mymodel = new MyViewElements();
                     mymodel.id = (TextView) view.findViewById(R.id.id);
                     mymodel.name = (TextView) view.findViewById(R.id.name);
-                    mymodel.department = (TextView) view.findViewById(R.id.department);
+                    mymodel.startDate = (TextView) view.findViewById(R.id.startDate);
+                    mymodel.dueDate = (TextView) view.findViewById(R.id.dueDate);
 
                     view.setTag(mymodel);
 
                 }
 
-                Employees.Employee_View mymodel = (Employees.Employee_View) view.getTag();
-                Employee employee = singleton.Employees.get(i);
-                mymodel.id.setText(Integer.toString(i + 1));
-                mymodel.name.setText(employee.name);
-                mymodel.department.setText(employee.department);
+                MyViewElements mymodel = (MyViewElements) view.getTag();
+                Project project = singleton.Projects.get(i);
+                mymodel.id.setText(Integer.toString(i+1));
+                mymodel.name.setText(project.name);
+                mymodel.startDate.setText(formatter.format(project.start_date));
+                mymodel.dueDate.setText(formatter.format(project.due_date));
 
                 return view;
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id){
+
+                if(position>0){
+                ProjectDetails detailsFragment = new ProjectDetails();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Bundle args = new Bundle();
+                args.putInt("position",position);
+                detailsFragment.setArguments(args);
+                ft.replace(R.id.fragment_layout, detailsFragment);
+                ft.addToBackStack("pdetails");
+                ft.commit();
+                }
+            }
+        });
+        Log.d("Info", "hey");
+
+
         Log.d("Info", "heyssss");
 
-        return viewGroup;
-
-
+        return view;
     }
-    public class Employee_View {
+
+
+
+    public class MyViewElements {
         TextView id;
         TextView name;
-        TextView department;
+        TextView startDate;
+        TextView dueDate;
+        TextView endDate;
+
     }
 
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
 //    @Override
 //    public void onAttach(Context context) {
@@ -141,25 +175,7 @@ public class ProjectFragment extends ListFragment {
 //                    + " must implement OnFragmentInteractionListener");
 //        }
 //    }
+@Override
+public void onClick(View v) {}
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

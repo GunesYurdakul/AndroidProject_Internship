@@ -28,6 +28,7 @@ public class Project{
 
     public void addTaskToProject(Task newtask){
         newtask.assigned_person.Tasks.add(newtask);
+        newtask.assigned_person.projects.add(this);
         this.Tasks.add(newtask);
         newtask.related_project=this;
     }

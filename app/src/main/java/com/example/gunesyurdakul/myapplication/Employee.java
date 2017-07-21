@@ -14,7 +14,7 @@ public class Employee {
     String surname;
     String department;
     List<Task> Tasks=new ArrayList<Task>();
-    Project[]projects;
+    List<Project> projects=new ArrayList<Project>();
 
     Employee(String name_in,String surname_in,String department_in){//constructorwith inputs
         person_id=counter++;
