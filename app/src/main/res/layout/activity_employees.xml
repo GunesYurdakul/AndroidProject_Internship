@@ -4,12 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.gunesyurdakul.myapplication.Projects">
+    android:orientation="vertical"
+    tools:context="com.example.gunesyurdakul.myapplication.Projects"
+    >
+
+    <include
+        layout="@layout/view_employee_cell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </include>
+
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="1"
         android:headerDividersEnabled="true"></ListView>
 
 

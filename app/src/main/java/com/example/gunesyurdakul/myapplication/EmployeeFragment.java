@@ -44,7 +44,7 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d("Info", "hey");
-        View view = inflater.inflate(R.layout.activity_projects, container, false);
+        View view = inflater.inflate(R.layout.activity_employees, container, false);
         Log.d("Info", "hey");
         TableLayout table;
         ListView listView;
@@ -56,16 +56,30 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
             singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
             singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
             singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
+            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
+            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
+            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
+            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
+            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
+            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
+            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
+            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
         }
 
-        View v= inflater.inflate(R.layout.view_employee_cell,null);
-        Employee_View mymodel = new Employee_View();
-        mymodel.id = (TextView) view.findViewById(R.id.id);
-        mymodel.name = (TextView) view.findViewById(R.id.name);
-        mymodel.department = (TextView) view.findViewById(R.id.startDate);
 
-        v.setTag(mymodel);
-        listView.addHeaderView(v);
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {

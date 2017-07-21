@@ -71,16 +71,6 @@ public class ProjectFragment extends Fragment implements View.OnClickListener{
             singleton.Projects.get(2).addTaskToProject(new Task("bla bla task", singleton.Employees.get(1), today.getTime(), today.getTime(), 76));
         }
 
-        View v;
-        v = inflater.inflate(R.layout.view_project_cell,null);
-        MyViewElements mymodel = new MyViewElements();
-        mymodel.id = (TextView) v.findViewById(R.id.id);
-        mymodel.name = (TextView) v.findViewById(R.id.name);
-        mymodel.startDate = (TextView) v.findViewById(R.id.startDate);
-        mymodel.dueDate = (TextView) v.findViewById(R.id.dueDate);
-
-        v.setTag(mymodel);
-        listView.addHeaderView(v);
 
         listView.setAdapter(new BaseAdapter() {
             @Override
