@@ -17,7 +17,9 @@ public class Project{
     Date end_date;
     List<Task> Tasks=new ArrayList<Task>();
     float process_completion_ratio;
-    Project(){};
+    Project(){
+        project_id=counter++;
+    };
 
     Project(String name_in,Date start_date_in,Date due_date_in){
         name=name_in;

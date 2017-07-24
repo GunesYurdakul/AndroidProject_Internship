@@ -45,33 +45,6 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
 
         listView = (ListView) view.findViewById(R.id.listView);
 
-        if(singleton.Employees.size()==0) {
-            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
-            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
-            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
-            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
-            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
-            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
-            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
-            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment"));
-            singleton.Employees.add(new Employee("Jane", "Doe", "Analist"));
-        }
-
 
         listView.setAdapter(new BaseAdapter() {
             @Override
@@ -138,9 +111,6 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
         });
         Log.d("Info", "hey");
 
-
-        Log.d("Info", "heyssss");
-
         return view;
 
 
@@ -154,18 +124,6 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
         TextView department;
     }
 
-
-
-    //    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
     @Override
     public void onClick(View v) {}
 

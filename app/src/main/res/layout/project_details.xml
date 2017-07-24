@@ -47,6 +47,7 @@
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,24 +73,41 @@
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp" />
         </LinearLayout>
+
         <TextView
+            android:id="@+id/tasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:gravity="right"
             android:text="Tasks"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
+
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/tasksList"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@android:color/background_dark"
-        android:dividerHeight="1dp" />
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/tasksList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/background_dark"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id="@+id/addTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/green"
+            android:text="@string/addTask" />
+
+    </RelativeLayout>
+
 </LinearLayout>

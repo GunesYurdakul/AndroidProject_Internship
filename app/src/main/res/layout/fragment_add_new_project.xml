@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:id="@+id/addProjectLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,42 +29,44 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/projectName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="enter the name of the project" />
+                android:hint="Enter the name of the project"
+                android:inputType="textPersonName" />
 
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:orientation="horizontal">
 
-            <TextView
+            <Button
+                android:id="@+id/setStartDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
+                android:layout_alignParentLeft="true"
+                android:background="@color/colorPrimary"
                 android:text="@string/StartDate"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18sp" />
+                android:textColor="@color/white" />
 
-            <DatePicker
-                android:id="@+id/datePicker"
+            <Button
+                android:id="@+id/setDueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_alignParentRight="true"
+                android:background="@color/colorPrimary"
+                android:text="@string/DueDate"
+                android:textColor="@color/white" />
+        </RelativeLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -70,28 +74,41 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/startDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:text="@string/DueDate"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18sp" />
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
 
-            <DatePicker
-                android:id="@+id/datePicker2"
+            <TextView
+                android:id="@+id/dueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_alignParentRight="true"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@color/green"
+                android:text="DONE"
+                android:textColor="@color/white" />
+
+
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/tasksList"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/warning"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:divider="@android:color/background_dark"
-        android:dividerHeight="1dp" />
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/holo_red_dark" />
 </LinearLayout>

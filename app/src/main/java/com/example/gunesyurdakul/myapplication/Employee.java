@@ -13,6 +13,7 @@ public class Employee {
     String name;
     String surname;
     String department;
+    String password;
     List<Task> Tasks=new ArrayList<Task>();
     List<Project> projects=new ArrayList<Project>();
 

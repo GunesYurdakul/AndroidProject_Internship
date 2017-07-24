@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -22,14 +23,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProjectFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ProjectFragment newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ProjectFragment extends Fragment implements View.OnClickListener{
 
    // TODO: Rename and change types and number of parameters
@@ -57,20 +51,20 @@ public class ProjectFragment extends Fragment implements View.OnClickListener{
         final DateFormat formatter=DateFormat.getDateInstance();
 
 
-        if(singleton.Projects.isEmpty()) {
-            singleton.Projects.add(new Project("Kurumsal", today.getTime(), today.getTime()));
-            singleton.Projects.add(new Project("Bireysel", today.getTime(), today.getTime()));
-            singleton.Projects.add(new Project("Ticari", today.getTime(), today.getTime()));
-            singleton.Projects.get(0).addTaskToProject(new Task("Main page design", singleton.Employees.get(0), today.getTime(), today.getTime(), 76));
-            singleton.Projects.get(0).addTaskToProject(new Task("back end", singleton.Employees.get(1), today.getTime(), today.getTime(), 3));
-            singleton.Projects.get(0).addTaskToProject(new Task("group management", singleton.Employees.get(2), today.getTime(), today.getTime(), 6));
+        final Button addProject = view.findViewById(R.id.addNewProject);
 
-            singleton.Projects.get(1).addTaskToProject(new Task("Main page design", singleton.Employees.get(0), today.getTime(), today.getTime(), 76));
-            singleton.Projects.get(1).addTaskToProject(new Task("back end fggf", singleton.Employees.get(2), today.getTime(), today.getTime(), 3));
+        addProject.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Log.d("INFO","AddButtonClicked");
+                addNewProjectFragment addProject = new addNewProjectFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment_layout,addProject );
+                ft.addToBackStack("pdetails");
+                ft.commit();
 
-            singleton.Projects.get(2).addTaskToProject(new Task("bla bla task", singleton.Employees.get(1), today.getTime(), today.getTime(), 76));
-        }
-
+            };
+        });
 
         listView.setAdapter(new BaseAdapter() {
             @Override

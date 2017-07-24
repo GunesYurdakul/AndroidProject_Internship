@@ -3,6 +3,7 @@ package com.example.gunesyurdakul.myapplication;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -61,10 +63,13 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
         TableLayout table;
         final ListView listView;
 
+
+        Button addTask=(Button)view.findViewById(R.id.addTask);
         TextView projectName = (TextView) view.findViewById(R.id.projectName);
         TextView startDate= (TextView) view.findViewById(R.id.startDate);
         TextView dueDate= (TextView) view.findViewById(R.id.dueDate);
         TextView id=(TextView)view.findViewById(R.id.id);
+        TextView tasks=(TextView)view.findViewById(R.id.tasks);
         final DateFormat formatter=DateFormat.getDateInstance();
 
 //        id.setText(singleton.Projects.get(position).project_id);
@@ -73,7 +78,10 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
         dueDate.setText(formatter.format(singleton.Projects.get(position).due_date));
         listView = (ListView) view.findViewById(R.id.tasksList);
 
-
+        if(singleton.Projects.get(position).Tasks.size()==0)
+        {
+            tasks.setText("No task found!");
+        }
 
         listView.setAdapter(new BaseAdapter() {
             @Override
@@ -130,6 +138,23 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
                 return view;
             }
         });
+
+        addTask.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                addNewTask detailsFragment = new addNewTask();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Bundle args = new Bundle();
+                args.putInt("position",position);
+                detailsFragment.setArguments(args);
+                ft.replace(R.id.fragment_layout, detailsFragment);
+                ft.addToBackStack("pdetails");
+                ft.commit();
+            };
+        });
+
+
+
 
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 //            public void onItemClick(AdapterView<?> parent, View view,
