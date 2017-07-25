@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,7 @@ public class addNewTask extends Fragment implements View.OnClickListener{
     Spinner employees;
     static boolean s=false;
     ListView listView;
-    EditText projectName;
+    EditText projectName,cost;
     static SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
     int position;
 
@@ -87,41 +88,39 @@ public class addNewTask extends Fragment implements View.OnClickListener{
         dueDate = view.findViewById(R.id.dueDate);
         projectName=view.findViewById(R.id.projectName);
         done=view.findViewById(R.id.done);
+        cost=view.findViewById(R.id.estimatedCost);
 
+        //Employees drop down list
         employees = (Spinner)view.findViewById(R.id.assignee);
-        employees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
-
-            }
-        });
         List<String> employee_names=new ArrayList<String>();
         for (Employee i:singleton.Employees){
             employee_names.add(i.name+" "+i.surname);
         }
 
-//        ArrayAdapter adapter = new ArrayAdapter<String>(employee_names, android.R.layout.simple_spinner_dropdown_item, values);
-//
-//        employees.setAdapter( new LookupArrayAdapter<String>( null, employee_names, null ) );
+        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, employee_names);
+        employees.setAdapter( adapter);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-//        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        //get start date
+        employees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+            newTask.assigned_person=singleton.Employees.get(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //get start date
         setStartDate.setOnClickListener(new View.OnClickListener(){
 
 
             public void onClick(View v){
                 s=true;
                 Log.d("INFO","SetStartButtonClicked");
-                DialogFragment sDate = new addNewProjectFragment.DatePickerFragment();
+                DialogFragment sDate = new DatePickerFragment();
                 sDate.show(getFragmentManager(),"datePicker");
             };
 
@@ -133,18 +132,19 @@ public class addNewTask extends Fragment implements View.OnClickListener{
             public void onClick(View v){
                 s=false;
                 Log.d("INFO","SetEndButtonClicked");
-                DialogFragment dDate = new addNewProjectFragment.DatePickerFragment();
+                DialogFragment dDate = new DatePickerFragment();
                 dDate.show(getFragmentManager(),"datePicker");
             };
         });
 
         done.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                if(projectName.getText().toString().trim().length()>0)
+                if(projectName.getText().toString().trim().length()>0&&cost.getText().toString().trim().length()>0&& TextUtils.isDigitsOnly(cost.getText()))
                 {
+                    newTask.estimated_cost=Integer.parseInt(cost.getText().toString());
                     newTask.task_name=projectName.getText().toString();
                     Log.d("INFO","addTask");
-                  //  singleton.Projects.get(position).addTaskToProject(new Task(newTask.task_name,Employee, newTask.start_date,newTask.due_date,cost));
+                    singleton.Projects.get(position).addTaskToProject(new Task(newTask.task_name,newTask.assigned_person, newTask.start_date,newTask.due_date,newTask.estimated_cost));
                     ProjectFragment addProject = new ProjectFragment();
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
@@ -161,8 +161,17 @@ public class addNewTask extends Fragment implements View.OnClickListener{
                 else if(newTask.due_date==null){
                     warning.setText("Due date can not be left blank!");
                 }
+                else if(newTask.assigned_person==null){
+                    warning.setText("An Assignee should be chosen!");
+                }
+                else if(!TextUtils.isDigitsOnly(cost.getText())){
+                    warning.setText("Estimated cost should be a numeric value!");
+                }
+                else if(cost.getText().toString().trim().length()==0){
+                    warning.setText("Estimated cost field can not be left blank!");
+                }
                 else{
-                    warning.setText("Project name can not be left blank!");
+                    warning.setText("Task name can not be left blank!");
                 }
 
             };
@@ -171,19 +180,6 @@ public class addNewTask extends Fragment implements View.OnClickListener{
 
 
         return view;
-    }
-
-
-
-    public class MyViewElements {
-        TextView id;
-        TextView name;
-        TextView startDate;
-        TextView dueDate;
-        TextView estimatedCost;
-        TextView remainingCost;
-        TextView assignedPerson;
-        ProgressBar ratio;
     }
 
     @Override

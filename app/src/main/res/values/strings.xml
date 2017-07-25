@@ -25,5 +25,7 @@
     <string name="addEmployee">Add a New Employee</string>
     <string name="estimatedCost">Estimated Cost</string>
     <string name="assignee">Assignee</string>
+    <string name="surname">Surname</string>
+    <string name="password">Password</string>
 
 </resources>

@@ -14,14 +14,17 @@ public class Employee {
     String surname;
     String department;
     String password;
+    Boolean admin;
     List<Task> Tasks=new ArrayList<Task>();
     List<Project> projects=new ArrayList<Project>();
 
-    Employee(String name_in,String surname_in,String department_in){//constructorwith inputs
-        person_id=counter++;
+    Employee(String name_in,String surname_in,String department_in,String password,int id,boolean admin){//constructorwith inputs
+        this.admin=admin;
+        person_id=id;
         this.name=name_in;
         this.surname=surname_in;
         this.department=department_in;
+        this.password=password;
     }
     Employee(){}
 }

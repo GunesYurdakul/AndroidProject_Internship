@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -45,7 +46,20 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
 
         listView = (ListView) view.findViewById(R.id.listView);
 
+        final Button addProject = view.findViewById(R.id.addNewEmployee);
 
+        addProject.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Log.d("INFO","AddButtonClicked");
+                addNewEmployee addEmployee = new addNewEmployee();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment_layout,addEmployee );
+                ft.addToBackStack("addemployee");
+                ft.commit();
+
+            };
+        });
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
@@ -74,6 +88,7 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
                     mymodel.id = (TextView) view.findViewById(R.id.id);
                     mymodel.name = (TextView) view.findViewById(R.id.name);
                     mymodel.department = (TextView) view.findViewById(R.id.department);
+                    mymodel.userType=(TextView)view.findViewById(R.id.admin);
 
                     view.setTag(mymodel);
 
@@ -84,6 +99,10 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
                 mymodel.id.setText(Integer.toString(i+1));
                 mymodel.name.setText(employee.name+" "+employee.surname);
                 mymodel.department.setText(employee.department);
+                if(employee.admin)
+                    mymodel.userType.setText("Admin");
+                else
+                    mymodel.userType.setText("Default");
 
                 return view;
             }
@@ -122,6 +141,7 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
         TextView id;
         TextView name;
         TextView department;
+        TextView userType;
     }
 
     @Override
