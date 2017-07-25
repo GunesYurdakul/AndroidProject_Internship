@@ -70,9 +70,5 @@ public class Projects extends AppCompatActivity {
         listView.addHeaderView(view);
     }
 
-//    public void openDetails(){
-//        Intent intent = new Intent(this,HavingFragment.class);
-//        startActivity(intent);
-//    }
 }
 

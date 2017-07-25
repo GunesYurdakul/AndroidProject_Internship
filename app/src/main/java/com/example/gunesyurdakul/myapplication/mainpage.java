@@ -22,7 +22,7 @@ public class mainpage extends AppCompatActivity {
         if(singleton.Employees.size()==0) {
             singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment","123456",1,true));
             singleton.employeeMap.put(1,singleton.Employees.get(0));
-            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment","rerger23",2,false));
+            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment","asdfgh",2,false));
             singleton.employeeMap.put(2,singleton.Employees.get(1));
             singleton.Employees.add(new Employee("Jane", "Doe", "Analist","46677880",3,false));
             singleton.employeeMap.put(3,singleton.Employees.get(2));
@@ -71,16 +71,18 @@ public class mainpage extends AppCompatActivity {
                  warning.setText("No such Id exists!");
             }
             else if(logging_in.admin&&logging_in.password.equals(pass.getText().toString())){
-                String message = idText.getText().toString();
+                 singleton.currentUser=singleton.employeeMap.get(Integer.parseInt(id));
+                 String message = idText.getText().toString();
                 Intent intent = new Intent(this, LoggedInUser.class);
                 intent.putExtra(EXTRA_MESSAGE, message);
                 startActivity(intent);
             }
             else if(!logging_in.admin&&logging_in.password.equals(pass.getText().toString())){
-                String message = idText.getText().toString();
-                Intent intent = new Intent(this, LoggedInUser.class);
-                intent.putExtra(EXTRA_MESSAGE, message);
-                startActivity(intent);
+                 singleton.currentUser=singleton.employeeMap.get(Integer.parseInt(id));
+                 String message = idText.getText().toString();
+                 Intent intent = new Intent(this, defaultUsers.class);
+                 intent.putExtra(EXTRA_MESSAGE, message);
+                 startActivity(intent);
             }
             else if(!logging_in.password.equals(pass.getText().toString())){
                 warning.setText("Password and Id do not match!");

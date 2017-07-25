@@ -24,10 +24,7 @@
         <activity android:name=".LoggedInUser" />
         <activity android:name=".Employees" />
         <activity android:name=".Projects" />
-        <activity
-            android:name=".HavingFragment"
-            android:label="@string/title_activity_having_fragment"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".defaultUsers"></activity>
     </application>
 
 </manifest>

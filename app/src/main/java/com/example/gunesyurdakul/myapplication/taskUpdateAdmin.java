@@ -3,7 +3,6 @@ package com.example.gunesyurdakul.myapplication;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -25,23 +23,23 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 
-public class ProjectDetails extends Fragment implements View.OnClickListener{
+public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
 
 
     Singleton singleton =Singleton.getSingleton();
     ListView listView;
 
-    int position_project;
+    int position;
 
-    public static ProjectDetails newInstance(int param1) {
-        ProjectDetails fragment = new ProjectDetails();
+    public static taskUpdateAdmin newInstance(int param1) {
+        taskUpdateAdmin fragment = new taskUpdateAdmin();
         Bundle args = new Bundle();
         args.putInt("position", param1);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public ProjectDetails() {
+    public taskUpdateAdmin() {
         // Required empty public constructor
     }
 
@@ -49,7 +47,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            position_project = getArguments().getInt("position");
+            position = getArguments().getInt("position");
         }
     }
 
@@ -58,38 +56,36 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d("Info", "hey");
-        View view = inflater.inflate(R.layout.project_details, container, false);
+        View view = inflater.inflate(R.layout.employee_details, container, false);
         Log.d("Info", "hey");
         TableLayout table;
         final ListView listView;
 
-
-        Button addTask=(Button)view.findViewById(R.id.addTask);
-        TextView projectName = (TextView) view.findViewById(R.id.projectName);
-        TextView startDate= (TextView) view.findViewById(R.id.startDate);
-        TextView dueDate= (TextView) view.findViewById(R.id.dueDate);
+        TextView name = (TextView) view.findViewById(R.id.employee_name);
+        TextView department= (TextView) view.findViewById(R.id.department);
         TextView id=(TextView)view.findViewById(R.id.id);
-        TextView tasks=(TextView)view.findViewById(R.id.tasks);
-        final DateFormat formatter=DateFormat.getDateInstance();
+        final TextView tasks=(TextView)view.findViewById(R.id.tasksHeader);
 
-//        id.setText(singleton.Projects.get(position).project_id);
-        projectName.setText(singleton.Projects.get(position_project).name);
-        startDate.setText(formatter.format(singleton.Projects.get(position_project).start_date));
-        dueDate.setText(formatter.format(singleton.Projects.get(position_project).due_date));
+        final DateFormat formatter=DateFormat.getDateInstance();
+        final Employee currentEmployee = singleton.Employees.get(position);
+        name.setText(currentEmployee.name+" "+currentEmployee.surname);
+        department.setText(currentEmployee.department);
+        id.setText(Integer.toString(currentEmployee.person_id));
         listView = (ListView) view.findViewById(R.id.tasksList);
 
-        if(singleton.Projects.get(position_project).Tasks.size()==0)
-        {
-            tasks.setText("No task found!");
-        }
+
 
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                if(singleton.Projects.get(position_project).Tasks == null) {
+                if(currentEmployee.Tasks == null) {
                     return 0;
                 }else {
-                    return singleton.Projects.get(position_project).Tasks.size();
+                    if(currentEmployee.Tasks.size()==0)
+                        tasks.setText("No task found!");
+                    else
+                        tasks.setText("Tasks");
+                    return currentEmployee.Tasks.size();
                 }
             }
 
@@ -123,7 +119,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
 
                 MyViewElements mymodel = (MyViewElements) view.getTag();
                 Log.d("fg",Integer.toString(i));
-                Task task = singleton.Projects.get(position_project).Tasks.get(i);
+                Task task = singleton.Employees.get(position).Tasks.get(i);
 
                 mymodel.id.setText(Integer.toString(task.task_id));
                 mymodel.name.setText(task.task_name);
@@ -139,41 +135,24 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
             }
         });
 
-        addTask.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                addNewTask detailsFragment = new addNewTask();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                Bundle args = new Bundle();
-                args.putInt("position",position_project);
-                detailsFragment.setArguments(args);
-                ft.replace(R.id.fragment_layout, detailsFragment);
-                ft.addToBackStack("pdetails");
-                ft.commit();
-            };
-        });
-
-
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id){
-
-
-                final Task projectInfo = singleton.Projects.get(position_project).Tasks.get(position);
-
-                taskUpdateAdmin detailsFragment = new taskUpdateAdmin();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                Bundle args = new Bundle();
-                args.putInt("position",position);
-                detailsFragment.setArguments(args);
-                ft.replace(R.id.fragment_layout, detailsFragment);
-                ft.addToBackStack("tdetails");
-                ft.commit();
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//            public void onItemClick(AdapterView<?> parent, View view,
+//                                    int position, long id){
+//
+//
+//                final Project projectInfo = singleton.Projects.get(position);
+//
+//                ProjectDetails detailsFragment = new ProjectDetails();
+//                FragmentManager fm = getFragmentManager();
+//                FragmentTransaction ft = fm.beginTransaction();
+//                Bundle args = new Bundle();
+//                args.putInt("position",position);
+//                detailsFragment.setArguments(args);
+//                ft.replace(R.id.fragment_layout, detailsFragment);
+//                ft.addToBackStack("pdetails");
+//                ft.commit();
+//            }
+//        });
         Log.d("Info", "hey");
 
 

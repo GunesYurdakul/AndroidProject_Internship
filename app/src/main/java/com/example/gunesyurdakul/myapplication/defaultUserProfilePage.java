@@ -31,10 +31,9 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
 
     int position;
 
-    public static EmployeeDetails newInstance(int param1) {
+    public static EmployeeDetails newInstance() {
         EmployeeDetails fragment = new EmployeeDetails();
         Bundle args = new Bundle();
-        args.putInt("position", param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,9 +45,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            position = getArguments().getInt("position");
-        }
+
     }
 
 
@@ -67,7 +64,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
         final TextView tasks=(TextView)view.findViewById(R.id.tasksHeader);
 
         final DateFormat formatter=DateFormat.getDateInstance();
-        final Employee currentEmployee = singleton.employeeMap.get(position);
+        final Employee currentEmployee = singleton.currentUser;
         name.setText(currentEmployee.name+" "+currentEmployee.surname);
         department.setText(currentEmployee.department);
         id.setText(Integer.toString(currentEmployee.person_id));
@@ -119,7 +116,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
 
                 MyViewElements mymodel = (MyViewElements) view.getTag();
                 Log.d("fg",Integer.toString(i));
-                Task task = singleton.employeeMap.get(position).Tasks.get(i);
+                Task task = currentEmployee.Tasks.get(i);
 
                 mymodel.id.setText(Integer.toString(task.task_id));
                 mymodel.name.setText(task.task_name);
@@ -135,13 +132,12 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
             }
         });
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id){
-//
-//
-//                final Project projectInfo = singleton.Projects.get(position);
-//
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id){
+
+
+                final Task taskInfo = singleton.currentUser.Tasks.get(position);
 //                ProjectDetails detailsFragment = new ProjectDetails();
 //                FragmentManager fm = getFragmentManager();
 //                FragmentTransaction ft = fm.beginTransaction();
@@ -151,8 +147,9 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
 //                ft.replace(R.id.fragment_layout, detailsFragment);
 //                ft.addToBackStack("pdetails");
 //                ft.commit();
-//            }
-//        });
+
+            }
+        });
         Log.d("Info", "hey");
 
 

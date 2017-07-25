@@ -3,7 +3,7 @@
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="id">id:</string>
-    <string name="sign_in">Sign in</string>
+    <string name="log_in">LOGIN</string>
 
     <string name="title_activity_logged__in__user">Logged_In_User</string>
     <string name="dummy_button">Dummy Button</string>
@@ -27,5 +27,8 @@
     <string name="assignee">Assignee</string>
     <string name="surname">Surname</string>
     <string name="password">Password</string>
+    <string name="removeTask">Remove Task</string>
+    <string name="remove">REMOVE</string>
+    <string name="update">UPDATE</string>
 
 </resources>

@@ -8,19 +8,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class HavingFragment extends AppCompatActivity {
+public class defaultUsers extends AppCompatActivity {
+    Singleton singleton =Singleton.getSingleton();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_project);
 
-        ProjectFragment fragment = new ProjectFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        getSupportFragmentManager().beginTransaction()
-                  .add(R.id.listView, fragment).commit();
+        if(!singleton.currentUser.admin){
+            defaultUserProfilePage fragment = new defaultUserProfilePage();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_layout, fragment).commit();
+            transaction.commit();
+        }
 
-        transaction.commit();
     }
 
 }

@@ -12,6 +12,7 @@ import java.util.Map;
 public class Singleton {
     private static Singleton singleton = new Singleton();
     private Singleton(){}
+    Employee currentUser;
 
     List<Employee> Employees=new ArrayList<Employee>();
     List<Project> Projects=new ArrayList<Project>();
