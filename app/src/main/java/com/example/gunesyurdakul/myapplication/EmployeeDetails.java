@@ -28,7 +28,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
 
     Singleton singleton =Singleton.getSingleton();
     ListView listView;
-
+    int p_id;
     int position;
 
     public static EmployeeDetails newInstance(int param1) {
@@ -105,7 +105,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
                     view = inflater.inflate(R.layout.view_task_cell,null);
                     MyViewElements mymodel = new MyViewElements();
                     mymodel.id = (TextView) view.findViewById(R.id.id);
-                    mymodel.name = (TextView) view.findViewById(R.id.projectName);
+                    mymodel.name = (TextView) view.findViewById(R.id.taskName);
                     mymodel.startDate = (TextView) view.findViewById(R.id.startDate);
                     mymodel.dueDate = (TextView) view.findViewById(R.id.dueDate);
                     mymodel.estimatedCost = (TextView) view.findViewById(R.id.estimatedCost);
@@ -120,7 +120,6 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
                 MyViewElements mymodel = (MyViewElements) view.getTag();
                 Log.d("fg",Integer.toString(i));
                 Task task = singleton.Employees.get(position).Tasks.get(i);
-
                 mymodel.id.setText(Integer.toString(task.task_id));
                 mymodel.name.setText(task.task_name);
                 mymodel.startDate.setText(formatter.format(task.start_date));
@@ -135,24 +134,26 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
             }
         });
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id){
-//
-//
-//                final Project projectInfo = singleton.Projects.get(position);
-//
-//                ProjectDetails detailsFragment = new ProjectDetails();
-//                FragmentManager fm = getFragmentManager();
-//                FragmentTransaction ft = fm.beginTransaction();
-//                Bundle args = new Bundle();
-//                args.putInt("position",position);
-//                detailsFragment.setArguments(args);
-//                ft.replace(R.id.fragment_layout, detailsFragment);
-//                ft.addToBackStack("pdetails");
-//                ft.commit();
-//            }
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int task_id, long id){
+
+                Task task = singleton.Employees.get(position).Tasks.get(task_id);
+                taskUpdateAdmin detailsFragment = new taskUpdateAdmin();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Bundle args = new Bundle();
+                Log.d("taskid",Integer.toString(task_id+1));
+                Log.d("size",Integer.toString(singleton.taskMap.size()));
+                //Task t=singleton.taskMap.get(task_id+1);
+                //args.putInt("project",t.related_project.project_id-1);
+                args.putInt("task",task.task_id);
+                detailsFragment.setArguments(args);
+                ft.replace(R.id.fragment_layout, detailsFragment);
+                //ft.addToBackStack("tdetails");
+                ft.commit();
+            }
+        });
         Log.d("Info", "hey");
 
 

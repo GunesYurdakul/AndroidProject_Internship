@@ -15,16 +15,21 @@ public class Employee {
     String department;
     String password;
     Boolean admin;
+    String email;
     List<Task> Tasks=new ArrayList<Task>();
     List<Project> projects=new ArrayList<Project>();
 
-    Employee(String name_in,String surname_in,String department_in,String password,int id,boolean admin){//constructorwith inputs
+    Employee(String name_in,String surname_in,String department_in,String password,String email,int id,boolean admin){//constructorwith inputs
         this.admin=admin;
+        this.email=email;
         person_id=id;
         this.name=name_in;
         this.surname=surname_in;
         this.department=department_in;
         this.password=password;
     }
+//    public void deleteTask(Task){
+//    Tasks.remove()
+//    }
     Employee(){}
 }

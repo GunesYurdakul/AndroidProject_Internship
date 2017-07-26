@@ -120,7 +120,7 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
                     args.putInt("position",position);
                     detailsFragment.setArguments(args);
                     ft.replace(R.id.fragment_layout, detailsFragment);
-                    ft.addToBackStack("pdetails");
+                    //ft.addToBackStack("pdetails");
                     ft.commit();
 
                 //openDetails();

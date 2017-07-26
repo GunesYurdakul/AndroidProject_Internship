@@ -2,7 +2,9 @@ package com.example.gunesyurdakul.myapplication;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Güneş Yurdakul on 18/07/2017.
@@ -29,11 +31,17 @@ public class Project{
     };
 
     public void addTaskToProject(Task newtask){
+        Singleton singleton =Singleton.getSingleton();
+        singleton.taskMap.put(newtask.task_id,newtask);
         newtask.assigned_person.Tasks.add(newtask);
         newtask.assigned_person.projects.add(this);
         this.Tasks.add(newtask);
         newtask.related_project=this;
     }
 
+    public void removeTask(Task removeTask) {
+        Singleton singleton =Singleton.getSingleton();
+        singleton.taskMap.remove(removeTask.task_id);
+    }
 
 }

@@ -116,7 +116,7 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
                     newEmployee.person_id=Integer.parseInt(id.getText().toString());
                     newEmployee.admin=userType.isChecked();
                     Log.d("INFO","addTask");
-                    Employee newE=new Employee(newEmployee.name,newEmployee.surname,newEmployee.department,newEmployee.password,newEmployee.person_id,newEmployee.admin);
+                    Employee newE=new Employee(newEmployee.name,newEmployee.surname,newEmployee.department,newEmployee.password,"email",newEmployee.person_id,newEmployee.admin);
                     singleton.employeeMap.put(newE.person_id,newE);
                     singleton.Employees.add(newE);
                     EmployeeFragment addEmp = new EmployeeFragment();

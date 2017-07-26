@@ -20,13 +20,13 @@ public class mainpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
         if(singleton.Employees.size()==0) {
-            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment","123456",1,true));
+            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment","123456","kdlw@kfşl.com",1,true));
             singleton.employeeMap.put(1,singleton.Employees.get(0));
-            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment","asdfgh",2,false));
+            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment","asdfgh","kfşdk@lkrş.com",2,false));
             singleton.employeeMap.put(2,singleton.Employees.get(1));
-            singleton.Employees.add(new Employee("Jane", "Doe", "Analist","46677880",3,false));
+            singleton.Employees.add(new Employee("Jane", "Doe", "Analist","46677880","jsdhlaksh@kdlsk.com",3,false));
             singleton.employeeMap.put(3,singleton.Employees.get(2));
-            singleton.Employees.add(new Employee("Fırat", "Yurdakul", "Mobile Devolopment","6798787",4,false));
+            singleton.Employees.add(new Employee("Fırat", "Yurdakul", "Mobile Devolopment","6798787","ruklskş@kjlks.com",4,false));
             singleton.employeeMap.put(4,singleton.Employees.get(3));
 
         }

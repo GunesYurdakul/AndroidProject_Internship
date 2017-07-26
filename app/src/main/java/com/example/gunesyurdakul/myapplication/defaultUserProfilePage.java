@@ -102,7 +102,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
                     view = inflater.inflate(R.layout.view_task_cell,null);
                     MyViewElements mymodel = new MyViewElements();
                     mymodel.id = (TextView) view.findViewById(R.id.id);
-                    mymodel.name = (TextView) view.findViewById(R.id.projectName);
+                    mymodel.name = (TextView) view.findViewById(R.id.taskName);
                     mymodel.startDate = (TextView) view.findViewById(R.id.startDate);
                     mymodel.dueDate = (TextView) view.findViewById(R.id.dueDate);
                     mymodel.estimatedCost = (TextView) view.findViewById(R.id.estimatedCost);
@@ -138,16 +138,18 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
 
 
                 final Task taskInfo = singleton.currentUser.Tasks.get(position);
-//                ProjectDetails detailsFragment = new ProjectDetails();
-//                FragmentManager fm = getFragmentManager();
-//                FragmentTransaction ft = fm.beginTransaction();
-//                Bundle args = new Bundle();
-//                args.putInt("position",position);
-//                detailsFragment.setArguments(args);
-//                ft.replace(R.id.fragment_layout, detailsFragment);
-//                ft.addToBackStack("pdetails");
-//                ft.commit();
-
+                taskUpdateDefaultUser detailsFragment = new taskUpdateDefaultUser();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Bundle args = new Bundle();
+                Log.d("size",Integer.toString(singleton.taskMap.size()));
+                Task t=singleton.taskMap.get(taskInfo.task_id);
+                //args.putInt("project",t.related_project.project_id-1);
+                args.putInt("task",taskInfo.task_id);
+                detailsFragment.setArguments(args);
+                ft.replace(R.id.fragment_layout, detailsFragment);
+                ft.addToBackStack("tdetails");
+                ft.commit();
             }
         });
         Log.d("Info", "hey");

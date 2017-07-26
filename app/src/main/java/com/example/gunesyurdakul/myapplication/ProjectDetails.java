@@ -109,7 +109,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
                     view = inflater.inflate(R.layout.view_task_cell,null);
                     MyViewElements mymodel = new MyViewElements();
                     mymodel.id = (TextView) view.findViewById(R.id.id);
-                    mymodel.name = (TextView) view.findViewById(R.id.projectName);
+                    mymodel.name = (TextView) view.findViewById(R.id.taskName);
                     mymodel.startDate = (TextView) view.findViewById(R.id.startDate);
                     mymodel.dueDate = (TextView) view.findViewById(R.id.dueDate);
                     mymodel.estimatedCost = (TextView) view.findViewById(R.id.estimatedCost);
@@ -148,7 +148,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
                 args.putInt("position",position_project);
                 detailsFragment.setArguments(args);
                 ft.replace(R.id.fragment_layout, detailsFragment);
-                ft.addToBackStack("pdetails");
+                //ft.addToBackStack("pdetails");
                 ft.commit();
             };
         });
@@ -167,10 +167,11 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 Bundle args = new Bundle();
-                args.putInt("position",position);
+                //args.putInt("project",position_project);
+                args.putInt("task",projectInfo.task_id);
                 detailsFragment.setArguments(args);
                 ft.replace(R.id.fragment_layout, detailsFragment);
-                ft.addToBackStack("tdetails");
+                //ft.addToBackStack("tdetails");
                 ft.commit();
             }
         });

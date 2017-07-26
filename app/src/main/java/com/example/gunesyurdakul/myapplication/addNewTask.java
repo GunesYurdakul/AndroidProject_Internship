@@ -141,36 +141,46 @@ public class addNewTask extends Fragment implements View.OnClickListener{
             public void onClick(View v){
                 if(projectName.getText().toString().trim().length()>0&&cost.getText().toString().trim().length()>0&& TextUtils.isDigitsOnly(cost.getText()))
                 {
+                    Log.d("d","1");
                     newTask.estimated_cost=Integer.parseInt(cost.getText().toString());
                     newTask.task_name=projectName.getText().toString();
                     Log.d("INFO","addTask");
                     singleton.Projects.get(position).addTaskToProject(new Task(newTask.task_name,newTask.assigned_person, newTask.start_date,newTask.due_date,newTask.estimated_cost));
-                    ProjectFragment addProject = new ProjectFragment();
+                    ProjectDetails detailsFragment = new ProjectDetails();
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.fragment_layout,addProject);
-                    ft.addToBackStack("addProject");
+                    Bundle args = new Bundle();
+                    args.putInt("position",position);
+                    detailsFragment.setArguments(args);
+                    ft.replace(R.id.fragment_layout, detailsFragment);
                     ft.commit();
                 }
                 else if(newTask.start_date.compareTo(newTask.due_date)>0){
+                    Log.d("d","2");
                     warning.setText("Due date of the task should be later than its starting date!");
                 }
                 else if(newTask.start_date==null){
+                    Log.d("d","3");
                     warning.setText("Starting date can not be left blank!");
                 }
                 else if(newTask.due_date==null){
+                    Log.d("d","4");
                     warning.setText("Due date can not be left blank!");
                 }
                 else if(newTask.assigned_person==null){
+                    Log.d("d","5");
                     warning.setText("An Assignee should be chosen!");
                 }
                 else if(!TextUtils.isDigitsOnly(cost.getText())){
+                    Log.d("d","6");
                     warning.setText("Estimated cost should be a numeric value!");
                 }
                 else if(cost.getText().toString().trim().length()==0){
+                    Log.d("d","7");
                     warning.setText("Estimated cost field can not be left blank!");
                 }
                 else{
+                    Log.d("d","4");
                     warning.setText("Task name can not be left blank!");
                 }
 

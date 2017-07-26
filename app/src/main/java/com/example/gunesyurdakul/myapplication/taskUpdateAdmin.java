@@ -1,26 +1,40 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import static com.example.gunesyurdakul.myapplication.addNewTask.format;
 
 
 public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
@@ -28,13 +42,19 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
 
     Singleton singleton =Singleton.getSingleton();
     ListView listView;
-
-    int position;
+    static TextView warning,startDate,dueDate;
+    static boolean s=false;
+    static boolean s_changed=false;
+    static boolean d_changed=false;
+    static Task currentTask;
+    static Task updatedTask;
+    int task;
 
     public static taskUpdateAdmin newInstance(int param1) {
         taskUpdateAdmin fragment = new taskUpdateAdmin();
         Bundle args = new Bundle();
-        args.putInt("position", param1);
+        //args.putInt("project", param1);
+        //args.putInt("task",param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,7 +67,8 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            position = getArguments().getInt("position");
+            //project = getArguments().getInt("project");
+            task= getArguments().getInt("task");
         }
     }
 
@@ -56,137 +77,192 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d("Info", "hey");
-        View view = inflater.inflate(R.layout.employee_details, container, false);
-        Log.d("Info", "hey");
+        View view = inflater.inflate(R.layout.fragment_task_update_admin, container, false);
+        currentTask=singleton.taskMap.get(task);
         TableLayout table;
         final ListView listView;
-
-        TextView name = (TextView) view.findViewById(R.id.employee_name);
-        TextView department= (TextView) view.findViewById(R.id.department);
-        TextView id=(TextView)view.findViewById(R.id.id);
-        final TextView tasks=(TextView)view.findViewById(R.id.tasksHeader);
+        updatedTask=new Task();
+        updatedTask.start_date=currentTask.start_date;
+        updatedTask.due_date=currentTask.due_date;
+        TextView id = (TextView) view.findViewById(R.id.taskId);
+        final EditText name = (EditText) view.findViewById(R.id.taskName);
+        startDate= (TextView) view.findViewById(R.id.startDateT);
+        dueDate=(TextView)view.findViewById(R.id.dueDateT);
+        Button setStartDate = (Button)view.findViewById(R.id.setStartDate);
+        Button setDueDate = (Button)view.findViewById(R.id.setDueDate);
+        final TextView estimatedCost=(TextView)view.findViewById(R.id.estimatedCost);
+        warning=(TextView)view.findViewById(R.id.warning);
+        final Button  update=(Button) view.findViewById(R.id.updateTask);
+        Button  remove=(Button) view.findViewById(R.id.removeTask);
+        Spinner asignee =(Spinner)view.findViewById(R.id.assignee);
 
         final DateFormat formatter=DateFormat.getDateInstance();
-        final Employee currentEmployee = singleton.Employees.get(position);
-        name.setText(currentEmployee.name+" "+currentEmployee.surname);
-        department.setText(currentEmployee.department);
-        id.setText(Integer.toString(currentEmployee.person_id));
-        listView = (ListView) view.findViewById(R.id.tasksList);
 
+        name.setText(currentTask.task_name);
+        Log.d("INFO",currentTask.task_name);
+        id.setText(Integer.toString(currentTask.task_id));
+        estimatedCost.setText(Float.toString(currentTask.estimated_cost));
+        startDate.setText(formatter.format(currentTask.start_date));
+        dueDate.setText(formatter.format(currentTask.due_date));
+        name.setText(currentTask.task_name);
+        asignee.setSelection(currentTask.assigned_person.person_id);
+        //Employees drop down list
 
+        List<String> employee_names=new ArrayList<String>();
+        for (Employee i:singleton.Employees){
+            employee_names.add(i.name+" "+i.surname);
+        }
 
-        listView.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                if(currentEmployee.Tasks == null) {
-                    return 0;
-                }else {
-                    if(currentEmployee.Tasks.size()==0)
-                        tasks.setText("No task found!");
-                    else
-                        tasks.setText("Tasks");
-                    return currentEmployee.Tasks.size();
-                }
+        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, employee_names);
+        asignee.setAdapter( adapter);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        asignee.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                updatedTask.assigned_person=singleton.Employees.get(position);
             }
-
             @Override
-            public Object getItem(int i) {
-                return null;
-            }
+            public void onNothingSelected(AdapterView<?> parent) {
 
-            @Override
-            public long getItemId(int i) {
-                return 0;
-            }
-
-            @Override
-            public View getView(int i, View view, ViewGroup viewGroup) {
-                if(view == null) {
-                    view = inflater.inflate(R.layout.view_task_cell,null);
-                    MyViewElements mymodel = new MyViewElements();
-                    mymodel.id = (TextView) view.findViewById(R.id.id);
-                    mymodel.name = (TextView) view.findViewById(R.id.projectName);
-                    mymodel.startDate = (TextView) view.findViewById(R.id.startDate);
-                    mymodel.dueDate = (TextView) view.findViewById(R.id.dueDate);
-                    mymodel.estimatedCost = (TextView) view.findViewById(R.id.estimatedCost);
-                    mymodel.remainingCost = (TextView) view.findViewById(R.id.remainingCost);
-                    mymodel.assignedPerson = (TextView) view.findViewById(R.id.assignedPerson);
-                    mymodel.ratio = (ProgressBar)view.findViewById(R.id.progressBar);
-                    mymodel.ratio.setMax(100);
-                    view.setTag(mymodel);
-
-                }
-
-                MyViewElements mymodel = (MyViewElements) view.getTag();
-                Log.d("fg",Integer.toString(i));
-                Task task = singleton.Employees.get(position).Tasks.get(i);
-
-                mymodel.id.setText(Integer.toString(task.task_id));
-                mymodel.name.setText(task.task_name);
-                mymodel.startDate.setText(formatter.format(task.start_date));
-                mymodel.dueDate.setText(formatter.format(task.due_date));
-                mymodel.estimatedCost.setText(Float.toString(task.estimated_cost));
-                mymodel.remainingCost.setText(Float.toString(task.remaining_cost));
-                mymodel.assignedPerson.setText(task.assigned_person.name+" "+task.assigned_person.surname);
-                float ratio=((task.estimated_cost-task.remaining_cost)/task.estimated_cost)*100;
-                mymodel.ratio.setProgress((int)ratio);
-                Log.d("Info",Integer.toString(Float.floatToIntBits(ratio)));
-                return view;
             }
         });
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id){
-//
-//
-//                final Project projectInfo = singleton.Projects.get(position);
-//
-//                ProjectDetails detailsFragment = new ProjectDetails();
-//                FragmentManager fm = getFragmentManager();
-//                FragmentTransaction ft = fm.beginTransaction();
-//                Bundle args = new Bundle();
-//                args.putInt("position",position);
-//                detailsFragment.setArguments(args);
-//                ft.replace(R.id.fragment_layout, detailsFragment);
-//                ft.addToBackStack("pdetails");
-//                ft.commit();
-//            }
-//        });
-        Log.d("Info", "hey");
+        //get start date
+        setStartDate.setOnClickListener(new View.OnClickListener(){
 
 
-        Log.d("Info", "heyssss");
+            public void onClick(View v){
+                s=true;
+                Log.d("INFO","SetStartButtonClicked");
+                DialogFragment sDate = new DatePickerFragment();
+                sDate.show(getFragmentManager(),"datePicker");
+            };
 
+
+        });
+
+        //get end date
+        setDueDate.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                s=false;
+                Log.d("INFO","SetEndButtonClicked");
+                DialogFragment dDate = new DatePickerFragment();
+                dDate.show(getFragmentManager(),"datePicker");
+            };
+        });
+
+        update.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Log.d("k","clicked");
+                if(name.getText().toString().trim().length()>0&&estimatedCost.getText().toString().trim().length()>0&& TextUtils.isDigitsOnly(estimatedCost.getText()))
+                {
+                    Log.d("k","clicked1");
+                    currentTask.estimated_cost=Integer.parseInt(estimatedCost.getText().toString());
+                    currentTask.task_name=name.getText().toString();
+                    currentTask.assigned_person=updatedTask.assigned_person;
+                    if(s_changed)
+                        currentTask.start_date=updatedTask.start_date;
+                    if(d_changed)
+                        currentTask.due_date=updatedTask.due_date;
+                    Log.d("INFO","addTask");
+                    ProjectDetails detailsFragment = new ProjectDetails();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Bundle args = new Bundle();
+                    //************change it if you switch to map structure
+                    args.putInt("position",currentTask.related_project.project_id-1);
+                    detailsFragment.setArguments(args);
+                    ft.replace(R.id.fragment_layout, detailsFragment);
+                    ft.commit();
+                }
+                else if(updatedTask.start_date.compareTo(updatedTask.due_date)>0){
+                    Log.d("k","clicked2");
+                    warning.setText("Due date of the task should be later than its starting date!");
+                }
+                else if(updatedTask.start_date==null){
+                    Log.d("k","clicked3");
+                    warning.setText("Starting date can not be left blank!");
+                }
+                else if(updatedTask.due_date==null){
+                    Log.d("k","clicked4");
+                    warning.setText("Due date can not be left blank!");
+                }
+                else if(updatedTask.assigned_person==null){
+                    Log.d("k","clicked5");
+                    warning.setText("An Assignee should be chosen!");
+                }
+                else if(!TextUtils.isDigitsOnly(estimatedCost.getText())){
+                    Log.d("k","clicked6");
+                    warning.setText("Estimated cost should be a numeric value!");
+                }
+                else if(estimatedCost.getText().toString().trim().length()==0){
+                    Log.d("k","clicked7");
+                    warning.setText("Estimated cost field can not be left blank!");
+                }
+                else{
+                    Log.d("k","clicked8");
+                    warning.setText("Task name can not be left blank!");
+                }
+
+            };
+        });
+        remove.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+
+                singleton.Projects.get(currentTask.related_project.project_id-1).removeTask(currentTask);
+                ProjectFragment addProject = new ProjectFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment_layout,addProject);
+                ft.commit();};
+        });
         return view;
     }
 
 
-
-    public class MyViewElements {
-        TextView id;
-        TextView name;
-        TextView startDate;
-        TextView dueDate;
-        TextView estimatedCost;
-        TextView remainingCost;
-        TextView assignedPerson;
-        ProgressBar ratio;
-    }
-
-
-
-    //    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
     @Override
     public void onClick(View v) {}
+
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+            dialog.getDatePicker().setMinDate(c.getTimeInMillis());
+            return  dialog;
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            String date = Integer.toString(day)+"/"+Integer.toString(month+1)+"/"+Integer.toString(year);
+            if (s) {
+                try {
+                    updatedTask.start_date = format.parse(date);
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
+                s_changed=true;
+                startDate.setText(date);
+            }
+            else
+            {
+                try {
+                    updatedTask.due_date = format.parse(date);
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
+                d_changed=true;
+                dueDate.setText(date);
+            }
+
+        }
+    }
+
 
 }

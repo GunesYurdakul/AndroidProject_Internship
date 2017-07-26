@@ -29,7 +29,7 @@ public class Task {
         start_date=start_date_in;
         due_date=due_date_in;
         estimated_cost=estimated_cost_in;
-        remaining_cost=estimated_cost;
+        remaining_cost=estimated_cost/2;
         completed_ratio=0;
 
     };
