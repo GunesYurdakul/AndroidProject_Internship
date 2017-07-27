@@ -107,7 +107,8 @@ public class taskUpdateDefaultUser extends Fragment implements View.OnClickListe
         startDate.setText(formatter.format(currentTask.start_date));
         dueDate.setText(formatter.format(currentTask.due_date));
         name.setText(currentTask.task_name);
-        asignee.setText(currentTask.assigned_person.name+" "+currentTask.assigned_person.surname);
+        Employee person=singleton.employeeMap.get(currentTask.assigned_person_id);
+        asignee.setText(person.name+" "+person.surname);
         remainingCost.setText(Float.toString(currentTask.remaining_cost));
         float ratio=((currentTask.estimated_cost-currentTask.remaining_cost)/currentTask.estimated_cost)*100;
         progress.setProgress((int)ratio);

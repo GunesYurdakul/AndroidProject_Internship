@@ -12,17 +12,17 @@ public class Task {
     String task_name;
     Date start_date;
     Date due_date;
-    Employee assigned_person;
-    Project related_project;
+    int assigned_person_id;
+    int related_project_id;
     float estimated_cost;
     float remaining_cost;
 
     Task(){};
 
-    Task(String name_in,Employee assigned, Date start_date_in,Date due_date_in,float estimated_cost_in){
+    Task(String name_in,int assigned, Date start_date_in,Date due_date_in,float estimated_cost_in){
 
         task_name=name_in;
-        assigned_person=assigned;
+        assigned_person_id=assigned;
         task_id=++counter;
         start_date=start_date_in;
         due_date=due_date_in;

@@ -16,8 +16,9 @@ public class Project{
     int project_id;
     Date start_date;
     Date due_date;
-    Date end_date;
+    //Date end_date;
     List<Task> Tasks=new ArrayList<Task>();
+    List<Integer>tasks=new ArrayList<Integer>();
     Project(){
         project_id=counter++;
     };
@@ -33,18 +34,19 @@ public class Project{
         Singleton singleton =Singleton.getSingleton();
         singleton.taskMap.put(newtask.task_id,newtask);
 
-        newtask.assigned_person.Tasks.add(newtask);
-        newtask.assigned_person.tasks.put(newtask.task_id,newtask);
+        singleton.employeeMap.get(newtask.assigned_person_id).Tasks.add(newtask);
+        singleton.employeeMap.get(newtask.assigned_person_id).tasks.put(newtask.task_id,newtask);
 
-        newtask.assigned_person.projects.add(this);
+       // newtask.assigned_person.projects.add(this);
         this.Tasks.add(newtask);
-        newtask.related_project=this;
+        this.tasks.add(newtask.task_id);
+        newtask.related_project_id=this.project_id;
     }
 
     public void removeTask(Task removeTask) {
         Singleton singleton =Singleton.getSingleton();
         singleton.taskMap.remove(removeTask.task_id);
-        removeTask.assigned_person.tasks.remove(removeTask.task_id);
+        singleton.employeeMap.get(removeTask.assigned_person_id).tasks.remove(removeTask.task_id);
     }
 
 }

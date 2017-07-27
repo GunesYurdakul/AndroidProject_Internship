@@ -124,14 +124,14 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
                 MyViewElements mymodel = (MyViewElements) view.getTag();
                 Log.d("fg",Integer.toString(i));
                 Task task = singleton.Projects.get(position_project).Tasks.get(i);
-
+                Employee person=singleton.employeeMap.get(task.assigned_person_id);
                 mymodel.id.setText(Integer.toString(task.task_id));
                 mymodel.name.setText(task.task_name);
                 mymodel.startDate.setText(formatter.format(task.start_date));
                 mymodel.dueDate.setText(formatter.format(task.due_date));
                 mymodel.estimatedCost.setText(Float.toString(task.estimated_cost));
                 mymodel.remainingCost.setText(Float.toString(task.remaining_cost));
-                mymodel.assignedPerson.setText(task.assigned_person.name+" "+task.assigned_person.surname);
+                mymodel.assignedPerson.setText(person.name+" "+person.surname);
                 float ratio=((task.estimated_cost-task.remaining_cost)/task.estimated_cost)*100;
                 mymodel.ratio.setProgress((int)ratio);
                 Log.d("Info",Integer.toString(Float.floatToIntBits(ratio)));

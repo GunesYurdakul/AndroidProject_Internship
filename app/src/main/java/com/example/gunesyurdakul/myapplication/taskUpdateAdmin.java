@@ -82,6 +82,7 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
         TableLayout table;
         final ListView listView;
         updatedTask=new Task();
+        updatedTask.assigned_person_id=-1;
         updatedTask.start_date=currentTask.start_date;
         updatedTask.due_date=currentTask.due_date;
         TextView id = (TextView) view.findViewById(R.id.taskId);
@@ -105,7 +106,7 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
         startDate.setText(formatter.format(currentTask.start_date));
         dueDate.setText(formatter.format(currentTask.due_date));
         name.setText(currentTask.task_name);
-        asignee.setSelection(currentTask.assigned_person.person_id);
+        asignee.setSelection(currentTask.assigned_person_id);
         //Employees drop down list
 
         List<String> employee_names=new ArrayList<String>();
@@ -120,7 +121,7 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
         asignee.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                updatedTask.assigned_person=singleton.Employees.get(position);
+                updatedTask.assigned_person_id=singleton.Employees.get(position).person_id;
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -160,7 +161,7 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
                     Log.d("k","clicked1");
                     currentTask.estimated_cost=Integer.parseInt(estimatedCost.getText().toString());
                     currentTask.task_name=name.getText().toString();
-                    currentTask.assigned_person=updatedTask.assigned_person;
+                    currentTask.assigned_person_id=updatedTask.assigned_person_id;
                     if(s_changed)
                         currentTask.start_date=updatedTask.start_date;
                     if(d_changed)
@@ -171,7 +172,7 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
                     FragmentTransaction ft = fm.beginTransaction();
                     Bundle args = new Bundle();
                     //************change it if you switch to map structure
-                    args.putInt("position",currentTask.related_project.project_id-1);
+                    args.putInt("position",currentTask.related_project_id-1);
                     detailsFragment.setArguments(args);
                     ft.replace(R.id.fragment_layout, detailsFragment);
                     ft.commit();
@@ -188,7 +189,7 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
                     Log.d("k","clicked4");
                     warning.setText("Due date can not be left blank!");
                 }
-                else if(updatedTask.assigned_person==null){
+                else if(updatedTask.assigned_person_id==-1){
                     Log.d("k","clicked5");
                     warning.setText("An Assignee should be chosen!");
                 }
@@ -210,7 +211,7 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
         remove.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                singleton.Projects.get(currentTask.related_project.project_id-1).removeTask(currentTask);
+                singleton.Projects.get(currentTask.related_project_id-1).removeTask(currentTask);
                 ProjectFragment addProject = new ProjectFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();

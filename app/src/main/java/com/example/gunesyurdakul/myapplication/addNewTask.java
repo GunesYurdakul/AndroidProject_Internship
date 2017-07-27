@@ -92,6 +92,7 @@ public class addNewTask extends Fragment implements View.OnClickListener{
         projectName=view.findViewById(R.id.projectName);
         done=view.findViewById(R.id.done);
        // cost=view.findViewById(R.id.estimatedCost);
+        newTask.assigned_person_id=-1;
 
         //Employees drop down list
         employees = (Spinner)view.findViewById(R.id.assignee);
@@ -108,7 +109,7 @@ public class addNewTask extends Fragment implements View.OnClickListener{
         employees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-            newTask.assigned_person=singleton.Employees.get(position);
+            newTask.assigned_person_id=singleton.Employees.get(position).person_id;
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -149,7 +150,7 @@ public class addNewTask extends Fragment implements View.OnClickListener{
                     newTask.estimated_cost=(Math.abs(newTask.start_date.getTime() - newTask.due_date.getTime())*8)/(60*60*1000*24);
                     newTask.task_name=projectName.getText().toString();
                     Log.d("INFO","addTask");
-                    singleton.Projects.get(position).addTaskToProject(new Task(newTask.task_name,newTask.assigned_person, newTask.start_date,newTask.due_date,newTask.estimated_cost));
+                    singleton.Projects.get(position).addTaskToProject(new Task(newTask.task_name,newTask.assigned_person_id, newTask.start_date,newTask.due_date,newTask.estimated_cost));
                     ProjectDetails detailsFragment = new ProjectDetails();
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
@@ -171,7 +172,7 @@ public class addNewTask extends Fragment implements View.OnClickListener{
                     Log.d("d","4");
                     warning.setText("Due date can not be left blank!");
                 }
-                else if(newTask.assigned_person==null){
+                else if(newTask.assigned_person_id==-1){
                     Log.d("d","5");
                     warning.setText("An Assignee should be chosen!");
                 }

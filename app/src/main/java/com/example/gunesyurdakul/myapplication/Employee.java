@@ -20,7 +20,6 @@ public class Employee {
     String email;
     List<Task> Tasks=new ArrayList<Task>();
     Map<Integer,Task> tasks=new HashMap<Integer, Task>();
-    List<Project> projects=new ArrayList<Project>();
 
     Employee(String name_in,String surname_in,String department_in,String password,String email,int id,boolean admin){//constructorwith inputs
         this.admin=admin;

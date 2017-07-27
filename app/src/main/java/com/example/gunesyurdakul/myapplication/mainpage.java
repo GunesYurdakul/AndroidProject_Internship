@@ -52,14 +52,14 @@ public class mainpage extends AppCompatActivity {
             singleton.Projects.add(new Project("Kurumsal", today.getTime(), today.getTime()));
             singleton.Projects.add(new Project("Bireysel", today.getTime(), today.getTime()));
             singleton.Projects.add(new Project("Ticari", today.getTime(), today.getTime()));
-            singleton.Projects.get(0).addTaskToProject(new Task("Main page design", singleton.Employees.get(0), today.getTime(), today.getTime(), 76));
-            singleton.Projects.get(0).addTaskToProject(new Task("back end", singleton.Employees.get(1), today.getTime(), today.getTime(), 3));
-            singleton.Projects.get(0).addTaskToProject(new Task("group management", singleton.Employees.get(2), today.getTime(), today.getTime(), 6));
+            singleton.Projects.get(0).addTaskToProject(new Task("Main page design", singleton.Employees.get(0).person_id, today.getTime(), today.getTime(), 76));
+            singleton.Projects.get(0).addTaskToProject(new Task("back end", singleton.Employees.get(1).person_id, today.getTime(), today.getTime(), 3));
+            singleton.Projects.get(0).addTaskToProject(new Task("group management", singleton.Employees.get(2).person_id, today.getTime(), today.getTime(), 6));
 
-            singleton.Projects.get(1).addTaskToProject(new Task("Main page design", singleton.Employees.get(0), today.getTime(), today.getTime(), 76));
-            singleton.Projects.get(1).addTaskToProject(new Task("back end fggf", singleton.Employees.get(2), today.getTime(), today.getTime(), 3));
+            singleton.Projects.get(1).addTaskToProject(new Task("Main page design", singleton.Employees.get(0).person_id, today.getTime(), today.getTime(), 76));
+            singleton.Projects.get(1).addTaskToProject(new Task("back end fggf", singleton.Employees.get(2).person_id, today.getTime(), today.getTime(), 3));
 
-            singleton.Projects.get(2).addTaskToProject(new Task("bla bla task", singleton.Employees.get(1), today.getTime(), today.getTime(), 76));
+            singleton.Projects.get(2).addTaskToProject(new Task("bla bla task", singleton.Employees.get(1).person_id, today.getTime(), today.getTime(), 76));
         }
         singleton.Departments.add("Mobile Development");
         singleton.Departments.add("Analist");
@@ -108,16 +108,16 @@ public class mainpage extends AppCompatActivity {
         JSONArray employees=new JSONArray();
         JSONObject obj;
         for(Employee i:singleton.Employees){
-//            Gson gson = new Gson();
-//            try{
-//               Gson g = new Gson();
-//               String json = g.toJson(i);
-//               System.out.println(json);
-//               FileWriter writer=new FileWriter("/file.json");
-//               gson.toJson(i, writer);
-//           }catch(IOException e){
-//            e.printStackTrace();
-//           }
+            Gson gson = new Gson();
+            try{
+               Gson g = new Gson();
+               String json = g.toJson(i);
+               System.out.println(json);
+               FileWriter writer=new FileWriter("/file.json");
+               gson.toJson(i, writer);
+           }catch(IOException e){
+            e.printStackTrace();
+           }
         }
             }
 
