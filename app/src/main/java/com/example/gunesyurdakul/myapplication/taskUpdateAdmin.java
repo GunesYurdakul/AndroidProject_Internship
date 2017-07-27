@@ -2,15 +2,11 @@ package com.example.gunesyurdakul.myapplication;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -161,7 +155,9 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
                     Log.d("k","clicked1");
                     currentTask.estimated_cost=Integer.parseInt(estimatedCost.getText().toString());
                     currentTask.task_name=name.getText().toString();
+                    singleton.employeeMap.get(currentTask.assigned_person_id).tasks.remove(currentTask.task_id);
                     currentTask.assigned_person_id=updatedTask.assigned_person_id;
+                    singleton.employeeMap.get(currentTask.assigned_person_id).tasks.put(currentTask.task_id,currentTask);
                     if(s_changed)
                         currentTask.start_date=updatedTask.start_date;
                     if(d_changed)
