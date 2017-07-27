@@ -30,5 +30,6 @@
     <string name="removeTask">Remove Task</string>
     <string name="remove">REMOVE</string>
     <string name="update">UPDATE</string>
+    <string name="email">Email address</string>
 
 </resources>

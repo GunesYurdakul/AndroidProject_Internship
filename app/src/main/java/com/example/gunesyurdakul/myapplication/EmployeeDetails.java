@@ -1,13 +1,9 @@
 package com.example.gunesyurdakul.myapplication;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +17,6 @@ import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +67,8 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
 
         final DateFormat formatter = DateFormat.getDateInstance();
         final Employee currentEmployee = singleton.Employees.get(position);
+        final TextView email=(TextView)view.findViewById(R.id.email);
+        email.setText(currentEmployee.email);
         name.setText(currentEmployee.name + " " + currentEmployee.surname);
         department.setText(currentEmployee.department);
         id.setText(Integer.toString(currentEmployee.person_id));
@@ -153,7 +150,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
             public void onItemClick(AdapterView<?> parent, View view,
                                     int task_id, long id){
 
-                Task task = singleton.Employees.get(position).Tasks.get(task_id);
+                Task task = singleton.Employees.get(position).tasks.get(taskarray.get(task_id).task_id);
                 taskUpdateAdmin detailsFragment = new taskUpdateAdmin();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();

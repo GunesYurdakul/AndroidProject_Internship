@@ -1,14 +1,9 @@
 package com.example.gunesyurdakul.myapplication;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +17,6 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
-import java.util.Calendar;
 
 
 public class ProjectDetails extends Fragment implements View.OnClickListener{
@@ -78,7 +72,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
         dueDate.setText(formatter.format(singleton.Projects.get(position_project).due_date));
         listView = (ListView) view.findViewById(R.id.tasksList);
 
-        if(singleton.Projects.get(position_project).Tasks.size()==0)
+        if(singleton.Projects.get(position_project).tasks.size()==0)
         {
             tasks.setText("No task found!");
         }
@@ -86,10 +80,10 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                if(singleton.Projects.get(position_project).Tasks == null) {
+                if(singleton.Projects.get(position_project).tasks == null) {
                     return 0;
                 }else {
-                    return singleton.Projects.get(position_project).Tasks.size();
+                    return singleton.Projects.get(position_project).tasks.size();
                 }
             }
 
@@ -123,7 +117,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
 
                 MyViewElements mymodel = (MyViewElements) view.getTag();
                 Log.d("fg",Integer.toString(i));
-                Task task = singleton.Projects.get(position_project).Tasks.get(i);
+                Task task = singleton.taskMap.get(singleton.Projects.get(position_project).tasks.get(i));
                 Employee person=singleton.employeeMap.get(task.assigned_person_id);
                 mymodel.id.setText(Integer.toString(task.task_id));
                 mymodel.name.setText(task.task_name);
@@ -161,7 +155,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
                                     int position, long id){
 
 
-                final Task projectInfo = singleton.Projects.get(position_project).Tasks.get(position);
+                final Task projectInfo = singleton.taskMap.get(singleton.Projects.get(position_project).tasks.get(position));
 
                 taskUpdateAdmin detailsFragment = new taskUpdateAdmin();
                 FragmentManager fm = getFragmentManager();

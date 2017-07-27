@@ -1,10 +1,8 @@
 package com.example.gunesyurdakul.myapplication;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,23 +10,17 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 
 public class mainpage extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.gunesyurdakul.myapplication.MESSAGE";
     Singleton singleton =Singleton.getSingleton();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,20 +97,35 @@ public class mainpage extends AppCompatActivity {
     }
 
     public void writeJSON(){
+
         JSONArray employees=new JSONArray();
         JSONObject obj;
-        for(Employee i:singleton.Employees){
+
+        //for(Employee i:singleton.Employees){
             Gson gson = new Gson();
+            File file = new File(getFilesDir(), "objfile.json");
+
             try{
-               Gson g = new Gson();
-               String json = g.toJson(i);
-               System.out.println(json);
-               FileWriter writer=new FileWriter("/file.json");
-               gson.toJson(i, writer);
-           }catch(IOException e){
-            e.printStackTrace();
-           }
-        }
+                Gson g = new Gson();
+                String json = g.toJson(singleton.Employees);
+                System.out.println(json);
+                FileWriter writer=new FileWriter(file);
+                gson.toJson(singleton.Employees, writer);
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        //}
+        File file1 = new File(getFilesDir(), "objfile1.json");
+//        file1.getParentFile().mkdirs();
+            try{
+                Gson g = new Gson();
+                String json = g.toJson(singleton.Projects);
+                System.out.println(json);
+                FileWriter writer=new FileWriter(file1);
+                gson.toJson(singleton.Projects, writer);
+            }catch(IOException e){
+                e.printStackTrace();
+            }
             }
 
 

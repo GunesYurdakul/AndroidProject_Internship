@@ -1,15 +1,10 @@
 package com.example.gunesyurdakul.myapplication;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,11 +22,9 @@ import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.Inflater;
 
 
 public class defaultUserProfilePage extends Fragment implements View.OnClickListener{
@@ -79,6 +72,8 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
 
         final DateFormat formatter=DateFormat.getDateInstance();
         final Employee currentEmployee = singleton.currentUser;
+        final TextView email=(TextView)view.findViewById(R.id.email);
+        email.setText(currentEmployee.email);
         name.setText(currentEmployee.name+" "+currentEmployee.surname);
         department.setText(currentEmployee.department);
         id.setText(Integer.toString(currentEmployee.person_id));
