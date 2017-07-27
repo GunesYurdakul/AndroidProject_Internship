@@ -20,12 +20,16 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 
 public class EmployeeDetails extends Fragment implements View.OnClickListener{
 
-
+    Iterator<Map.Entry<Integer, Task>> it;
     Singleton singleton =Singleton.getSingleton();
     ListView listView;
     int p_id;
@@ -62,30 +66,35 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
         final ListView listView;
 
         TextView name = (TextView) view.findViewById(R.id.employee_name);
-        TextView department= (TextView) view.findViewById(R.id.department);
-        TextView id=(TextView)view.findViewById(R.id.id);
-        final TextView tasks=(TextView)view.findViewById(R.id.tasksHeader);
+        TextView department = (TextView) view.findViewById(R.id.department);
+        TextView id = (TextView) view.findViewById(R.id.id);
+        final TextView tasks = (TextView) view.findViewById(R.id.tasksHeader);
 
-        final DateFormat formatter=DateFormat.getDateInstance();
+        final DateFormat formatter = DateFormat.getDateInstance();
         final Employee currentEmployee = singleton.Employees.get(position);
-        name.setText(currentEmployee.name+" "+currentEmployee.surname);
+        name.setText(currentEmployee.name + " " + currentEmployee.surname);
         department.setText(currentEmployee.department);
         id.setText(Integer.toString(currentEmployee.person_id));
         listView = (ListView) view.findViewById(R.id.tasksList);
-
-
-
+        final List <Task>taskarray=new ArrayList<Task>();
+        it = currentEmployee.tasks.entrySet().iterator();
+        while (it.hasNext()){
+            Map.Entry<Integer, Task> pair = it.next();
+            taskarray.add(pair.getValue());
+        }
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                if(currentEmployee.Tasks == null) {
+                Log.d("task",Integer.toString(currentEmployee.tasks.size()));
+                if(taskarray == null) {
+                    Log.d("task","null");
                     return 0;
                 }else {
-                    if(currentEmployee.Tasks.size()==0)
+                    if(taskarray.size()==0)
                         tasks.setText("No task found!");
                     else
                         tasks.setText("Tasks");
-                    return currentEmployee.Tasks.size();
+                    return currentEmployee.tasks.size();
                 }
             }
 
@@ -101,6 +110,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
 
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
+
                 if(view == null) {
                     view = inflater.inflate(R.layout.view_task_cell,null);
                     MyViewElements mymodel = new MyViewElements();
@@ -117,9 +127,13 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
 
                 }
 
+
                 MyViewElements mymodel = (MyViewElements) view.getTag();
                 Log.d("fg",Integer.toString(i));
-                Task task = singleton.Employees.get(position).Tasks.get(i);
+                //Task task = singleton.Employees.get(position).Tasks.get(i);
+
+                Task task=taskarray.get(i);
+                Log.d("task",task.task_name);
                 mymodel.id.setText(Integer.toString(task.task_id));
                 mymodel.name.setText(task.task_name);
                 mymodel.startDate.setText(formatter.format(task.start_date));
@@ -130,6 +144,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
                 float ratio=((task.estimated_cost-task.remaining_cost)/task.estimated_cost)*100;
                 mymodel.ratio.setProgress((int)ratio);
                 Log.d("Info",Integer.toString(Float.floatToIntBits(ratio)));
+
                 return view;
             }
         });
@@ -151,6 +166,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
                 detailsFragment.setArguments(args);
                 ft.replace(R.id.fragment_layout, detailsFragment);
                 //ft.addToBackStack("tdetails");
+                fm.popBackStack();
                 ft.commit();
             }
         });

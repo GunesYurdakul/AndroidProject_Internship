@@ -3,7 +3,7 @@ package com.example.gunesyurdakul.myapplication;
 import java.util.Date;
 
 /**
- * Created by melisgulenay on 18/07/2017.
+ * Created by gunesyurdakul on 18/07/2017.
  */
 
 public class Task {
@@ -11,11 +11,9 @@ public class Task {
     int task_id;
     String task_name;
     Date start_date;
-    Date end_date;
     Date due_date;
     Employee assigned_person;
     Project related_project;
-    float completed_ratio;
     float estimated_cost;
     float remaining_cost;
 
@@ -30,7 +28,5 @@ public class Task {
         due_date=due_date_in;
         estimated_cost=estimated_cost_in;
         remaining_cost=estimated_cost/2;
-        completed_ratio=0;
-
     };
 }

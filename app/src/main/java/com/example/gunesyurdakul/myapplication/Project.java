@@ -18,7 +18,6 @@ public class Project{
     Date due_date;
     Date end_date;
     List<Task> Tasks=new ArrayList<Task>();
-    float process_completion_ratio;
     Project(){
         project_id=counter++;
     };
@@ -33,7 +32,10 @@ public class Project{
     public void addTaskToProject(Task newtask){
         Singleton singleton =Singleton.getSingleton();
         singleton.taskMap.put(newtask.task_id,newtask);
+
         newtask.assigned_person.Tasks.add(newtask);
+        newtask.assigned_person.tasks.put(newtask.task_id,newtask);
+
         newtask.assigned_person.projects.add(this);
         this.Tasks.add(newtask);
         newtask.related_project=this;
@@ -42,6 +44,7 @@ public class Project{
     public void removeTask(Task removeTask) {
         Singleton singleton =Singleton.getSingleton();
         singleton.taskMap.remove(removeTask.task_id);
+        removeTask.assigned_person.tasks.remove(removeTask.task_id);
     }
 
 }

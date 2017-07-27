@@ -215,7 +215,8 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment_layout,addProject);
-                ft.commit();};
+                ft.commit();
+            };
         });
         return view;
     }

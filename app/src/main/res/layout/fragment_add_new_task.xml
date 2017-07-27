@@ -45,23 +45,6 @@
             android:layout_marginRight="16dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:text="@string/estimatedCost"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/estimatedCost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
 
         </LinearLayout>
         <LinearLayout

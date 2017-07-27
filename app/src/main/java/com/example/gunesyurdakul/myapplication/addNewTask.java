@@ -50,6 +50,9 @@ public class addNewTask extends Fragment implements View.OnClickListener{
     static String date;
     Spinner employees;
     static boolean s=false;
+    static boolean sc=false;
+    static boolean dc=false;
+
     ListView listView;
     EditText projectName,cost;
     static SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
@@ -88,7 +91,7 @@ public class addNewTask extends Fragment implements View.OnClickListener{
         dueDate = view.findViewById(R.id.dueDate);
         projectName=view.findViewById(R.id.projectName);
         done=view.findViewById(R.id.done);
-        cost=view.findViewById(R.id.estimatedCost);
+       // cost=view.findViewById(R.id.estimatedCost);
 
         //Employees drop down list
         employees = (Spinner)view.findViewById(R.id.assignee);
@@ -139,10 +142,11 @@ public class addNewTask extends Fragment implements View.OnClickListener{
 
         done.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                if(projectName.getText().toString().trim().length()>0&&cost.getText().toString().trim().length()>0&& TextUtils.isDigitsOnly(cost.getText()))
+                if(projectName.getText().toString().trim().length()>0&&!(newTask.start_date==null)&&!(newTask.due_date==null))
                 {
                     Log.d("d","1");
-                    newTask.estimated_cost=Integer.parseInt(cost.getText().toString());
+
+                    newTask.estimated_cost=(Math.abs(newTask.start_date.getTime() - newTask.due_date.getTime())*8)/(60*60*1000*24);
                     newTask.task_name=projectName.getText().toString();
                     Log.d("INFO","addTask");
                     singleton.Projects.get(position).addTaskToProject(new Task(newTask.task_name,newTask.assigned_person, newTask.start_date,newTask.due_date,newTask.estimated_cost));
@@ -170,14 +174,6 @@ public class addNewTask extends Fragment implements View.OnClickListener{
                 else if(newTask.assigned_person==null){
                     Log.d("d","5");
                     warning.setText("An Assignee should be chosen!");
-                }
-                else if(!TextUtils.isDigitsOnly(cost.getText())){
-                    Log.d("d","6");
-                    warning.setText("Estimated cost should be a numeric value!");
-                }
-                else if(cost.getText().toString().trim().length()==0){
-                    Log.d("d","7");
-                    warning.setText("Estimated cost field can not be left blank!");
                 }
                 else{
                     Log.d("d","4");
@@ -217,6 +213,7 @@ public class addNewTask extends Fragment implements View.OnClickListener{
                     e.printStackTrace();
                 }
                 startDate.setText(date);
+                sc=true;
             }
             else
             {
@@ -226,6 +223,7 @@ public class addNewTask extends Fragment implements View.OnClickListener{
                     e.printStackTrace();
                 }
                 dueDate.setText(date);
+                dc=true;
             }
 
         }

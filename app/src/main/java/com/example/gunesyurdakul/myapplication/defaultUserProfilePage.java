@@ -1,6 +1,8 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,18 +11,27 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.zip.Inflater;
 
 
 public class defaultUserProfilePage extends Fragment implements View.OnClickListener{
@@ -28,6 +39,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
 
     Singleton singleton =Singleton.getSingleton();
     ListView listView;
+    Iterator<Map.Entry<Integer, Task>> it;
 
     int position;
 
@@ -53,7 +65,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d("Info", "hey");
-        View view = inflater.inflate(R.layout.fragment_default_user_profile_page, container, false);
+        final View view = inflater.inflate(R.layout.fragment_default_user_profile_page, container, false);
         Log.d("Info", "hey");
         TableLayout table;
         final ListView listView;
@@ -61,6 +73,8 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
         TextView name = (TextView) view.findViewById(R.id.employee_name);
         TextView department= (TextView) view.findViewById(R.id.department);
         TextView id=(TextView)view.findViewById(R.id.id);
+        EditText newPassword=(EditText)view.findViewById(R.id.newPassword);
+        final Button changePassword =(Button)view.findViewById(R.id.changePassword);
         final TextView tasks=(TextView)view.findViewById(R.id.tasksHeader);
 
         final DateFormat formatter=DateFormat.getDateInstance();
@@ -70,19 +84,75 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
         id.setText(Integer.toString(currentEmployee.person_id));
         listView = (ListView) view.findViewById(R.id.tasksList);
 
+        changePassword.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                changePassword.setText("ENTER YOUR NEW PASSWORD");
+                View popupView = inflater.inflate(R.layout.change_password_popup, null,false);
 
+                final PopupWindow popupWindow = new PopupWindow(popupView,
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                final TextView newPassword=(TextView)popupView.findViewById(R.id.newPassword);
+                final TextView confirm=(TextView)popupView.findViewById(R.id.confirmPassword);
+                final Button change =   (Button)popupView.findViewById(R.id.change);
+                // If the PopupWindow should be focusable
+                popupWindow.setFocusable(true);
+
+                // If you need the PopupWindow to dismiss when when touched outside
+                popupWindow.setBackgroundDrawable(new ColorDrawable());
+
+                int location[] = new int[2];
+
+                // Get the View's(the one that was clicked in the Fragment) location
+                changePassword.getLocationOnScreen(location);
+
+                // Using location, the PopupWindow will be displayed right under anchorView
+                popupWindow.showAtLocation(changePassword, Gravity.NO_GRAVITY,
+                        location[0], location[1] + changePassword.getHeight());
+
+
+                change.setOnClickListener(new View.OnClickListener(){
+                    public void onClick(View v){
+                        String p1=newPassword.getText().toString();
+                        String p2=confirm.getText().toString();
+                        Log.d("p1","fhghkhg");
+                        Log.d("p2",p2);
+                        if(!p1.equals(p2)){
+                            changePassword.setText("Passwords do not match!");
+                        }
+                        else if (p1.equals(p2)&&p1.length()<6) {
+                            Log.d("length",Integer.toString(p1.length()));
+                            changePassword.setText("Password should include at least 6 characters!");
+                        }
+                        else{
+                            currentEmployee.password=p1;
+                            changePassword.setText("CHANGED:)");
+                            popupWindow.dismiss();
+                        }
+                    }
+
+                });
+            }
+
+        });
+        final List<Task> taskarray=new ArrayList<Task>();
+        it = currentEmployee.tasks.entrySet().iterator();
+        while (it.hasNext()){
+            Map.Entry<Integer, Task> pair = it.next();
+            taskarray.add(pair.getValue());
+        }
 
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                if(currentEmployee.Tasks == null) {
+                if(currentEmployee.tasks == null) {
                     return 0;
                 }else {
-                    if(currentEmployee.Tasks.size()==0)
+                    if(currentEmployee.tasks.size()==0)
                         tasks.setText("No task found!");
                     else
                         tasks.setText("Tasks");
-                    return currentEmployee.Tasks.size();
+                    return currentEmployee.tasks.size();
                 }
             }
 
@@ -116,7 +186,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
 
                 MyViewElements mymodel = (MyViewElements) view.getTag();
                 Log.d("fg",Integer.toString(i));
-                Task task = currentEmployee.Tasks.get(i);
+                Task task =taskarray.get(i);
 
                 mymodel.id.setText(Integer.toString(task.task_id));
                 mymodel.name.setText(task.task_name);
@@ -137,7 +207,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
                                     int position, long id){
 
 
-                final Task taskInfo = singleton.currentUser.Tasks.get(position);
+                final Task taskInfo = taskarray.get(position);
                 taskUpdateDefaultUser detailsFragment = new taskUpdateDefaultUser();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -173,18 +243,6 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
         ProgressBar ratio;
     }
 
-
-
-    //    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
     @Override
     public void onClick(View v) {}
 

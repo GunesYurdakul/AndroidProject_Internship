@@ -21,7 +21,7 @@ public class Singleton {
     Map<Integer,Project> projectMap=new HashMap<Integer,Project>();
     Map<Integer,Employee> employeeMap=new HashMap<Integer,Employee>();
     Map<Integer,Task> taskMap=new HashMap<Integer,Task>();
-  //  Map<Integer,Map>employeeTaskMap=new HashMap<Integer,Map>();
+    //Map<Integer,Map>employeeTaskMap=new HashMap<Integer,Map>();
     //If this method is called, singleton object will be created
     public static Singleton getSingleton() {
         return singleton;
