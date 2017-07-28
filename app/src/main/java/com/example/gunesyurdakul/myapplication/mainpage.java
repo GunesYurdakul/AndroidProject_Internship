@@ -38,6 +38,13 @@ public class mainpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
         readFile();
+        if(singleton.currentUser!=null){
+            EditText idText = (EditText) findViewById(R.id.id_edit);
+            TextView warning = (TextView) findViewById(R.id.warning_login);
+            EditText pass = (EditText) findViewById(R.id.password);
+            idText.setText(Integer.toString(singleton.currentUser.person_id));
+            pass.setText(singleton.currentUser.password);
+        }
 //        if(singleton.Employees.size()==0) {
 //            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment","123456","kdlw@kfşl.com",1,true));
 //            singleton.employeeMap.put(1,singleton.Employees.get(0));

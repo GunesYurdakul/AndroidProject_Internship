@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loggedin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.gunesyurdakul.myapplication.LoggedInUser"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="81dp">
+    android:orientation="vertical"
+    >
+
+    <Button
+        android:id="@+id/profilePage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:fontFamily="sans-serif-condensed"
+        android:onClick="goToProfile"
+        android:text="Profile Page"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/Employees"
-        android:layout_width="539dp"
-        android:layout_height="330dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/border2"
         android:fontFamily="sans-serif-condensed"
         android:onClick="goToEmployees"
@@ -20,15 +33,13 @@
         android:textColor="@android:color/background_light"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="-20dp" />
+        android:layout_weight="1"
+        />
 
     <Button
         android:id="@+id/Projects"
-        android:layout_width="383dp"
-        android:layout_height="270dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         android:background="@android:color/background_light"
         android:fontFamily="sans-serif-condensed"
@@ -37,9 +48,6 @@
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="235dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_weight="1"
+        />
+</LinearLayout>

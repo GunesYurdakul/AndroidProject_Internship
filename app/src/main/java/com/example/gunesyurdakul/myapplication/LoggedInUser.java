@@ -47,6 +47,11 @@ public class LoggedInUser extends AppCompatActivity {
         Intent intent = new Intent(this,Projects.class);
         startActivity(intent);
     }
+
+    public void goToProfile(View v){
+        Intent intent = new Intent(this,defaultUsers.class);
+        startActivity(intent);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

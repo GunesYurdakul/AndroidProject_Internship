@@ -38,12 +38,12 @@ public class defaultUsers extends AppCompatActivity {
         readFile();
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        if(!singleton.currentUser.admin){
+
             defaultUserProfilePage fragment = new defaultUserProfilePage();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_layout, fragment).commit();
             transaction.commit();
-        }
+
 
     }
     @Override

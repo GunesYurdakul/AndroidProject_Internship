@@ -134,18 +134,18 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
                 mymodel.assignedPerson.setText(person.name+" "+person.surname);
                 float ratio=((task.estimated_cost-task.remaining_cost)/task.estimated_cost)*100;
                 mymodel.ratio.setProgress((int)ratio);
-//                SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
-//                Date today=new Date();
-//                float leftTime=(Math.abs(task.due_date.getTime() - today.getTime())*8/(60*60*1000*24));
-//                if(leftTime<(float)16)
-//                    mymodel.name.setTextColor(Color.parseColor("fd7300"));
-//                else if(leftTime<0){
-//                    mymodel.name.setTextColor(Color.parseColor("#660718"));
-//                }
-//                else{
-//                    mymodel.name.setTextColor(Color.parseColor("#07b42d"));
-//
-//                }
+                SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
+                Date today=new Date();
+                float leftTime=(Math.abs(task.due_date.getTime() - today.getTime())*8/(60*60*1000*24));
+                if(leftTime<(float)16)
+                    mymodel.name.setTextColor(Color.parseColor("#fd7300"));
+                else if(leftTime<0){
+                    mymodel.name.setTextColor(Color.parseColor("#660718"));
+                }
+                else{
+                    mymodel.name.setTextColor(Color.parseColor("#38872d"));
+
+                }
                 Log.d("Info",Integer.toString(Float.floatToIntBits(ratio)));
                 return view;
             }

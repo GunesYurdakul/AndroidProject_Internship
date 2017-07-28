@@ -89,25 +89,23 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <ListView
             android:id="@+id/tasksList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@android:color/background_dark"
-            android:layout_above="@+id/addTask"
-            />
+            android:layout_height="410dp"
+            android:divider="@android:color/background_dark" />
 
         <Button
             android:id="@+id/addTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:background="@color/green"
             android:text="@string/addTask" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
