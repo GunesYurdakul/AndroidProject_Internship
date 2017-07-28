@@ -49,7 +49,7 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
     Button done;
     Spinner departments;
     RadioButton userType;
-    EditText name,surname,password,id;
+    EditText name,surname,password,id,email;
     static SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
     int position;
 
@@ -85,6 +85,7 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
         password = view.findViewById(R.id.password);
         done=view.findViewById(R.id.addNewEmployee);
         id=view.findViewById(R.id.id);
+        email=view.findViewById(R.id.email);
 
         //Employees drop down list
         departments = (Spinner)view.findViewById(R.id.departments);
@@ -108,15 +109,16 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
 
         done.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                if(name.getText().toString().trim().length()>0&&surname.getText().toString().trim().length()>0&&password.getText().toString().trim().length()>=6&&id.getText().toString().trim().length()>0)
+                if(email.getText().toString().trim().length()>0&&name.getText().toString().trim().length()>0&&surname.getText().toString().trim().length()>0&&password.getText().toString().trim().length()>=6&&id.getText().toString().trim().length()>0)
                 {
                     newEmployee.name=name.getText().toString();
                     newEmployee.surname=surname.getText().toString();
                     newEmployee.password=password.getText().toString();
                     newEmployee.person_id=Integer.parseInt(id.getText().toString());
                     newEmployee.admin=userType.isChecked();
+                    newEmployee.email=email.getText().toString();
                     Log.d("INFO","addTask");
-                    Employee newE=new Employee(newEmployee.name,newEmployee.surname,newEmployee.department,newEmployee.password,"email",newEmployee.person_id,newEmployee.admin);
+                    Employee newE=new Employee(newEmployee.name,newEmployee.surname,newEmployee.department,newEmployee.password,newEmployee.email,newEmployee.person_id,newEmployee.admin);
                     singleton.employeeMap.put(newE.person_id,newE);
                     singleton.Employees.add(newE);
                     EmployeeFragment addEmp = new EmployeeFragment();
@@ -132,8 +134,11 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
                 else if(password.getText().toString().trim().length()<6){
                     warning.setText("Password should have at least 6 characters!");
                 }
-                else if(name.getText().toString().trim().length()>0){
+                else if(name.getText().toString().trim().length()==0){
                     warning.setText("Name field is blank!");
+                }
+                else if(email.getText().toString().trim().length()==0){
+                    warning.setText("Email address field is blank!");
                 }
                 else{
                     warning.setText("Surname field is blank!");

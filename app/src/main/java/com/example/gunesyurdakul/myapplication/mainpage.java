@@ -106,6 +106,9 @@ public class mainpage extends AppCompatActivity {
                 warning.setText("Password and Id do not match!");
             }
         }
+        singleton.Departments.add("Yazılım");
+        singleton.Departments.add("Analiz");
+        singleton.Departments.add("Yönetim");
     }
 
 

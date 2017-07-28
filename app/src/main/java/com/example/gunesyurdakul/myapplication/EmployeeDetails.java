@@ -1,5 +1,6 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,7 +17,9 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -144,7 +147,18 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
                 float ratio=((task.estimated_cost-task.remaining_cost)/task.estimated_cost)*100;
                 mymodel.ratio.setProgress((int)ratio);
                 Log.d("Info",Integer.toString(Float.floatToIntBits(ratio)));
-
+//                SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
+//                Date today=new Date();
+//                float leftTime=(Math.abs(task.due_date.getTime() - today.getTime())*8/(60*60*1000*24));
+//                if(leftTime<(float)16)
+//                    mymodel.name.setTextColor(Color.parseColor("fd7300"));
+//                else if(leftTime<0){
+//                    mymodel.name.setTextColor(Color.parseColor("#660718"));
+//                }
+//                else{
+//                    mymodel.name.setTextColor(Color.parseColor("#07b42d"));
+//
+//                }
                 return view;
             }
         });
