@@ -143,7 +143,6 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
         });
 
 
-
         return view;
     }
 

@@ -150,10 +150,11 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
         update.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Log.d("k","clicked");
-                if(name.getText().toString().trim().length()>0&&estimatedCost.getText().toString().trim().length()>0&& TextUtils.isDigitsOnly(estimatedCost.getText()))
+                if(name.getText().toString().trim().length()>0&&estimatedCost.getText().toString().trim().length()>0)
                 {
+                    singleton.taskMap.remove(currentTask.task_id);
                     Log.d("k","clicked1");
-                    currentTask.estimated_cost=Integer.parseInt(estimatedCost.getText().toString());
+                    currentTask.estimated_cost=Float.parseFloat(estimatedCost.getText().toString());
                     currentTask.task_name=name.getText().toString();
                     singleton.employeeMap.get(currentTask.assigned_person_id).tasks.remove(currentTask.task_id);
                     currentTask.assigned_person_id=updatedTask.assigned_person_id;
@@ -167,6 +168,8 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
                     Bundle args = new Bundle();
+                    singleton.taskMap.put(currentTask.task_id,currentTask);
+                    Log.d("asdf",Integer.toString(currentTask.assigned_person_id));
                     //************change it if you switch to map structure
                     args.putInt("position",currentTask.related_project_id-1);
                     detailsFragment.setArguments(args);
@@ -188,10 +191,6 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
                 else if(updatedTask.assigned_person_id==-1){
                     Log.d("k","clicked5");
                     warning.setText("An Assignee should be chosen!");
-                }
-                else if(!TextUtils.isDigitsOnly(estimatedCost.getText())){
-                    Log.d("k","clicked6");
-                    warning.setText("Estimated cost should be a numeric value!");
                 }
                 else if(estimatedCost.getText().toString().trim().length()==0){
                     Log.d("k","clicked7");

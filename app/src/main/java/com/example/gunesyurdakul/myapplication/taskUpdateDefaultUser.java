@@ -126,10 +126,12 @@ public class taskUpdateDefaultUser extends Fragment implements View.OnClickListe
                     if(currentTask.remaining_cost-c<0)
                         currentTask.remaining_cost=0;
                     else{
+                        singleton.employeeMap.get(currentTask.assigned_person_id).tasks.remove(currentTask.task_id);
                         currentTask.remaining_cost-=c;
                         remainingCost.setText(Float.toString(currentTask.remaining_cost));
                         float ratio=((currentTask.estimated_cost-currentTask.remaining_cost)/currentTask.estimated_cost)*100;
                         progress.setProgress((int)ratio);
+                        singleton.employeeMap.get(currentTask.assigned_person_id).tasks.put(currentTask.task_id,currentTask);
                     }
                 }
 

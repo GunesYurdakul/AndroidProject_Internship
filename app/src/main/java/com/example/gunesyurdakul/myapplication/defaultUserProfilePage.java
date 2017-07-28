@@ -120,6 +120,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
                             changePassword.setText("Password should include at least 6 characters!");
                         }
                         else{
+                            singleton.employeeMap.get(currentEmployee.person_id).password=p1;
                             currentEmployee.password=p1;
                             changePassword.setText("CHANGED:)");
                             popupWindow.dismiss();
@@ -224,6 +225,8 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
 
         return view;
     }
+
+
 
 
 

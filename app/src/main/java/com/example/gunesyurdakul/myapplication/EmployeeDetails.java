@@ -66,19 +66,22 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
         final TextView tasks = (TextView) view.findViewById(R.id.tasksHeader);
 
         final DateFormat formatter = DateFormat.getDateInstance();
-        final Employee currentEmployee = singleton.Employees.get(position);
+        final Employee currentEmployee=singleton.employeeMap.get(position);
         final TextView email=(TextView)view.findViewById(R.id.email);
         email.setText(currentEmployee.email);
         name.setText(currentEmployee.name + " " + currentEmployee.surname);
         department.setText(currentEmployee.department);
         id.setText(Integer.toString(currentEmployee.person_id));
         listView = (ListView) view.findViewById(R.id.tasksList);
+
         final List <Task>taskarray=new ArrayList<Task>();
         it = currentEmployee.tasks.entrySet().iterator();
+
         while (it.hasNext()){
             Map.Entry<Integer, Task> pair = it.next();
             taskarray.add(pair.getValue());
         }
+
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
@@ -150,7 +153,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
             public void onItemClick(AdapterView<?> parent, View view,
                                     int task_id, long id){
 
-                Task task = singleton.Employees.get(position).tasks.get(taskarray.get(task_id).task_id);
+                Task task = singleton.employeeMap.get(position).tasks.get(taskarray.get(task_id).task_id);
                 taskUpdateAdmin detailsFragment = new taskUpdateAdmin();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -167,6 +170,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
                 ft.commit();
             }
         });
+//        listView.notifyAll();
         Log.d("Info", "hey");
 
 

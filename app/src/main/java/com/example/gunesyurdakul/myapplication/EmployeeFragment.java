@@ -117,7 +117,7 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
                     Bundle args = new Bundle();
-                    args.putInt("position",position);
+                    args.putInt("position",singleton.Employees.get(position).person_id);
                     detailsFragment.setArguments(args);
                     ft.replace(R.id.fragment_layout, detailsFragment);
                     ft.addToBackStack("pdetails");

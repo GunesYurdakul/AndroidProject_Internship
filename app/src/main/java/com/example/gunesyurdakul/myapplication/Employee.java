@@ -1,5 +1,6 @@
 package com.example.gunesyurdakul.myapplication;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ import java.util.Map;
  * Created by Güneş Yurdakul on 18/07/2017.
  */
 
-public class Employee {
+public class Employee{
     static int counter=1;
     int person_id;
     String name;
@@ -28,6 +29,7 @@ public class Employee {
         this.department=department_in;
         this.password=password;
     }
+
 //    public void deleteTask(Task){
 //    Tasks.remove()
 //    }
