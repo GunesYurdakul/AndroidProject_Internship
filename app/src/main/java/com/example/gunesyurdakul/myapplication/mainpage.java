@@ -45,16 +45,16 @@ public class mainpage extends AppCompatActivity {
             idText.setText(Integer.toString(singleton.currentUser.person_id));
             pass.setText(singleton.currentUser.password);
         }
-//        if(singleton.Employees.size()==0) {
-//            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment","123456","kdlw@kfşl.com",1,true));
-//            singleton.employeeMap.put(1,singleton.Employees.get(0));
+        if(singleton.Employees.size()==0) {
+            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment","123456","kdlw@kfşl.com",1,true));
+            singleton.employeeMap.put(1,singleton.Employees.get(0));
 //            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment","asdfgh","kfşdk@lkrş.com",2,false));
 //            singleton.employeeMap.put(2,singleton.Employees.get(1));
 //            singleton.Employees.add(new Employee("Jane", "Doe", "Analist","46677880","jsdhlaksh@kdlsk.com",3,false));
 //            singleton.employeeMap.put(3,singleton.Employees.get(2));
 //            singleton.Employees.add(new Employee("Fırat", "Yurdakul", "Mobile Devolopment","6798787","ruklskş@kjlks.com",4,false));
 //            singleton.employeeMap.put(4,singleton.Employees.get(3));
-//        }
+        }
 //
 //        Calendar today=Calendar.getInstance();
 //        today.set(Calendar.HOUR_OF_DAY, 0);
@@ -164,7 +164,7 @@ void readFile(){
         rson = new GsonBuilder().create();
         singleton.Projects=rson.fromJson(reader,new TypeToken<List<Project>>(){}.getType());
         //String str=gson.toJson(singleton.employeeMap);
-        System.out.println(singleton.Projects.get(0).name);
+        //System.out.println(singleton.Projects.get(0).name);
         reader.close();
     }catch(IOException e){
         e.printStackTrace();

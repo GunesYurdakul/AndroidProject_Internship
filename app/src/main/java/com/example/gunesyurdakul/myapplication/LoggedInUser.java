@@ -119,7 +119,7 @@ public class LoggedInUser extends AppCompatActivity {
             rson = new GsonBuilder().create();
             singleton.Projects=rson.fromJson(reader,new TypeToken<List<Project>>(){}.getType());
             //String str=gson.toJson(singleton.employeeMap);
-            System.out.println(singleton.Projects.get(0).name);
+//            System.out.println(singleton.Projects.get(0).name);
             reader.close();
         }catch(IOException e){
             e.printStackTrace();

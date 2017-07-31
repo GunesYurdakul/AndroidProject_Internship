@@ -71,7 +71,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
         final TextView tasks=(TextView)view.findViewById(R.id.tasksHeader);
 
         final DateFormat formatter=DateFormat.getDateInstance();
-        final Employee currentEmployee = singleton.currentUser;
+        final Employee currentEmployee = singleton.employeeMap.get(singleton.currentUser.person_id);
         final TextView email=(TextView)view.findViewById(R.id.email);
         email.setText(currentEmployee.email);
         name.setText(currentEmployee.name+" "+currentEmployee.surname);

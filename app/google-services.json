@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "741245303708",
+    "firebase_url": "https://islergucler-48672.firebaseio.com",
+    "project_id": "islergucler-48672",
+    "storage_bucket": "islergucler-48672.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741245303708:android:1dd7e0acc4428975",
+        "android_client_info": {
+          "package_name": "com.example.gunesyurdakul.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741245303708-fvfp695g3ml5jlqtm5v3ldf31tn9nphp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ9FO65kNpX_WzssxrOFwmp2cr_dFe54Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

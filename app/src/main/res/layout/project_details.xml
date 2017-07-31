@@ -89,14 +89,10 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
         <ListView
             android:id="@+id/tasksList"
             android:layout_width="match_parent"
-            android:layout_height="410dp"
+            android:layout_height="wrap_content"
             android:divider="@android:color/background_dark" />
 
         <Button
@@ -105,7 +101,5 @@
             android:layout_height="wrap_content"
             android:background="@color/green"
             android:text="@string/addTask" />
-
-    </LinearLayout>
 
 </LinearLayout>
