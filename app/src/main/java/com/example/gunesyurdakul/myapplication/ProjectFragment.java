@@ -20,8 +20,11 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 
 public class ProjectFragment extends Fragment implements View.OnClickListener{
@@ -60,19 +63,26 @@ public class ProjectFragment extends Fragment implements View.OnClickListener{
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment_layout,addProject );
-                ft.addToBackStack("pdetails");
+                //ft.addToBackStack("pdetails");
                 ft.commit();
 
             };
         });
+        final List<Integer> idArray= new ArrayList<Integer>();
+        long i = 0;
+        Iterator<Map.Entry<Integer, Project>> it = singleton.projectMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, Project> pair = it.next();
+            idArray.add(pair.getValue().project_id);
+        }
 
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                if(singleton.Projects == null) {
+                if(singleton.projectMap == null) {
                     return 0;
                 }else {
-                    return singleton.Projects.size();
+                    return singleton.projectMap.size();
                 }
             }
 
@@ -101,7 +111,7 @@ public class ProjectFragment extends Fragment implements View.OnClickListener{
                 }
 
                 MyViewElements mymodel = (MyViewElements) view.getTag();
-                Project project = singleton.Projects.get(i);
+                Project project = singleton.projectMap.get(idArray.get(i));
                 mymodel.id.setText(Integer.toString(i+1));
                 mymodel.name.setText(project.name);
                 mymodel.startDate.setText(formatter.format(project.start_date));
@@ -120,7 +130,7 @@ public class ProjectFragment extends Fragment implements View.OnClickListener{
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 Bundle args = new Bundle();
-                args.putInt("position",position);
+                args.putInt("position",singleton.projectMap.get(idArray.get(position)).project_id);
                 detailsFragment.setArguments(args);
                 ft.replace(R.id.fragment_layout, detailsFragment);
                 ft.commit();

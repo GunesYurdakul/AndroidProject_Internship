@@ -31,5 +31,7 @@
     <string name="remove">REMOVE</string>
     <string name="update">UPDATE</string>
     <string name="email">Email address</string>
+    <string name="deleteEmployee">Delete Employee</string>
+    <string name="deleteProject">Delete Project</string>
 
 </resources>

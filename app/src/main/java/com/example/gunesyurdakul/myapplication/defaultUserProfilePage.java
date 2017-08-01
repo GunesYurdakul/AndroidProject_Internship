@@ -1,7 +1,15 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,17 +22,21 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class defaultUserProfilePage extends Fragment implements View.OnClickListener{
@@ -33,9 +45,9 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
     Singleton singleton =Singleton.getSingleton();
     ListView listView;
     Iterator<Map.Entry<Integer, Task>> it;
-
-    int position;
-
+    View view;
+    int position,RESULT_LOAD_IMAGE;
+    Employee currentEmployee;
     public static EmployeeDetails newInstance() {
         EmployeeDetails fragment = new EmployeeDetails();
         Bundle args = new Bundle();
@@ -58,7 +70,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d("Info", "hey");
-        final View view = inflater.inflate(R.layout.fragment_default_user_profile_page, container, false);
+        view = inflater.inflate(R.layout.fragment_default_user_profile_page, container, false);
         Log.d("Info", "hey");
         TableLayout table;
         final ListView listView;
@@ -69,15 +81,28 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
         EditText newPassword=(EditText)view.findViewById(R.id.newPassword);
         final Button changePassword =(Button)view.findViewById(R.id.changePassword);
         final TextView tasks=(TextView)view.findViewById(R.id.tasksHeader);
+        ImageView pp=(ImageView)view.findViewById(R.id.profilePicture);
 
         final DateFormat formatter=DateFormat.getDateInstance();
-        final Employee currentEmployee = singleton.employeeMap.get(singleton.currentUser.person_id);
+        currentEmployee = singleton.employeeMap.get(singleton.currentUser.person_id);
         final TextView email=(TextView)view.findViewById(R.id.email);
         email.setText(currentEmployee.email);
         name.setText(currentEmployee.name+" "+currentEmployee.surname);
         department.setText(currentEmployee.department);
         id.setText(Integer.toString(currentEmployee.person_id));
         listView = (ListView) view.findViewById(R.id.tasksList);
+
+
+        if (currentEmployee.profilePicture != null) {
+           // pp.setImageDrawable(null); //this should help
+            //currentEmployee.profilePicture.recycle();
+            try{
+                Bitmap bmp = BitmapFactory.decodeByteArray(currentEmployee.profilePicture, 0, currentEmployee.profilePicture.length);
+                pp.setImageBitmap(bmp);
+            }catch (Exception e){
+                Log.e("picture","error");
+            }
+        }
 
         changePassword.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -221,6 +246,16 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
         Log.d("Info", "hey");
 
 
+        pp.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent i = new Intent(
+                        Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+
+            }
+
+        });
         Log.d("Info", "heyssss");
 
         return view;
@@ -244,4 +279,34 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {}
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("IMAGE","IMAGE");
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = getActivity().getApplicationContext().getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            ImageView imageView = (ImageView) view.findViewById(R.id.profilePicture);
+            imageView.setImageURI(selectedImage);
+
+            Bitmap bmp = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            singleton.employeeMap.get(currentEmployee.person_id).profilePicture =byteArray ;
+        }
+
+
+    }
 }
+

@@ -150,7 +150,8 @@ public class addNewTask extends Fragment implements View.OnClickListener{
                     newTask.estimated_cost=(Math.abs(newTask.start_date.getTime() - newTask.due_date.getTime())*8)/(60*60*1000*24);
                     newTask.task_name=projectName.getText().toString();
                     Log.d("INFO","addTask");
-                    singleton.Projects.get(position).addTaskToProject(new Task(newTask.task_name,newTask.assigned_person_id, newTask.start_date,newTask.due_date,newTask.estimated_cost));
+                    //singleton.Projects.get(position).addTaskToProject();
+                    singleton.projectMap.get(singleton.Projects.get(position).project_id).addTaskToProject(new Task(newTask.task_name,newTask.assigned_person_id, newTask.start_date,newTask.due_date,newTask.estimated_cost));
                     ProjectDetails detailsFragment = new ProjectDetails();
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();

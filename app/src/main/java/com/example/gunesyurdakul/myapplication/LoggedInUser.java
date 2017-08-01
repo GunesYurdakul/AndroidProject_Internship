@@ -1,5 +1,8 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +39,16 @@ public class LoggedInUser extends AppCompatActivity {
         readFile();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in_user);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
+        notificationIntent.addCategory("android.intent.category.DEFAULT");
+
+        PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, 5);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
     }
 
     public void goToEmployees(View view){
@@ -136,6 +149,19 @@ public class LoggedInUser extends AppCompatActivity {
         }catch(IOException e){
             e.printStackTrace();
         }
+
+        try {
+            Gson rson=new Gson();
+            Reader reader = new FileReader(getFilesDir()+ "/objfilep.json");
+            rson = new GsonBuilder().create();
+            singleton.projectMap=rson.fromJson(reader,new TypeToken<Map<Integer,Project>>(){}.getType());
+            //String str=gson.toJson(singleton.employeeMap);
+            System.out.println(singleton.projectMap);
+            reader.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
 
     }
 }

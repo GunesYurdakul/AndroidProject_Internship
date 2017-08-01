@@ -23,6 +23,7 @@
         android:layout_weight="1"
         android:headerDividersEnabled="true"></ListView>
 
+
     <Button
         android:id="@+id/addNewEmployee"
         android:layout_width="match_parent"

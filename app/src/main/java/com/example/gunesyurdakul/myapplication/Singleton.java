@@ -14,7 +14,6 @@ public class Singleton {
     private Singleton(){}
     Employee currentUser;
     Employee clickedProject;
-
     List<Employee> Employees=new ArrayList<Employee>();
     List<Project> Projects=new ArrayList<Project>();
     List<String>Departments=new ArrayList<String>();

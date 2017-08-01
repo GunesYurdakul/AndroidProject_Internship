@@ -103,6 +103,20 @@ public class Employees extends AppCompatActivity {
         }
 
         try {
+            Writer writer = new FileWriter(getFilesDir()+ "/objfilep.json");
+            gson = new GsonBuilder().create();
+            gson.toJson(singleton.projectMap, writer);
+            String str=gson.toJson(singleton.projectMap);
+            System.out.println(str);
+            writer.close();
+
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+        try {
             Writer writer = new FileWriter(getFilesDir()+ "/objfilet.json");
             gson = new GsonBuilder().create();
             gson.toJson(singleton.taskMap, writer);

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Project{
     String name;
-    static int counter=1;
+    static int counter=0;
     int project_id;
     Date start_date;
     Date due_date;
@@ -21,9 +21,10 @@ public class Project{
         project_id=counter++;
     };
 
-    Project(String name_in,Date start_date_in,Date due_date_in){
+    Project(String name_in,Date start_date_in,Date due_date_in,int id){
+        Singleton singleton =Singleton.getSingleton();
         name=name_in;
-        project_id=counter++;
+        project_id=id;
         start_date=start_date_in;
         due_date=due_date_in;
     };

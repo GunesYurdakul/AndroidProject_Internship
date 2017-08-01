@@ -20,10 +20,10 @@ public class Task {
     Task(){};
 
     Task(String name_in,int assigned, Date start_date_in,Date due_date_in,float estimated_cost_in){
-
+        Singleton singleton =Singleton.getSingleton();
         task_name=name_in;
         assigned_person_id=assigned;
-        task_id=++counter;
+        task_id=singleton.taskMap.size();
         start_date=start_date_in;
         due_date=due_date_in;
         estimated_cost=estimated_cost_in;

@@ -88,12 +88,14 @@ public class addNewProjectFragment extends Fragment implements View.OnClickListe
                 {
                     newProject.name=projectName.getText().toString();
                     Log.d("INFO","addTask");
-                    singleton.Projects.add(new Project(newProject.name,newProject.start_date,newProject.due_date));
+                    int id=singleton.projectMap.size();
+                    singleton.projectMap.put(id,new Project(newProject.name,newProject.start_date,newProject.due_date,id));
+                    singleton.Projects.add(new Project(newProject.name,newProject.start_date,newProject.due_date,id));
                     ProjectFragment addProject = new ProjectFragment();
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
                     ft.replace(R.id.fragment_layout,addProject);
-                    ft.addToBackStack("addProject");
+                    //ft.addToBackStack("addProject");
                     ft.commit();
                 }
                 else if(newProject.start_date.compareTo(newProject.due_date)>0){

@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -35,7 +36,9 @@ public class defaultUsers extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_project);
-        readFile();
+        if(singleton.currentUser.admin==false) {
+            readFile();
+        }
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -109,6 +112,20 @@ public class defaultUsers extends AppCompatActivity {
         }
 
         try {
+            Writer writer = new FileWriter(getFilesDir()+ "/objfilep.json");
+            gson = new GsonBuilder().create();
+            gson.toJson(singleton.projectMap, writer);
+            String str=gson.toJson(singleton.projectMap);
+            System.out.println(str);
+            writer.close();
+
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+        try {
             Gson gsone=new Gson();
             Writer writer = new FileWriter(getFilesDir()+ "/objfile1.json");
             gsone = new GsonBuilder().create();
@@ -180,7 +197,7 @@ public class defaultUsers extends AppCompatActivity {
             rson = new GsonBuilder().create();
             singleton.Projects=rson.fromJson(reader,new TypeToken<List<Project>>(){}.getType());
             //String str=gson.toJson(singleton.employeeMap);
-            System.out.println(singleton.Projects.get(0).name);
+            //System.out.println(singleton.Projects.get(0).name);
             reader.close();
         }catch(IOException e){
             e.printStackTrace();
@@ -193,6 +210,18 @@ public class defaultUsers extends AppCompatActivity {
             singleton.taskMap=rson.fromJson(reader,new TypeToken<Map<Integer,Task>>(){}.getType());
             //String str=gson.toJson(singleton.employeeMap);
             System.out.println(singleton.taskMap);
+            reader.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        try {
+            Gson rson=new Gson();
+            Reader reader = new FileReader(getFilesDir()+ "/objfilep.json");
+            rson = new GsonBuilder().create();
+            singleton.projectMap=rson.fromJson(reader,new TypeToken<Map<Integer,Project>>(){}.getType());
+            //String str=gson.toJson(singleton.employeeMap);
+            System.out.println(singleton.projectMap);
             reader.close();
         }catch(IOException e){
             e.printStackTrace();

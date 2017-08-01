@@ -125,7 +125,7 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
                     ft.replace(R.id.fragment_layout,addEmp);
-                    ft.addToBackStack("addProject");
+                    //ft.addToBackStack("addProject");
                     ft.commit();
                 }
                 else if(newEmployee.department==null){

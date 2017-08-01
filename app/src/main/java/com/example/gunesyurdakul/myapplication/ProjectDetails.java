@@ -1,11 +1,13 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 
 public class ProjectDetails extends Fragment implements View.OnClickListener{
@@ -65,6 +68,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
 
 
         Button addTask=(Button)view.findViewById(R.id.addTask);
+        Button deleteProject=(Button)view.findViewById(R.id.deleteProject);
         TextView projectName = (TextView) view.findViewById(R.id.projectName);
         TextView startDate= (TextView) view.findViewById(R.id.startDate);
         TextView dueDate= (TextView) view.findViewById(R.id.dueDate);
@@ -73,12 +77,13 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
         final DateFormat formatter=DateFormat.getDateInstance();
 
 //        id.setText(singleton.Projects.get(position).project_id);
-        projectName.setText(singleton.Projects.get(position_project).name);
-        startDate.setText(formatter.format(singleton.Projects.get(position_project).start_date));
-        dueDate.setText(formatter.format(singleton.Projects.get(position_project).due_date));
+        final Project k=singleton.projectMap.get(position_project);
+        projectName.setText(k.name);
+        startDate.setText(formatter.format(k.start_date));
+        dueDate.setText(formatter.format(k.due_date));
         listView = (ListView) view.findViewById(R.id.tasksList);
 
-        if(singleton.Projects.get(position_project).tasks.size()==0)
+        if(k.tasks.size()==0)
         {
             tasks.setText("No task found!");
         }
@@ -86,10 +91,10 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                if(singleton.Projects.get(position_project).tasks == null) {
+                if(k.tasks == null) {
                     return 0;
                 }else {
-                    return singleton.Projects.get(position_project).tasks.size();
+                    return k.tasks.size();
                 }
             }
 
@@ -123,7 +128,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
 
                 MyViewElements mymodel = (MyViewElements) view.getTag();
                 Log.d("fg",Integer.toString(i));
-                Task task = singleton.taskMap.get(singleton.Projects.get(position_project).tasks.get(i));
+                Task task = singleton.taskMap.get(k.tasks.get(i));
                 Employee person=singleton.employeeMap.get(task.assigned_person_id);
                 mymodel.id.setText(Integer.toString(task.task_id));
                 mymodel.name.setText(task.task_name);
@@ -165,6 +170,23 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
             };
         });
 
+        deleteProject.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                int size=singleton.projectMap.get(position_project).tasks.size();
+                Log.d("size",Integer.toString(size));
+                for (int i=0;i<size;i++) {
+                    Log.d("bla",Integer.toString(i));
+                    Task toDelete=singleton.taskMap.get(singleton.projectMap.get(position_project).tasks.get(i));
+                    singleton.projectMap.get(position_project).removeTask(toDelete);
+                }
+                singleton.projectMap.remove(position_project);
+                ProjectFragment addProject = new ProjectFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment_layout,addProject);
+                ft.commit();
+            };
+        });
 
 
 
@@ -173,7 +195,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
                                     int position, long id){
 
 
-                final Task projectInfo = singleton.taskMap.get(singleton.Projects.get(position_project).tasks.get(position));
+                final Task projectInfo = singleton.taskMap.get(k.tasks.get(position));
 
                 taskUpdateAdmin detailsFragment = new taskUpdateAdmin();
                 FragmentManager fm = getFragmentManager();

@@ -1,8 +1,15 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -10,6 +17,13 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -23,6 +37,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,11 +48,19 @@ import java.util.Map;
 public class mainpage extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.gunesyurdakul.myapplication.MESSAGE";
     Singleton singleton =Singleton.getSingleton();
+    private NotificationManager notificationManager;
+    private NotificationCompat.Builder notificationBuilder;
+    private int currentNotificationID = 0;
+    private String notificationTitle;
+    private String notificationText;
+    private EditText etMainNotificationText,getEtMainNotificationTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
         readFile();
+
         if(singleton.currentUser!=null){
             EditText idText = (EditText) findViewById(R.id.id_edit);
             TextView warning = (TextView) findViewById(R.id.warning_login);
@@ -73,9 +96,11 @@ public class mainpage extends AppCompatActivity {
 //
 //            singleton.Projects.get(2).addTaskToProject(new Task("bla bla task", singleton.Employees.get(1).person_id, today.getTime(), today.getTime(), 76));
 //        }
-//        singleton.Departments.add("Mobile Development");
-//        singleton.Departments.add("Analist");
-//        singleton.Departments.add("asdas");
+        if(singleton.Departments.size()==0){
+        singleton.Departments.add("Mobile Development");
+        singleton.Departments.add("Analist");
+        singleton.Departments.add("asdas");
+        }
     }
 
     public void login(View view) {
@@ -113,10 +138,14 @@ public class mainpage extends AppCompatActivity {
                 warning.setText("Password and Id do not match!");
             }
         }
+
+        if(singleton.Departments.size()==0){
         singleton.Departments.add("Yazılım");
         singleton.Departments.add("Analiz");
         singleton.Departments.add("Yönetim");
     }
+    }
+
 
 
 
@@ -182,6 +211,21 @@ void readFile(){
         e.printStackTrace();
     }
 
+
+    try {
+        Gson rson=new Gson();
+        Reader reader = new FileReader(getFilesDir()+ "/objfilet.json");
+        rson = new GsonBuilder().create();
+        singleton.projectMap=rson.fromJson(reader,new TypeToken<Map<Integer,Project>>(){}.getType());
+        //String str=gson.toJson(singleton.employeeMap);
+        System.out.println(singleton.projectMap);
+        reader.close();
+    }catch(IOException e){
+        e.printStackTrace();
+    }
+
+
 }
+
 
 }

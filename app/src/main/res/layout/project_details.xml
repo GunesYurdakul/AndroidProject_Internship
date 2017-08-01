@@ -74,6 +74,23 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
+
+        <Button
+            android:id="@+id/addTask"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green"
+            android:textColor="@color/white"
+            android:text="@string/addTask" />
+
+        <Button
+            android:id="@+id/deleteProject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_dark"
+            android:text="@string/deleteProject"
+            android:textColor="@android:color/white" />
         <TextView
             android:id="@+id/tasks"
             android:layout_width="wrap_content"
@@ -95,11 +112,5 @@
             android:layout_height="wrap_content"
             android:divider="@android:color/background_dark" />
 
-        <Button
-            android:id="@+id/addTask"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/green"
-            android:text="@string/addTask" />
 
 </LinearLayout>

@@ -71,19 +71,6 @@ public class Projects extends AppCompatActivity {
 
     }
 
-    public void addHeader(){
-        View view;
-        LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService( getBaseContext().LAYOUT_INFLATER_SERVICE );
-        view = inflater.inflate(R.layout.view_project_cell,null);
-        MyViewElements  mymodel = new MyViewElements();
-        mymodel.id = (TextView) view.findViewById(R.id.id);
-        mymodel.name = (TextView) view.findViewById(R.id.name);
-        mymodel.startDate = (TextView) view.findViewById(R.id.startDate);
-        mymodel.dueDate = (TextView) view.findViewById(R.id.dueDate);
-
-        view.setTag(mymodel);
-        listView.addHeaderView(view);
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -143,6 +130,21 @@ public class Projects extends AppCompatActivity {
         catch(IOException e){
             e.printStackTrace();
         }
+
+
+        try {
+            Writer writer = new FileWriter(getFilesDir()+ "/objfilep.json");
+            gson = new GsonBuilder().create();
+            gson.toJson(singleton.projectMap, writer);
+            String str=gson.toJson(singleton.projectMap);
+            System.out.println(str);
+            writer.close();
+
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
 
         try {
             Gson gsone=new Gson();

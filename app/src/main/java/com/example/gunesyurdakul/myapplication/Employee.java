@@ -1,5 +1,12 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
+import android.widget.ImageView;
+
+import java.io.ByteArrayOutputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +24,7 @@ public class Employee{
     String password;
     Boolean admin;
     String email;
+    byte[] profilePicture;
     //List<Task> Tasks=new ArrayList<Task>();
     Map<Integer,Task> tasks=new HashMap<Integer, Task>();
 
