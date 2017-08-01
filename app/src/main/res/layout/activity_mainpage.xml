@@ -105,6 +105,7 @@
                 android:gravity="center"
                 android:onClick="login"
                 android:text="@string/log_in"
+                android:textSize="16dp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 />
