@@ -18,7 +18,7 @@
             android:id="@+id/profile"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            app:srcCompat="@drawable/border" />
+            app:srcCompat="@drawable/border"/>
 
         <TextView
             android:id="@+id/employee_name"
