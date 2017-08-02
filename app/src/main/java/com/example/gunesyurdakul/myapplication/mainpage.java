@@ -50,12 +50,6 @@ import java.util.Map;
 public class mainpage extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.gunesyurdakul.myapplication.MESSAGE";
     Singleton singleton =Singleton.getSingleton();
-    private NotificationManager notificationManager;
-    private NotificationCompat.Builder notificationBuilder;
-    private int currentNotificationID = 0;
-    private String notificationTitle;
-    private String notificationText;
-    private EditText etMainNotificationText,getEtMainNotificationTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +67,6 @@ public class mainpage extends AppCompatActivity {
         if(singleton.Employees.size()==0) {
             singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment","123456","kdlw@kfşl.com",1,true));
             singleton.employeeMap.put(1,singleton.Employees.get(0));
-//            singleton.Employees.add(new Employee("Melis", "Gülenay", "Mobile Devolopment","asdfgh","kfşdk@lkrş.com",2,false));
-//            singleton.employeeMap.put(2,singleton.Employees.get(1));
-//            singleton.Employees.add(new Employee("Jane", "Doe", "Analist","46677880","jsdhlaksh@kdlsk.com",3,false));
-//            singleton.employeeMap.put(3,singleton.Employees.get(2));
-//            singleton.Employees.add(new Employee("Fırat", "Yurdakul", "Mobile Devolopment","6798787","ruklskş@kjlks.com",4,false));
-//            singleton.employeeMap.put(4,singleton.Employees.get(3));
         }
 //
 //        Calendar today=Calendar.getInstance();
@@ -130,17 +118,27 @@ public class mainpage extends AppCompatActivity {
                      SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
                      Date today=new Date();
                      float leftTime=(Math.abs(pair.getValue().due_date.getTime() - today.getTime())*8/(60*60*1000*24));
-                     if(leftTime<16&&pair.getValue().remaining_cost>0){
-                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-                         Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
-                         notificationIntent.addCategory("android.intent.category.DEFAULT");
-
-                         PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                         Calendar cal = Calendar.getInstance();
-                         cal.add(Calendar.SECOND, 1);
-                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
+                     if(leftTime<=16&&pair.getValue().remaining_cost>0){
+//                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//
+//                         Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
+//                         notificationIntent.addCategory("android.intent.category.DEFAULT");
+//
+//                         PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                         Calendar cal = Calendar.getInstance();
+//                         cal.add(Calendar.SECOND, 1);
+//                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
+                         Intent intent = new Intent(this, mainpage.class);
+                         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+                         Notification myNotify  = new Notification.Builder(this)
+                                 .setContentTitle("İşler Güçler")
+                                 .setContentText("Task "+pair.getValue().task_name+ "ends in " + Integer.toString(Math.round(leftTime)) + " work hours!!!")
+                                 .setSmallIcon(R.mipmap.ic_launcher)
+                                 .setContentIntent(pIntent)
+                                 .setAutoCancel(true).build();
+                         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                         notificationManager.notify(0, myNotify);
                      }
                  }
                  String message = idText.getText().toString();
