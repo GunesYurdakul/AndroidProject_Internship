@@ -23,7 +23,7 @@ public class Task {
         Singleton singleton =Singleton.getSingleton();
         task_name=name_in;
         assigned_person_id=assigned;
-        task_id=singleton.taskMap.size();
+        task_id=singleton.taskMap.size()+1;
         start_date=start_date_in;
         due_date=due_date_in;
         estimated_cost=estimated_cost_in;

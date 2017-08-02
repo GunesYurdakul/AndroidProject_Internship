@@ -161,8 +161,10 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
                     singleton.employeeMap.get(currentTask.assigned_person_id).tasks.put(currentTask.task_id,currentTask);
                     if(s_changed)
                         currentTask.start_date=updatedTask.start_date;
-                    if(d_changed)
-                        currentTask.due_date=updatedTask.due_date;
+                    if(d_changed) {
+                        currentTask.due_date = updatedTask.due_date;
+                        currentTask.remaining_cost+=(Math.abs(currentTask.start_date.getTime() - updatedTask.due_date.getTime())*8)/(60*60*1000*24);
+                    }
                     Log.d("INFO","addTask");
                     ProjectDetails detailsFragment = new ProjectDetails();
                     FragmentManager fm = getFragmentManager();
@@ -171,7 +173,7 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
                     singleton.taskMap.put(currentTask.task_id,currentTask);
                     Log.d("asdf",Integer.toString(currentTask.assigned_person_id));
                     //************change it if you switch to map structure
-                    args.putInt("position",currentTask.related_project_id-1);
+                    args.putInt("position",currentTask.related_project_id);
                     detailsFragment.setArguments(args);
                     ft.replace(R.id.fragment_layout, detailsFragment);
                     ft.commit();

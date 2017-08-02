@@ -1,7 +1,10 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -70,12 +74,23 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
 
         final DateFormat formatter = DateFormat.getDateInstance();
         final Employee currentEmployee=singleton.employeeMap.get(position);
+        final ImageView pp=(ImageView) view.findViewById(R.id.profile);
         final TextView email=(TextView)view.findViewById(R.id.email);
         email.setText(currentEmployee.email);
         name.setText(currentEmployee.name + " " + currentEmployee.surname);
         department.setText(currentEmployee.department);
         id.setText(Integer.toString(currentEmployee.person_id));
         listView = (ListView) view.findViewById(R.id.tasksList);
+        if (currentEmployee.profilePicture != null) {
+            // pp.setImageDrawable(null); //this should help
+            //currentEmployee.profilePicture.recycle();
+            try{
+                Bitmap bmp = BitmapFactory.decodeByteArray(currentEmployee.profilePicture, 0, currentEmployee.profilePicture.length);
+                pp.setImageBitmap(bmp);
+            }catch (Exception e){
+                Log.e("picture","error");
+            }
+        }
 
         final List <Task>taskarray=new ArrayList<Task>();
         it = currentEmployee.tasks.entrySet().iterator();
