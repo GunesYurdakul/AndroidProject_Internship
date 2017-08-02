@@ -108,7 +108,7 @@ public class mainpage extends AppCompatActivity {
                      SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
                      Date today=new Date();
                      float leftTime=(Math.abs(pair.getValue().due_date.getTime() - today.getTime())*8/(60*60*1000*24));
-                     if(leftTime<=16&&pair.getValue().remaining_cost>0){
+                     if(leftTime<=16&&pair.getValue().remaining_cost>0&&leftTime>=0){
 //                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 //
 //                         Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
@@ -130,6 +130,19 @@ public class mainpage extends AppCompatActivity {
                          NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                          notificationManager.notify(0, myNotify);
                      }
+                     else if(leftTime<0&&pair.getValue().remaining_cost>0){
+                         Intent intent = new Intent(this, mainpage.class);
+                         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+                         Notification myNotify  = new Notification.Builder(this)
+                                 .setContentTitle("İşler Güçler")
+                                 .setContentText("Task "+pair.getValue().task_name+ "ended in " + Integer.toString(Math.round(leftTime)) + " work hours ago, but is not completed yet!!!")
+                                 .setSmallIcon(R.mipmap.ic_launcher)
+                                 .setContentIntent(pIntent)
+                                 .setAutoCancel(true).build();
+                         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                         notificationManager.notify(0, myNotify);
+                     }
+
                  }
                  String message = idText.getText().toString();
                 Intent intent = new Intent(this, LoggedInUser.class);
