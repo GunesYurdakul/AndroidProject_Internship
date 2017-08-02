@@ -17,7 +17,7 @@
         android:background="@color/white"
         android:fontFamily="sans-serif-condensed"
         android:onClick="goToProfile"
-        android:text="Profile Page"
+        android:text="@string/Profile"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold" />

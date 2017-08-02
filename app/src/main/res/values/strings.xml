@@ -33,5 +33,6 @@
     <string name="email">Email address</string>
     <string name="deleteEmployee">Delete Employee</string>
     <string name="deleteProject">Delete Project</string>
+    <string name="Profile">Profile Page</string>
 
 </resources>

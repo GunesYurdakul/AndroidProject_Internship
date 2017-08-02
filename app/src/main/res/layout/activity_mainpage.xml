@@ -30,6 +30,7 @@
                 android:layout_marginBottom="4dp"
                 android:width="100dp"
                 android:text="@string/Id"
+                android:textSize="16dp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -39,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:background="@color/white"/>
+                android:background="@drawable/edit_text_background"/>
 
         </LinearLayout>
 
@@ -55,6 +56,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="4dp"
                 android:width="100dp"
+                android:textSize="16dp"
                 android:text="@string/password"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -64,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="textPassword" />
 
