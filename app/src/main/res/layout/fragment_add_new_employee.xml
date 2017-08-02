@@ -179,7 +179,7 @@
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
-                android:inputType="textEmailAddress"
+                android:inputType="textWebEmailAddress"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 

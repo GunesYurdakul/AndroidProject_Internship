@@ -90,7 +90,7 @@ public class addNewProjectFragment extends Fragment implements View.OnClickListe
                     Log.d("INFO","addTask");
                     int id=singleton.projectMap.size()+1;
                     singleton.projectMap.put(id,new Project(newProject.name,newProject.start_date,newProject.due_date,id));
-                    singleton.Projects.add(new Project(newProject.name,newProject.start_date,newProject.due_date,id));
+                    //singleton.Projects.add(new Project(newProject.name,newProject.start_date,newProject.due_date,id));
                     ProjectFragment addProject = new ProjectFragment();
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();

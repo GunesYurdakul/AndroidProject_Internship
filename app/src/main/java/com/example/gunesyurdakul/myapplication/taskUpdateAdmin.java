@@ -207,7 +207,6 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
         });
         remove.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Log.d("asd",Integer.toString(singleton.Projects.size()));
                 Log.d("asd",Integer.toString(currentTask.related_project_id));
                 singleton.projectMap.get(currentTask.related_project_id).removeTask(currentTask);
                 ProjectFragment addProject = new ProjectFragment();

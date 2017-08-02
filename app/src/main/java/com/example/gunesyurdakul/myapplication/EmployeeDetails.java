@@ -1,8 +1,11 @@
 package com.example.gunesyurdakul.myapplication;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -71,7 +75,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
         TextView department = (TextView) view.findViewById(R.id.department);
         TextView id = (TextView) view.findViewById(R.id.id);
         final TextView tasks = (TextView) view.findViewById(R.id.tasksHeader);
-
+        final Button sendMail=(Button) view.findViewById(R.id.sendMail);
         final DateFormat formatter = DateFormat.getDateInstance();
         final Employee currentEmployee=singleton.employeeMap.get(position);
         final ImageView pp=(ImageView) view.findViewById(R.id.profile);
@@ -205,6 +209,25 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
 
         Log.d("Info", "heyssss");
 
+        sendMail.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+
+                String mailto = "mailto:" + currentEmployee.email+
+                        "?cc=" + "gunesyurdakul@gmail.com" +
+                        "&subject=" + Uri.encode("Yapı Kredi") +
+                        "&body=" + Uri.encode("Merhaba "+currentEmployee.name+" Hanım/Bey,\n\n\n\n"+"İyi çalışmalar,\n"+singleton.currentUser.name+" "+singleton.currentUser.surname);
+
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse(mailto));
+
+                try {
+                    startActivity(emailIntent);
+                } catch (ActivityNotFoundException e) {
+                    //TODO: Handle case where no email app is available
+                }
+
+            }
+        });
         return view;
     }
 
@@ -221,18 +244,6 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
         ProgressBar ratio;
     }
 
-
-
-    //    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
     @Override
     public void onClick(View v) {}
 

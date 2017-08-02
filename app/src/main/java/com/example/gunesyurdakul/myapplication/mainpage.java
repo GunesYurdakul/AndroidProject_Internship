@@ -39,8 +39,10 @@ import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +124,25 @@ public class mainpage extends AppCompatActivity {
             }
             else if(logging_in.admin&&logging_in.password.equals(pass.getText().toString())){
                  singleton.currentUser=singleton.employeeMap.get(Integer.parseInt(id));
+                 Iterator<Map.Entry<Integer, Task>> it = singleton.currentUser.tasks.entrySet().iterator();
+                 while (it.hasNext()) {
+                     Map.Entry<Integer, Task> pair = it.next();
+                     SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
+                     Date today=new Date();
+                     float leftTime=(Math.abs(pair.getValue().due_date.getTime() - today.getTime())*8/(60*60*1000*24));
+                     if(leftTime<16&&pair.getValue().remaining_cost>0){
+                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+                         Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
+                         notificationIntent.addCategory("android.intent.category.DEFAULT");
+
+                         PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                         Calendar cal = Calendar.getInstance();
+                         cal.add(Calendar.SECOND, 1);
+                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
+                     }
+                 }
                  String message = idText.getText().toString();
                 Intent intent = new Intent(this, LoggedInUser.class);
                 intent.putExtra(EXTRA_MESSAGE, message);
@@ -187,17 +208,6 @@ void readFile(){
         e.printStackTrace();
     }
 
-    try {
-        Gson rson=new Gson();
-        Reader reader = new FileReader(getFilesDir()+ "/objfile2.json");
-        rson = new GsonBuilder().create();
-        singleton.Projects=rson.fromJson(reader,new TypeToken<List<Project>>(){}.getType());
-        //String str=gson.toJson(singleton.employeeMap);
-        //System.out.println(singleton.Projects.get(0).name);
-        reader.close();
-    }catch(IOException e){
-        e.printStackTrace();
-    }
 
     try {
         Gson rson=new Gson();

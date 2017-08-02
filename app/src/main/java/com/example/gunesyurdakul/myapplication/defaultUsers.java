@@ -139,19 +139,7 @@ public class defaultUsers extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        try {
-            Gson rson=new Gson();
-            Writer writer = new FileWriter(getFilesDir()+ "/objfile2.json");
-            rson = new GsonBuilder().create();
-            rson.toJson(singleton.Projects, writer);
-            String str=rson.toJson(singleton.Projects);
-            System.out.println(str);
-            writer.close();
 
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
 
     }
     void readFile(){
@@ -191,17 +179,6 @@ public class defaultUsers extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        try {
-            Gson rson=new Gson();
-            Reader reader = new FileReader(getFilesDir()+ "/objfile2.json");
-            rson = new GsonBuilder().create();
-            singleton.Projects=rson.fromJson(reader,new TypeToken<List<Project>>(){}.getType());
-            //String str=gson.toJson(singleton.employeeMap);
-            //System.out.println(singleton.Projects.get(0).name);
-            reader.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
 
         try {
             Gson rson=new Gson();

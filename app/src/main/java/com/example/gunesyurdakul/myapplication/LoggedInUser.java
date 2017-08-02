@@ -39,16 +39,6 @@ public class LoggedInUser extends AppCompatActivity {
         readFile();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in_user);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
-        notificationIntent.addCategory("android.intent.category.DEFAULT");
-
-        PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, 5);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
     }
 
     public void goToEmployees(View view){
@@ -126,17 +116,6 @@ public class LoggedInUser extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        try {
-            Gson rson=new Gson();
-            Reader reader = new FileReader(getFilesDir()+ "/objfile2.json");
-            rson = new GsonBuilder().create();
-            singleton.Projects=rson.fromJson(reader,new TypeToken<List<Project>>(){}.getType());
-            //String str=gson.toJson(singleton.employeeMap);
-//            System.out.println(singleton.Projects.get(0).name);
-            reader.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
 
         try {
             Gson rson=new Gson();

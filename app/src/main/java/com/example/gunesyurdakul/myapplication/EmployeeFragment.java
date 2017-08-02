@@ -20,7 +20,11 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 
 public class EmployeeFragment extends Fragment implements View.OnClickListener{
@@ -60,13 +64,19 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
 
             };
         });
+        final List<Integer> employee_ids=new ArrayList<Integer>();
+        Iterator<Map.Entry<Integer, Employee>> it = singleton.employeeMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, Employee> pair = it.next();
+            employee_ids.add(pair.getValue().person_id);
+        }
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                if(singleton.Employees == null) {
+                if(singleton.employeeMap == null) {
                     return 0;
                 }else {
-                    return singleton.Employees.size();
+                    return singleton.employeeMap.size();
                 }
             }
 
@@ -95,7 +105,7 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
                 }
 
                 Employee_View mymodel = (Employee_View) view.getTag();
-                Employee employee = singleton.Employees.get(i);
+                Employee employee = singleton.employeeMap.get(employee_ids.get(i));
                 mymodel.id.setText(Integer.toString(i+1));
                 mymodel.name.setText(employee.name+" "+employee.surname);
                 mymodel.department.setText(employee.department);
@@ -117,7 +127,7 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
                     Bundle args = new Bundle();
-                    args.putInt("position",singleton.Employees.get(position).person_id);
+                    args.putInt("position",employee_ids.get(position));
                     detailsFragment.setArguments(args);
                     ft.replace(R.id.fragment_layout, detailsFragment);
                     ft.addToBackStack("pdetails");

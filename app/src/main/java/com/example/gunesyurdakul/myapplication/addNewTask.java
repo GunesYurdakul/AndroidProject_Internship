@@ -36,7 +36,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 public class addNewTask extends Fragment implements View.OnClickListener{
@@ -97,11 +99,12 @@ public class addNewTask extends Fragment implements View.OnClickListener{
         //Employees drop down list
         employees = (Spinner)view.findViewById(R.id.assignee);
 
-        List<String> employee_names=new ArrayList<String>();
-        for (Employee i:singleton.Employees){
-            employee_names.add(i.name+" "+i.surname);
+        final List<String> employee_names=new ArrayList<String>();
+        Iterator<Map.Entry<Integer, Employee>> it = singleton.employeeMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, Employee> pair = it.next();
+            employee_names.add(pair.getValue().name+" "+pair.getValue().surname);
         }
-
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, employee_names);
         employees.setAdapter( adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -151,7 +154,7 @@ public class addNewTask extends Fragment implements View.OnClickListener{
                     newTask.task_name=projectName.getText().toString();
                     Log.d("INFO","addTask");
                     //singleton.Projects.get(position).addTaskToProject();
-                    singleton.projectMap.get(singleton.Projects.get(position).project_id).addTaskToProject(new Task(newTask.task_name,newTask.assigned_person_id, newTask.start_date,newTask.due_date,newTask.estimated_cost));
+                    singleton.projectMap.get(position).addTaskToProject(new Task(newTask.task_name,newTask.assigned_person_id, newTask.start_date,newTask.due_date,newTask.estimated_cost));
                     ProjectDetails detailsFragment = new ProjectDetails();
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
