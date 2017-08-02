@@ -129,19 +129,7 @@ public class Employees extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        try {
-            Gson gsone=new Gson();
-            Writer writer = new FileWriter(getFilesDir()+ "/objfile1.json");
-            gsone = new GsonBuilder().create();
-            gsone.toJson(singleton.Employees, writer);
-            String str=gsone.toJson(singleton.Employees);
-            System.out.println(str);
-            writer.close();
 
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
 
 
 

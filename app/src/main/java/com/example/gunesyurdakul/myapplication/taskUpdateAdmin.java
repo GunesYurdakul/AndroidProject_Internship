@@ -26,7 +26,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.gunesyurdakul.myapplication.addNewTask.format;
 
@@ -104,8 +106,12 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
         //Employees drop down list
 
         List<String> employee_names=new ArrayList<String>();
-        for (Employee i:singleton.Employees){
-            employee_names.add(i.name+" "+i.surname);
+        final List<Integer>ids=new ArrayList<Integer>();
+        Iterator<Map.Entry<Integer, Employee>> it = singleton.employeeMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, Employee> pair = it.next();
+            employee_names.add(pair.getValue().name+" "+pair.getValue().surname);
+            ids.add(pair.getValue().person_id);
         }
 
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, employee_names);
@@ -115,7 +121,7 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
         asignee.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                updatedTask.assigned_person_id=singleton.Employees.get(position).person_id;
+                updatedTask.assigned_person_id=singleton.employeeMap.get(ids.get(position)).person_id;
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {

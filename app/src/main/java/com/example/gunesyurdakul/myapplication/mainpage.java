@@ -64,28 +64,18 @@ public class mainpage extends AppCompatActivity {
             idText.setText(Integer.toString(singleton.currentUser.person_id));
             pass.setText(singleton.currentUser.password);
         }
-        if(singleton.Employees.size()==0) {
-            singleton.Employees.add(new Employee("Güneş", "Yurdakul", "Mobile Devolopment","123456","kdlw@kfşl.com",1,true));
-            singleton.employeeMap.put(1,singleton.Employees.get(0));
+        if(singleton.employeeMap.size()==0) {
+            singleton.employeeMap.put(1,new Employee("Güneş", "Yurdakul", "Mobile Devolopment","123456","kdlw@kfşl.com",1,true));
         }
-//
-//        Calendar today=Calendar.getInstance();
-//        today.set(Calendar.HOUR_OF_DAY, 0);
-//        final DateFormat formatter=DateFormat.getDateInstance();
-//
-//        if(singleton.Projects.isEmpty()) {
-//            singleton.Projects.add(new Project("Kurumsal", today.getTime(), today.getTime()));
-//            singleton.Projects.add(new Project("Bireysel", today.getTime(), today.getTime()));
-//            singleton.Projects.add(new Project("Ticari", today.getTime(), today.getTime()));
-//            singleton.Projects.get(0).addTaskToProject(new Task("Main page design", singleton.Employees.get(0).person_id, today.getTime(), today.getTime(), 76));
-//            singleton.Projects.get(0).addTaskToProject(new Task("back end", singleton.Employees.get(1).person_id, today.getTime(), today.getTime(), 3));
-//            singleton.Projects.get(0).addTaskToProject(new Task("group management", singleton.Employees.get(2).person_id, today.getTime(), today.getTime(), 6));
-//
-//            singleton.Projects.get(1).addTaskToProject(new Task("Main page design", singleton.Employees.get(0).person_id, today.getTime(), today.getTime(), 76));
-//            singleton.Projects.get(1).addTaskToProject(new Task("back end fggf", singleton.Employees.get(2).person_id, today.getTime(), today.getTime(), 3));
-//
-//            singleton.Projects.get(2).addTaskToProject(new Task("bla bla task", singleton.Employees.get(1).person_id, today.getTime(), today.getTime(), 76));
-//        }
+
+        Calendar today=Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        final DateFormat formatter=DateFormat.getDateInstance();
+
+       if(singleton.projectMap.isEmpty()) {
+            int id=singleton.projectMap.size()+1;
+           singleton.projectMap.put(id,new Project("Test Projesi", today.getTime(), today.getTime(),id));}
+
         if(singleton.Departments.size()==0){
         singleton.Departments.add("Mobile Development");
         singleton.Departments.add("Analist");
@@ -194,17 +184,6 @@ void readFile(){
         e.printStackTrace();
     }
 
-    try {
-        Gson rsone=new Gson();
-        Reader reader = new FileReader(getFilesDir()+ "/objfile1.json");
-        rsone = new GsonBuilder().create();
-        singleton.Employees=rsone.fromJson(reader,new TypeToken<List<Employee>>(){}.getType());
-        //String str=gson.toJson(singleton.employeeMap);
-        //System.out.println(singleton.Employees.get(0).tasks.get(0).task_name);
-        reader.close();
-    }catch(IOException e){
-        e.printStackTrace();
-    }
 
 
     try {

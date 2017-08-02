@@ -98,14 +98,14 @@ public class addNewProjectFragment extends Fragment implements View.OnClickListe
                     //ft.addToBackStack("addProject");
                     ft.commit();
                 }
-                else if(newProject.start_date.compareTo(newProject.due_date)>0){
-                    warning.setText("Due date of the project should be later than its starting date!");
-                }
                 else if(newProject.start_date==null){
                     warning.setText("Starting date can not be left blank!");
                 }
                 else if(newProject.due_date==null){
                     warning.setText("Due date can not be left blank!");
+                }
+                else if(newProject.start_date.compareTo(newProject.due_date)>0){
+                    warning.setText("Due date of the project should be later than its starting date!");
                 }
                 else{
                     warning.setText("Project name can not be left blank!");

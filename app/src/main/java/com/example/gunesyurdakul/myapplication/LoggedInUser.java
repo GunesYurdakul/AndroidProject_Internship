@@ -104,17 +104,6 @@ public class LoggedInUser extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        try {
-            Gson rsone=new Gson();
-            Reader reader = new FileReader(getFilesDir()+ "/objfile1.json");
-            rsone = new GsonBuilder().create();
-            singleton.Employees=rsone.fromJson(reader,new TypeToken<List<Employee>>(){}.getType());
-            //String str=gson.toJson(singleton.employeeMap);
-            //System.out.println(singleton.Employees.get(0).tasks.get(0).task_name);
-            reader.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
 
 
         try {

@@ -100,10 +100,12 @@ public class addNewTask extends Fragment implements View.OnClickListener{
         employees = (Spinner)view.findViewById(R.id.assignee);
 
         final List<String> employee_names=new ArrayList<String>();
+        final List<Integer>ids=new ArrayList<Integer>();
         Iterator<Map.Entry<Integer, Employee>> it = singleton.employeeMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<Integer, Employee> pair = it.next();
             employee_names.add(pair.getValue().name+" "+pair.getValue().surname);
+            ids.add(pair.getValue().person_id);
         }
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, employee_names);
         employees.setAdapter( adapter);
@@ -112,7 +114,7 @@ public class addNewTask extends Fragment implements View.OnClickListener{
         employees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-            newTask.assigned_person_id=singleton.Employees.get(position).person_id;
+            newTask.assigned_person_id=singleton.employeeMap.get(ids.get(position)).person_id;
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -164,10 +166,6 @@ public class addNewTask extends Fragment implements View.OnClickListener{
                     ft.replace(R.id.fragment_layout, detailsFragment);
                     ft.commit();
                 }
-                else if(newTask.start_date.compareTo(newTask.due_date)>0){
-                    Log.d("d","2");
-                    warning.setText("Due date of the task should be later than its starting date!");
-                }
                 else if(newTask.start_date==null){
                     Log.d("d","3");
                     warning.setText("Starting date can not be left blank!");
@@ -175,6 +173,10 @@ public class addNewTask extends Fragment implements View.OnClickListener{
                 else if(newTask.due_date==null){
                     Log.d("d","4");
                     warning.setText("Due date can not be left blank!");
+                }
+                else if(newTask.start_date.compareTo(newTask.due_date)>0){
+                    Log.d("d","2");
+                    warning.setText("Due date of the task should be later than its starting date!");
                 }
                 else if(newTask.assigned_person_id==-1){
                     Log.d("d","5");

@@ -13,7 +13,6 @@ public class Singleton {
     private static Singleton singleton = new Singleton();
     private Singleton(){}
     Employee currentUser;
-    List<Employee> Employees=new ArrayList<Employee>();
     List<String>Departments=new ArrayList<String>();
     Map<Integer,Project> projectMap=new HashMap<Integer,Project>();
     Map<Integer,Employee> employeeMap=new HashMap<Integer,Employee>();
