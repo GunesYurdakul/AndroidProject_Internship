@@ -19,10 +19,10 @@ import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -67,8 +67,8 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
         final ListView listView;
 
 
-        Button addTask=(Button)view.findViewById(R.id.addTask);
-        Button deleteProject=(Button)view.findViewById(R.id.deleteProject);
+        FloatingActionButton addTask=(FloatingActionButton) view.findViewById(R.id.addTask);
+        FloatingActionButton deleteProject=(FloatingActionButton) view.findViewById(R.id.deleteProject);
         TextView projectName = (TextView) view.findViewById(R.id.projectName);
         TextView startDate= (TextView) view.findViewById(R.id.startDate);
         TextView dueDate= (TextView) view.findViewById(R.id.dueDate);

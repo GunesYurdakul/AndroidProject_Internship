@@ -22,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -89,8 +91,8 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
         Button setDueDate = (Button)view.findViewById(R.id.setDueDate);
         final TextView estimatedCost=(TextView)view.findViewById(R.id.estimatedCost);
         warning=(TextView)view.findViewById(R.id.warning);
-        final Button  update=(Button) view.findViewById(R.id.updateTask);
-        Button  remove=(Button) view.findViewById(R.id.removeTask);
+        final FloatingActionButton update=(FloatingActionButton) view.findViewById(R.id.updateTask);
+        FloatingActionButton  remove=(FloatingActionButton) view.findViewById(R.id.removeTask);
         Spinner asignee =(Spinner)view.findViewById(R.id.assignee);
 
         final DateFormat formatter=DateFormat.getDateInstance();

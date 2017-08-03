@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+<LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -75,22 +81,6 @@
         </LinearLayout>
 
 
-        <Button
-            android:id="@+id/addTask"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/green"
-            android:textColor="@color/white"
-            android:text="@string/addTask" />
-
-        <Button
-            android:id="@+id/deleteProject"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_red_dark"
-            android:text="@string/deleteProject"
-            android:textColor="@android:color/white" />
         <TextView
             android:id="@+id/tasks"
             android:layout_width="wrap_content"
@@ -110,7 +100,46 @@
             android:id="@+id/tasksList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:divider="@android:color/background_dark" />
 
-
 </LinearLayout>
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/addNewEmployee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/fab_add"
+        fab:fab_colorNormal="@color/green"
+        >
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/addTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/fab_add"
+            fab:fab_colorNormal="@color/green"
+            fab:fab_label="Add Task"
+            >
+
+        </com.github.clans.fab.FloatingActionButton>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/deleteProject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@android:drawable/ic_menu_delete"
+            fab:fab_colorNormal="@android:color/holo_red_dark"
+            fab:fab_label="Delete Project"
+            >
+
+        </com.github.clans.fab.FloatingActionButton>
+    </com.github.clans.fab.FloatingActionMenu>
+
+</FrameLayout>

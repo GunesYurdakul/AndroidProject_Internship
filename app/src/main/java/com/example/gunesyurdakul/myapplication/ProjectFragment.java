@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,7 +56,7 @@ public class ProjectFragment extends Fragment implements View.OnClickListener{
         final DateFormat formatter=DateFormat.getDateInstance();
 
 
-        final Button addProject = view.findViewById(R.id.addNewProject);
+        final FloatingActionButton addProject = (FloatingActionButton)view.findViewById(R.id.addNewProject);
 
         addProject.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){

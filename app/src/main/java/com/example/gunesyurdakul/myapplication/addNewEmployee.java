@@ -118,7 +118,7 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
                     newEmployee.admin=userType.isChecked();
                     newEmployee.email=email.getText().toString();
                     Log.d("INFO","addTask");
-                    Employee newE=new Employee(newEmployee.name,newEmployee.surname,newEmployee.department,newEmployee.password,newEmployee.email,newEmployee.person_id,newEmployee.admin);
+                    Employee newE=new Employee(newEmployee.name, newEmployee.surname, newEmployee.department,newEmployee.password,newEmployee.email,newEmployee.person_id,newEmployee.admin);
                     singleton.employeeMap.put(newE.person_id,newE);
                     //singleton.Employees.add(newE);
                     EmployeeFragment addEmp = new EmployeeFragment();
@@ -127,6 +127,9 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
                     ft.replace(R.id.fragment_layout,addEmp);
                     //ft.addToBackStack("addProject");
                     ft.commit();
+                }
+                else if(singleton.employeeMap.get(Integer.parseInt(id.getText().toString()))!=null){
+                    warning.setText("This id already exists!");
                 }
                 else if(newEmployee.department==null){
                     warning.setText("Department should be chosen!");

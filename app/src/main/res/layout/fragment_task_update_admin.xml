@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -178,22 +179,43 @@
 
     </LinearLayout>
 
-
-    <Button
-        android:id="@+id/updateTask"
-        android:layout_width="match_parent"
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/addNewEmployee"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/green"
-        android:text="@string/update"
-        android:textColor="@android:color/white" />
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/fab_add"
+        fab:fab_colorNormal="@color/green"
+        >
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/updateTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@android:drawable/ic_menu_edit"
+            fab:fab_colorNormal="@color/green"
+            fab:fab_label="Update"
+            >
 
-    <Button
-        android:id="@+id/removeTask"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_red_dark"
-        android:text="@string/remove"
-        android:textColor="@android:color/white" />
+        </com.github.clans.fab.FloatingActionButton>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/removeTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@android:drawable/ic_menu_delete"
+            fab:fab_colorNormal="@android:color/holo_red_dark"
+            fab:fab_label="Remove"
+            >
+
+        </com.github.clans.fab.FloatingActionButton>
+    </com.github.clans.fab.FloatingActionMenu>
 
     <TextView
         android:id="@+id/warning"
@@ -204,4 +226,4 @@
         android:textColor="@android:color/holo_red_dark" />
 
 
-</LinearLayout>
+</FrameLayout>

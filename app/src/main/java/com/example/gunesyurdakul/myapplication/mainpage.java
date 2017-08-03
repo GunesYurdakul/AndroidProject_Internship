@@ -123,7 +123,7 @@ public class mainpage extends AppCompatActivity {
                          PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
                          Notification myNotify  = new Notification.Builder(this)
                                  .setContentTitle("İşler Güçler")
-                                 .setContentText("Task "+pair.getValue().task_name+ "ends in " + Integer.toString(Math.round(leftTime)) + " work hours!!!")
+                                 .setContentText("Task "+pair.getValue().task_name+ " ends in " + Integer.toString(Math.round(leftTime)) + " work hours!!!")
                                  .setSmallIcon(R.mipmap.ic_launcher)
                                  .setContentIntent(pIntent)
                                  .setAutoCancel(true).build();
@@ -135,7 +135,7 @@ public class mainpage extends AppCompatActivity {
                          PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
                          Notification myNotify  = new Notification.Builder(this)
                                  .setContentTitle("İşler Güçler")
-                                 .setContentText("Task "+pair.getValue().task_name+ "ended in " + Integer.toString(Math.round(leftTime)) + " work hours ago, but is not completed yet!!!")
+                                 .setContentText("Task "+pair.getValue().task_name+ " ended in " + Integer.toString(Math.round(leftTime)) + " work hours ago, but is not completed yet!!!")
                                  .setSmallIcon(R.mipmap.ic_launcher)
                                  .setContentIntent(pIntent)
                                  .setAutoCancel(true).build();

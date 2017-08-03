@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,9 +52,9 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
 
         listView = (ListView) view.findViewById(R.id.listView);
 
-        final Button addProject = view.findViewById(R.id.addNewEmployee);
+        final FloatingActionButton addEmployee = (FloatingActionButton)view.findViewById(R.id.addNewEmployee);
 
-        addProject.setOnClickListener(new View.OnClickListener(){
+        addEmployee.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Log.d("INFO","AddButtonClicked");
                 addNewEmployee addEmployee = new addNewEmployee();

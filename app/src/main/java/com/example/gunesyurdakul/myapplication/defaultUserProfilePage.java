@@ -13,11 +13,13 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -45,7 +47,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
     Singleton singleton =Singleton.getSingleton();
     ListView listView;
     Iterator<Map.Entry<Integer, Task>> it;
-    View view;
+    View view,card;
     int position,RESULT_LOAD_IMAGE;
     Employee currentEmployee;
     public static EmployeeDetails newInstance() {
@@ -71,26 +73,25 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
         // Inflate the layout for this fragment
         Log.d("Info", "hey");
         view = inflater.inflate(R.layout.fragment_default_user_profile_page, container, false);
+        card = inflater.inflate(R.layout.profile_card,null,false);
         Log.d("Info", "hey");
         TableLayout table;
         final ListView listView;
 
-        TextView name = (TextView) view.findViewById(R.id.employee_name);
-        TextView department= (TextView) view.findViewById(R.id.department);
-        TextView id=(TextView)view.findViewById(R.id.id);
-        EditText newPassword=(EditText)view.findViewById(R.id.newPassword);
-        final Button changePassword =(Button)view.findViewById(R.id.changePassword);
-        final TextView tasks=(TextView)view.findViewById(R.id.tasksHeader);
-        ImageView pp=(ImageView)view.findViewById(R.id.profilePicture);
+        TextView name = (TextView) card.findViewById(R.id.employee_name);
+        TextView department= (TextView) card.findViewById(R.id.department);
+        TextView id=(TextView)card.findViewById(R.id.id);
+        ImageView pp=(ImageView)card.findViewById(R.id.profilePicture);
 
         final DateFormat formatter=DateFormat.getDateInstance();
         currentEmployee = singleton.employeeMap.get(singleton.currentUser.person_id);
-        final TextView email=(TextView)view.findViewById(R.id.email);
+        final TextView email=(TextView)card.findViewById(R.id.email);
         email.setText(currentEmployee.email);
         name.setText(currentEmployee.name+" "+currentEmployee.surname);
         department.setText(currentEmployee.department);
         id.setText(Integer.toString(currentEmployee.person_id));
         listView = (ListView) view.findViewById(R.id.tasksList);
+
 
 
         if (currentEmployee.profilePicture != null) {
@@ -104,58 +105,6 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
             }
         }
 
-        changePassword.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                changePassword.setText("ENTER YOUR NEW PASSWORD");
-                View popupView = inflater.inflate(R.layout.change_password_popup, null,false);
-
-                final PopupWindow popupWindow = new PopupWindow(popupView,
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-                final TextView newPassword=(TextView)popupView.findViewById(R.id.newPassword);
-                final TextView confirm=(TextView)popupView.findViewById(R.id.confirmPassword);
-                final Button change =   (Button)popupView.findViewById(R.id.change);
-                // If the PopupWindow should be focusable
-                popupWindow.setFocusable(true);
-
-                // If you need the PopupWindow to dismiss when when touched outside
-                popupWindow.setBackgroundDrawable(new ColorDrawable());
-
-                int location[] = new int[2];
-
-                // Get the View's(the one that was clicked in the Fragment) location
-                changePassword.getLocationOnScreen(location);
-
-                // Using location, the PopupWindow will be displayed right under anchorView
-                popupWindow.showAtLocation(changePassword, Gravity.NO_GRAVITY,
-                        location[0], location[1] + changePassword.getHeight());
-
-
-                change.setOnClickListener(new View.OnClickListener(){
-                    public void onClick(View v){
-                        String p1=newPassword.getText().toString();
-                        String p2=confirm.getText().toString();
-                        Log.d("p1","fhghkhg");
-                        Log.d("p2",p2);
-                        if(!p1.equals(p2)){
-                            changePassword.setText("Passwords do not match!");
-                        }
-                        else if (p1.equals(p2)&&p1.length()<6) {
-                            Log.d("length",Integer.toString(p1.length()));
-                            changePassword.setText("Password should include at least 6 characters!");
-                        }
-                        else{
-                            singleton.employeeMap.get(currentEmployee.person_id).password=p1;
-                            currentEmployee.password=p1;
-                            changePassword.setText("CHANGED:)");
-                            popupWindow.dismiss();
-                        }
-                    }
-
-                });
-            }
-
-        });
         final List<Task> taskarray=new ArrayList<Task>();
         it = currentEmployee.tasks.entrySet().iterator();
         while (it.hasNext()){
@@ -169,10 +118,10 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
                 if(currentEmployee.tasks == null) {
                     return 0;
                 }else {
-                    if(currentEmployee.tasks.size()==0)
-                        tasks.setText("No task found!");
-                    else
-                        tasks.setText("Tasks");
+//                    if(currentEmployee.tasks.size()==0)
+//                        tasks.setText("No task found!");
+//                    else
+//                        tasks.setText("Tasks");
                     return currentEmployee.tasks.size();
                 }
             }
@@ -245,7 +194,37 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
         });
         Log.d("Info", "hey");
 
+        listView.setOnScrollListener(new AbsListView.OnScrollListener(){
 
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                int currentHeight= card.getHeight();
+                if (card.getHeight()>100)
+                {   ViewGroup.LayoutParams lp;
+                    lp = card.getLayoutParams();
+                    lp.height -= 15;
+                    Log.d("in if",Integer.toString(card.getHeight())+" " +Integer.toString(scrollState));
+                    card.setLayoutParams(lp);
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                // TODO Auto-generated method stub
+
+
+
+            }
+
+            private void isScrollCompleted() {
+//                if (totalItem - currentFirstVisibleItem == currentVisibleItemCount
+//                        && this.currentScrollState == SCROLL_STATE_IDLE) {
+                    /** To do code here*/
+
+
+                }
+        });
         pp.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent i = new Intent(
@@ -258,6 +237,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
         });
         Log.d("Info", "heyssss");
 
+        listView.addHeaderView( card);
         return view;
     }
 

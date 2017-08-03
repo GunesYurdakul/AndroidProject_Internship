@@ -1,6 +1,8 @@
 package com.example.gunesyurdakul.myapplication;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +43,7 @@ public class Employees extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_project);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
         setSupportActionBar(myToolbar);
 
         EmployeeFragment fragment = new EmployeeFragment();
@@ -64,7 +67,14 @@ public class Employees extends AppCompatActivity {
                 startActivity(intent);
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
-
+            case R.id.password:
+                changePassword detailsFragment = new changePassword();
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Bundle args = new Bundle();
+                detailsFragment.setArguments(args);
+                ft.replace(R.id.fragment_layout, detailsFragment);
+                ft.commit();
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

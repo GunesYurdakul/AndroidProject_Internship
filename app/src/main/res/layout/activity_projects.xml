@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.gunesyurdakul.myapplication.Projects"
    >
-
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
    <include
        layout="@layout/view_project_cell"
        android:layout_width="match_parent"
@@ -24,14 +28,19 @@
        android:layout_weight="1"
        android:headerDividersEnabled="true"></ListView>
 
-   <Button
-       android:id="@+id/addNewProject"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:background="@color/green"
-       android:text="@string/AddProject"
-       android:textColor="@android:color/white"
-       />
-
 
 </LinearLayout>
+
+
+
+   <com.github.clans.fab.FloatingActionButton
+       android:id="@+id/addNewProject"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="bottom|right"
+       android:layout_marginBottom="8dp"
+       android:layout_marginRight="8dp"
+       android:src="@drawable/fab_add"
+       fab:fab_colorNormal="@color/green"
+       />
+</FrameLayout>
