@@ -43,6 +43,8 @@ public class defaultUsers extends AppCompatActivity {
         }
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+        myToolbar.setTitleTextColor(getResources().getColor(R.color.white));
+
         setSupportActionBar(myToolbar);
 
             defaultUserProfilePage fragment = new defaultUserProfilePage();

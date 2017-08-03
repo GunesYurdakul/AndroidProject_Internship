@@ -60,6 +60,8 @@ public class Projects extends AppCompatActivity {
         setContentView(R.layout.fragment_project);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
+        myToolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        
         setSupportActionBar(myToolbar);
                     ProjectFragment fragment = new ProjectFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
