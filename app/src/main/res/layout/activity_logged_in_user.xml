@@ -26,28 +26,26 @@
         android:id="@+id/Employees"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@drawable/border2"
         android:fontFamily="sans-serif-condensed"
         android:onClick="goToEmployees"
         android:text="@string/Employees"
         android:textColor="@android:color/background_light"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_weight="1"
-        />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/Projects"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
+        android:layout_weight="1"
         android:background="@android:color/background_light"
         android:fontFamily="sans-serif-condensed"
         android:onClick="goToProjects"
         android:text="@string/Projects"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_weight="1"
-        />
+        android:textStyle="bold" />
 </LinearLayout>

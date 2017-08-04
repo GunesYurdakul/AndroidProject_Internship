@@ -10,6 +10,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="Employees">Employees</string>
     <string name="Projects">Projects</string>
+    <string name="Id2">Id: </string>
     <string name="Id">Id</string>
     <string name="Name">Name</string>
     <string name="Department">Department</string>

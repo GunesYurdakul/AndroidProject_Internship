@@ -1,6 +1,8 @@
 package com.example.gunesyurdakul.myapplication;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -70,7 +75,8 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
         Iterator<Map.Entry<Integer, Employee>> it = singleton.employeeMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<Integer, Employee> pair = it.next();
-            employee_ids.add(pair.getValue().person_id);
+            if(pair.getValue().person_id!=singleton.currentUser.person_id)
+                employee_ids.add(pair.getValue().person_id);
         }
         listView.setAdapter(new BaseAdapter() {
             @Override
@@ -97,18 +103,18 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
                 if(view == null) {
                     view = inflater.inflate(R.layout.view_employee_cell,viewGroup,false);
                     Employee_View mymodel = new Employee_View();
-                    mymodel.id = (TextView) view.findViewById(R.id.id);
+//                    mymodel.id = (TextView) view.findViewById(R.id.id);
                     mymodel.name = (TextView) view.findViewById(R.id.name);
                     mymodel.department = (TextView) view.findViewById(R.id.department);
                     mymodel.userType=(TextView)view.findViewById(R.id.admin);
-
+                    mymodel.pp=(ImageView)view.findViewById(R.id.miniPP);
                     view.setTag(mymodel);
 
                 }
 
                 Employee_View mymodel = (Employee_View) view.getTag();
                 Employee employee = singleton.employeeMap.get(employee_ids.get(i));
-                mymodel.id.setText(Integer.toString(i+1));
+//                mymodel.id.setText(Integer.toString(i+1));
                 mymodel.name.setText(employee.name+" "+employee.surname);
                 mymodel.department.setText(employee.department);
                 if(employee.admin)
@@ -116,6 +122,19 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
                 else
                     mymodel.userType.setText("Default");
 
+
+                if (employee.profilePicture != null) {
+                    // pp.setImageDrawable(null); //this should help
+                    //currentEmployee.profilePicture.recycle();
+                    try{
+                        Bitmap src = BitmapFactory.decodeByteArray(employee.profilePicture, 0, employee.profilePicture.length);
+                        RoundedBitmapDrawable dr = RoundedBitmapDrawableFactory.create(getResources(),src);
+                        dr.setCornerRadius(200);
+                        mymodel.pp.setImageDrawable(dr);
+                    }catch (Exception e){
+                        Log.e("picture","error");
+                    }
+                }
                 return view;
             }
         });
@@ -154,6 +173,7 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
         TextView name;
         TextView department;
         TextView userType;
+        ImageView pp;
     }
 
     @Override

@@ -26,7 +26,8 @@
                 android:gravity="left"
                 android:text="@string/Name"
                 android:textColor="@android:color/background_dark"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/projectName"
@@ -49,20 +50,18 @@
 
             <Button
                 android:id="@+id/setStartDate"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:background="@color/colorPrimary"
-                android:text="@string/StartDate"
+                android:background="@drawable/date_from"
                 android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/setDueDate"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:background="@color/colorPrimary"
-                android:text="@string/DueDate"
+                android:background="@drawable/date_to"
                 android:textColor="@color/white" />
         </RelativeLayout>
 
@@ -94,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:background="@color/green"
+                android:background="@drawable/border2"
                 android:text="DONE"
                 android:textColor="@color/white" />
 

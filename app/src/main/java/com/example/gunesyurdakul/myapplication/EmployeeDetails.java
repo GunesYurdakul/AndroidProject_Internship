@@ -5,12 +5,19 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +30,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -67,30 +76,34 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         Log.d("Info", "hey");
         View view = inflater.inflate(R.layout.employee_details, container, false);
+        //View card = inflater.inflate(R.layout.profile_card,null,false);
         Log.d("Info", "hey");
         TableLayout table;
         final ListView listView;
 
-        TextView name = (TextView) view.findViewById(R.id.employee_name);
+        FloatingActionButton sendMail=(FloatingActionButton)view.findViewById(R.id.sendMail);
+        //TextView name = (TextView) view.findViewById(R.id.employee_name);
         TextView department = (TextView) view.findViewById(R.id.department);
         TextView id = (TextView) view.findViewById(R.id.id);
-        final TextView tasks = (TextView) view.findViewById(R.id.tasksHeader);
-        final Button sendMail=(Button) view.findViewById(R.id.sendMail);
         final DateFormat formatter = DateFormat.getDateInstance();
         final Employee currentEmployee=singleton.employeeMap.get(position);
-        final ImageView pp=(ImageView) view.findViewById(R.id.profile);
+        final ImageView pp=(ImageView) view.findViewById(R.id.profilePicture);
         final TextView email=(TextView)view.findViewById(R.id.email);
         email.setText(currentEmployee.email);
-        name.setText(currentEmployee.name + " " + currentEmployee.surname);
+        //name.setText(currentEmployee.name + " " + currentEmployee.surname);
         department.setText(currentEmployee.department);
         id.setText(Integer.toString(currentEmployee.person_id));
         listView = (ListView) view.findViewById(R.id.tasksList);
+        TabLayout tabLayout=view.findViewById(R.id.tab);
+        tabLayout.getTabAt(0).setText(currentEmployee.name+" "+currentEmployee.surname);
         if (currentEmployee.profilePicture != null) {
             // pp.setImageDrawable(null); //this should help
             //currentEmployee.profilePicture.recycle();
             try{
-                Bitmap bmp = BitmapFactory.decodeByteArray(currentEmployee.profilePicture, 0, currentEmployee.profilePicture.length);
-                pp.setImageBitmap(bmp);
+                Bitmap src = BitmapFactory.decodeByteArray(currentEmployee.profilePicture, 0, currentEmployee.profilePicture.length);
+                RoundedBitmapDrawable dr = RoundedBitmapDrawableFactory.create(getResources(),src);
+                dr.setCornerRadius(200);
+                pp.setImageDrawable(dr);
             }catch (Exception e){
                 Log.e("picture","error");
             }
@@ -112,10 +125,6 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
                     Log.d("task","null");
                     return 0;
                 }else {
-                    if(taskarray.size()==0)
-                        tasks.setText("No task found!");
-                    else
-                        tasks.setText("Tasks");
                     return currentEmployee.tasks.size();
                 }
             }
@@ -145,6 +154,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
                     mymodel.assignedPerson = (TextView) view.findViewById(R.id.assignedPerson);
                     mymodel.ratio = (ProgressBar)view.findViewById(R.id.progressBar);
                     mymodel.ratio.setMax(100);
+                    mymodel.warning=(ImageView)view.findViewById(R.id.dateWarning);
                     view.setTag(mymodel);
 
                 }
@@ -169,13 +179,16 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
                 SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
                 Date today=new Date();
                 float leftTime=(Math.abs(task.due_date.getTime() - today.getTime())*8/(60*60*1000*24));
+                Drawable dr=getResources().getDrawable(R.drawable.circle);
+                mymodel.warning.setImageDrawable(dr);
+
                 if(leftTime<(float)16)
-                    mymodel.name.setTextColor(Color.parseColor("#fd7300"));
+                    mymodel.warning.setBackgroundColor(Color.parseColor("#fd7300"));
                 else if(leftTime<0){
-                    mymodel.name.setTextColor(Color.parseColor("#660718"));
+                    mymodel.warning.setBackgroundColor(Color.parseColor("#660718"));
                 }
                 else{
-                    mymodel.name.setTextColor(Color.parseColor("#38872d"));
+                    mymodel.warning.setBackgroundColor(Color.parseColor("#38872d"));
 
                 }
                 return view;
@@ -228,6 +241,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
 
             }
         });
+//        listView.addHeaderView( card);
         return view;
     }
 
@@ -242,6 +256,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
         TextView remainingCost;
         TextView assignedPerson;
         ProgressBar ratio;
+        ImageView warning;
     }
 
     @Override

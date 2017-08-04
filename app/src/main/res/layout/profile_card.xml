@@ -5,41 +5,46 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/pCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/grey"
-        android:foregroundGravity="top"
-        android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="6dp"
             android:gravity="center">
 
 
             <ImageView
+                android:layout_marginTop="10dp"
                 android:id="@+id/profilePicture"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:contentDescription="Choose a Profile Picture" />
 
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:gravity="center"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/employee_name"
-            android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="@string/Name"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textColor="@android:color/background_dark"
+            android:text="@string/Id2"/>
+        <TextView
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,48 +52,13 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:text="@string/Id"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:text="@string/Department"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/department"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:gravity="center"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -101,26 +71,15 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:text="@string/email"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18sp" />
-
-            <TextView
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:gravity="center"
                 android:textColor="@android:color/background_dark"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+           />
         </LinearLayout>
 
 
     </LinearLayout>
-
-
-</LinearLayout>

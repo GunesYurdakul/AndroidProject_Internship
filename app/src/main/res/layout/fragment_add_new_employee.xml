@@ -152,12 +152,12 @@
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp" />
 
-            <RadioButton
+            <CheckBox
                 android:id="@+id/userType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RadioButton" />
+                />
 
 
         </LinearLayout>
@@ -191,11 +191,11 @@
         android:id="@+id/addNewEmployee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/green"
-        android:text="DONE"
-        android:textColor="@color/white"
+        android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginLeft="25dp"/>
+        android:background="@drawable/border2"
+        android:text="DONE"
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/warning"

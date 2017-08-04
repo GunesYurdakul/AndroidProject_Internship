@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -48,7 +49,7 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
     static Employee newEmployee=new Employee();
     Button done;
     Spinner departments;
-    RadioButton userType;
+    CheckBox userType;
     EditText name,surname,password,id,email;
     static SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
     int position;
@@ -89,7 +90,7 @@ public class addNewEmployee extends Fragment implements View.OnClickListener{
 
         //Employees drop down list
         departments = (Spinner)view.findViewById(R.id.departments);
-        userType=(RadioButton)view.findViewById(R.id.userType);
+        userType=(CheckBox) view.findViewById(R.id.userType);
 
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, singleton.Departments);
         departments.setAdapter( adapter);
