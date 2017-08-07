@@ -81,10 +81,10 @@ public class EmployeeFragment extends Fragment implements View.OnClickListener{
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                if(singleton.employeeMap == null) {
+                if(employee_ids == null) {
                     return 0;
                 }else {
-                    return singleton.employeeMap.size();
+                    return employee_ids.size();
                 }
             }
 

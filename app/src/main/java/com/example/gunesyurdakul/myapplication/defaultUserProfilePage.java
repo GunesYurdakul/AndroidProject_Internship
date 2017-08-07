@@ -30,6 +30,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -263,7 +264,16 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
 
         });
         Log.d("Info", "heyssss");
-
+        if(currentEmployee.tasks.size()==0){
+            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            TextView tv=new TextView(this.getActivity());
+            tv.setLayoutParams(lparams);
+            tv.setTextColor(Color.parseColor("#0e0549"));
+            tv.setTextSize(22);
+            tv.setText("No task!");
+            listView.addHeaderView(tv);
+        }
         //listView.addHeaderView( card);
         return view;
     }
@@ -304,7 +314,7 @@ public class defaultUserProfilePage extends Fragment implements View.OnClickList
             cursor.close();
 
             ImageView imageView = (ImageView) view.findViewById(R.id.profilePicture);
-
+            imageView.setImageURI(selectedImage);
             Bitmap bmp = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);

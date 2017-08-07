@@ -19,6 +19,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -116,6 +118,7 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
             Map.Entry<Integer, Task> pair = it.next();
             taskarray.add(pair.getValue());
         }
+
 
         listView.setAdapter(new BaseAdapter() {
             @Override
@@ -241,6 +244,17 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
 
             }
         });
+        if(currentEmployee.tasks.size()==0){
+            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            TextView tv=new TextView(this.getActivity());
+            tv.setLayoutParams(lparams);
+            tv.setTextColor(Color.parseColor("#0e0549"));
+            tv.setTextSize(22);
+            tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+            tv.setText("No task!");
+            listView.addHeaderView(tv);
+        }
 //        listView.addHeaderView( card);
         return view;
     }

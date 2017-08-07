@@ -74,6 +74,7 @@ public class Employees extends AppCompatActivity {
                 FragmentTransaction ft = fm.beginTransaction();
                 Bundle args = new Bundle();
                 detailsFragment.setArguments(args);
+                ft.addToBackStack("dsf");
                 ft.replace(R.id.fragment_layout, detailsFragment);
                 ft.commit();
             default:

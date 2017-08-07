@@ -86,7 +86,7 @@
             <Button
                 android:id="@+id/setStartDate"
                 android:layout_width="70dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_alignParentLeft="true"
                 android:background="@drawable/date_from"
                 android:textColor="@color/white"
@@ -95,7 +95,7 @@
             <Button
                 android:id="@+id/setDueDate"
                 android:layout_width="70dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/date_to"
                 android:textColor="@color/white"

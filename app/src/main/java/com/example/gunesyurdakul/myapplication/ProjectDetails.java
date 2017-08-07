@@ -2,6 +2,7 @@ package com.example.gunesyurdakul.myapplication;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -137,18 +139,22 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
                 mymodel.estimatedCost.setText(Float.toString(task.estimated_cost));
                 mymodel.remainingCost.setText(Float.toString(task.remaining_cost));
                 mymodel.assignedPerson.setText(person.name+" "+person.surname);
+                mymodel.warning=(ImageView)view.findViewById(R.id.dateWarning);
                 float ratio=((task.estimated_cost-task.remaining_cost)/task.estimated_cost)*100;
                 mymodel.ratio.setProgress((int)ratio);
                 SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
                 Date today=new Date();
                 float leftTime=(Math.abs(task.due_date.getTime() - today.getTime())*8/(60*60*1000*24));
+                Drawable dr=getResources().getDrawable(R.drawable.circle);
+                mymodel.warning.setImageDrawable(dr);
+
                 if(leftTime<(float)16)
-                    mymodel.name.setTextColor(Color.parseColor("#fd7300"));
+                    mymodel.warning.setBackgroundColor(Color.parseColor("#fd7300"));
                 else if(leftTime<0){
-                    mymodel.name.setTextColor(Color.parseColor("#660718"));
+                    mymodel.warning.setBackgroundColor(Color.parseColor("#660718"));
                 }
                 else{
-                    mymodel.name.setTextColor(Color.parseColor("#38872d"));
+                    mymodel.warning.setBackgroundColor(Color.parseColor("#38872d"));
 
                 }
                 Log.d("Info",Integer.toString(Float.floatToIntBits(ratio)));
@@ -228,6 +234,7 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
         TextView remainingCost;
         TextView assignedPerson;
         ProgressBar ratio;
+        ImageView warning;
     }
 
 

@@ -70,6 +70,7 @@ public class defaultUsers extends AppCompatActivity {
                 FragmentTransaction ft = fm.beginTransaction();
                 Bundle args = new Bundle();
                 detailsFragment.setArguments(args);
+                ft.addToBackStack("dfs");
                 ft.replace(R.id.fragment_layout, detailsFragment);
                 ft.commit();
             default:

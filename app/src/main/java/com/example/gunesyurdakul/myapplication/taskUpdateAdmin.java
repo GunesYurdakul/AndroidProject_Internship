@@ -248,6 +248,7 @@ public class taskUpdateAdmin extends Fragment implements View.OnClickListener{
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             String date = Integer.toString(day)+"/"+Integer.toString(month+1)+"/"+Integer.toString(year);
+            final DateFormat formatter=DateFormat.getDateInstance();
             if (s) {
                 try {
                     updatedTask.start_date = format.parse(date);
