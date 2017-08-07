@@ -194,7 +194,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:background="@drawable/border2"
-        android:text="DONE"
+        android:text="@string/done"
         android:textColor="@color/white" />
 
     <TextView

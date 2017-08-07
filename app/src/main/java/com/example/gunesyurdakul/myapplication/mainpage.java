@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +46,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class mainpage extends AppCompatActivity {
@@ -81,7 +83,45 @@ public class mainpage extends AppCompatActivity {
         singleton.Departments.add("Analist");
         singleton.Departments.add("asdas");
         }
+
+        TextView english=(TextView)findViewById(R.id.english);
+        TextView turkish=(TextView)findViewById(R.id.turkish);
+
+        english.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String languageToLoad = "en"; // your language
+                        Locale locale = new Locale(languageToLoad);
+                        Locale.setDefault(locale);
+                        Configuration config = new Configuration();
+                        config.locale = locale;
+                        getBaseContext().getResources().updateConfiguration(config,
+                                getBaseContext().getResources().getDisplayMetrics());
+                        startActivity(new Intent(mainpage.this,mainpage.class));
+                        finish();
+                    }
+                }
+        );
+
+        turkish.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String languageToLoad = "tr"; // your language
+                        Locale locale = new Locale(languageToLoad);
+                        Locale.setDefault(locale);
+                        Configuration config = new Configuration();
+                        config.locale = locale;
+                        getBaseContext().getResources().updateConfiguration(config,
+                                getBaseContext().getResources().getDisplayMetrics());
+                        startActivity(new Intent(mainpage.this,mainpage.class));
+                        finish();
+                    }
+                }
+        );
     }
+
 
     public void login(View view) {
         EditText idText = (EditText) findViewById(R.id.id_edit);

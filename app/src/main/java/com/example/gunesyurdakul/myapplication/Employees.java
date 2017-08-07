@@ -1,6 +1,7 @@
 package com.example.gunesyurdakul.myapplication;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -33,6 +34,7 @@ import java.io.Writer;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Employees extends AppCompatActivity {
     Singleton singleton =Singleton.getSingleton();
@@ -77,6 +79,28 @@ public class Employees extends AppCompatActivity {
                 ft.addToBackStack("dsf");
                 ft.replace(R.id.fragment_layout, detailsFragment);
                 ft.commit();
+            case R.id.EN:
+                String languageToLoad = "en"; // your language
+                Locale locale = new Locale(languageToLoad);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+                startActivity(new Intent(Employees.this,Employees.class));
+                finish();
+                return true;
+            case R.id.TR:
+                String language = "tr"; // your language
+                Locale locale_tr = new Locale(language);
+                Locale.setDefault(locale_tr);
+                Configuration config_tr = new Configuration();
+                config_tr.locale = locale_tr;
+                getBaseContext().getResources().updateConfiguration(config_tr,
+                        getBaseContext().getResources().getDisplayMetrics());
+                startActivity(new Intent(Employees.this,Employees.class));
+                finish();
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

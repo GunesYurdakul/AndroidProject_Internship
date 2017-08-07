@@ -1,13 +1,9 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="edit_message">Enter a message</string>
-    <string name="button_send">Send</string>
+    <string name="app_name">İşler Güçler</string>
     <string name="id">id:</string>
     <string name="log_in">LOGIN</string>
 
     <string name="title_activity_logged__in__user">Logged_In_User</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="Employees">Employees</string>
     <string name="Projects">Projects</string>
     <string name="Id2">Id: </string>
@@ -26,6 +22,7 @@
     <string name="addEmployee">Add a New Employee</string>
     <string name="estimatedCost">Estimated Cost</string>
     <string name="assignee">Assignee</string>
+    <string name="remainingCost">Remaining Cost</string>
     <string name="surname">Surname</string>
     <string name="password">Password</string>
     <string name="removeTask">Remove Task</string>
@@ -35,5 +32,8 @@
     <string name="deleteEmployee">Delete Employee</string>
     <string name="deleteProject">Delete Project</string>
     <string name="Profile">Profile Page</string>
+    <string name="done">DONE</string>
+    <string name="EN">EN</string>
+    <string name="TR">TR</string>
 
 </resources>

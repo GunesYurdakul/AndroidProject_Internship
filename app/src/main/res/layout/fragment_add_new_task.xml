@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/border2"
-                android:text="DONE"
+                android:text="@string/done"
                 android:textColor="@color/white" />
 
 

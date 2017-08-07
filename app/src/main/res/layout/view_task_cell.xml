@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="Task Id"
+                android:text="@string/Id"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp" />
 
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="Assigned to"
+                android:text="@string/assignee"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp" />
 
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="Estimated Cost"
+                android:text="@string/estimatedCost"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp" />
 
@@ -175,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="RemainingCost"
+                android:text="@string/remainingCost"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp" />
 

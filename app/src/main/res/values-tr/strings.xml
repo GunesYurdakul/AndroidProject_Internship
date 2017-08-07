@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">İşler Güçler</string>
+    <string name="id">id:</string>
+    <string name="log_in">Giriş Yap</string>
+
+    <string name="title_activity_logged__in__user">Logged_In_User</string>
+    <string name="Employees">Çalışanlar</string>
+    <string name="Projects">Projeler</string>
+    <string name="Id2">Id: </string>
+    <string name="Id">Id</string>
+    <string name="Name">İsim</string>
+    <string name="Department">Departman</string>
+    <string name="StartDate">Başlangıç Tarihi</string>
+    <string name="DueDate">Bitiş Tarihi</string>
+    <string name="Project">Proje</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_having_fragment">HavingFragment</string>
+    <string name="AddProject">Yeni Proje Ekle</string>
+    <string name="addTask">Yeni Görev Ekle</string>
+    <string name="addEmployee">Yeni Çalışan Ekle</string>
+    <string name="estimatedCost">Beklenilen Süre</string>
+    <string name="remainingCost">Kalan Süre</string>
+    <string name="assignee">Görevli</string>
+    <string name="surname">Soyisim</string>
+    <string name="password">Şifre</string>
+    <string name="removeTask">Görevi Sil</string>
+    <string name="remove">SİL</string>
+    <string name="update">GÜNCELLE</string>
+    <string name="email">E-posta Adresi </string>
+    <string name="deleteEmployee">Çalışanı Sil</string>
+    <string name="deleteProject">Projeyi Sil</string>
+    <string name="Profile">Profil Sayfası</string>
+    <string name="done">BİTTİ</string>
+    <string name="EN">EN</string>
+    <string name="TR">TR</string>
+</resources>

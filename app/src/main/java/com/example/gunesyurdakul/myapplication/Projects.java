@@ -1,6 +1,7 @@
 package com.example.gunesyurdakul.myapplication;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -44,6 +45,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class Projects extends AppCompatActivity {
 
@@ -97,6 +99,27 @@ public class Projects extends AppCompatActivity {
                 ft.addToBackStack("dsf");
                 ft.replace(R.id.fragment_layout, detailsFragment);
                 ft.commit();
+                return true;
+            case R.id.TR:
+                Locale locale_tr = new Locale("tr");
+                Locale.setDefault(locale_tr);
+                Configuration config_tr = new Configuration();
+                config_tr.locale = locale_tr;
+                getBaseContext().getResources().updateConfiguration(config_tr,
+                        getBaseContext().getResources().getDisplayMetrics());
+                startActivity(new Intent(Projects.this,Projects.class));
+                finish();
+                return true;
+            case R.id.EN:
+                Locale locale = new Locale("en");
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+                startActivity(new Intent(Projects.this,Projects.class));
+                finish();
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

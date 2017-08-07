@@ -4,11 +4,26 @@
     >
 
     <item
+        android:icon="@drawable/language_support"
+        android:title="Logout"
+        android:id="@+id/language"
+        app:showAsAction="always">
+    <menu>
+        <item
+            android:id="@+id/EN"
+            android:title="EN" />
+        <item
+            android:id="@+id/TR"
+            android:title="TR" />
+    </menu>
+    </item>
+    <item
         android:icon="@drawable/key_icon"
         android:title="Password"
         android:id="@+id/password"
         app:showAsAction="always"
         />
+
     <item
         android:icon="@drawable/logout"
         android:title="Logout"
