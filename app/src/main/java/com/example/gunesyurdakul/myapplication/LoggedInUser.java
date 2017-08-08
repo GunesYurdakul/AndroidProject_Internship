@@ -1,6 +1,8 @@
 package com.example.gunesyurdakul.myapplication;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +29,10 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +42,10 @@ public class LoggedInUser extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         readFile();
+        setNotifications();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in_user);
+
     }
 
     public void goToEmployees(View view){
@@ -130,6 +137,44 @@ public class LoggedInUser extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
+    }
+
+    public void setNotifications(){
+        Iterator<Map.Entry<Integer, Task>> it = singleton.currentUser.tasks.entrySet().iterator();
+
+        while (it.hasNext()) {
+            Map.Entry<Integer, Task> pair = it.next();
+            SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
+            Date today=new Date();
+            float leftTime=(Math.abs(pair.getValue().due_date.getTime() - today.getTime())*8/(60*60*1000*24));
+
+            if(leftTime<=16&&pair.getValue().remaining_cost>0&&leftTime>=0){
+                Intent intent = new Intent(this, LoggedInUser.class);
+                PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+                Notification myNotify  = new Notification.Builder(this)
+                        .setContentTitle("İşler Güçler")
+                        .setContentText("Task "+pair.getValue().task_name+ " ends in " + Integer.toString(Math.round(leftTime)) + " work hours!!!")
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentIntent(pIntent)
+                        .setAutoCancel(true).build();
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.notify(0, myNotify);
+            }
+            else if(leftTime<0&&pair.getValue().remaining_cost>0){
+                Intent intent = new Intent(this, LoggedInUser.class);
+                PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+                Notification myNotify  = new Notification.Builder(this)
+                        .setContentTitle("İşler Güçler")
+                        .setContentText("Task "+pair.getValue().task_name+ " ended in " + Integer.toString(Math.round(leftTime)) + " work hours ago, but is not completed yet!!!")
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentIntent(pIntent)
+                        .setAutoCancel(true).build();
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.notify(0, myNotify);
+            }
+
+        }
 
     }
 }

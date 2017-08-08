@@ -48,6 +48,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class mainpage extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.gunesyurdakul.myapplication.MESSAGE";
@@ -143,47 +144,8 @@ public class mainpage extends AppCompatActivity {
             else if(logging_in.admin&&logging_in.password.equals(pass.getText().toString())){
                  singleton.currentUser=singleton.employeeMap.get(Integer.parseInt(id));
                  Iterator<Map.Entry<Integer, Task>> it = singleton.currentUser.tasks.entrySet().iterator();
-                 while (it.hasNext()) {
-                     Map.Entry<Integer, Task> pair = it.next();
-                     SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
-                     Date today=new Date();
-                     float leftTime=(Math.abs(pair.getValue().due_date.getTime() - today.getTime())*8/(60*60*1000*24));
-                     if(leftTime<=16&&pair.getValue().remaining_cost>0&&leftTime>=0){
-//                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//
-//                         Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
-//                         notificationIntent.addCategory("android.intent.category.DEFAULT");
-//
-//                         PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//                         Calendar cal = Calendar.getInstance();
-//                         cal.add(Calendar.SECOND, 1);
-//                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
-                         Intent intent = new Intent(this, mainpage.class);
-                         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
-                         Notification myNotify  = new Notification.Builder(this)
-                                 .setContentTitle("İşler Güçler")
-                                 .setContentText("Task "+pair.getValue().task_name+ " ends in " + Integer.toString(Math.round(leftTime)) + " work hours!!!")
-                                 .setSmallIcon(R.mipmap.ic_launcher)
-                                 .setContentIntent(pIntent)
-                                 .setAutoCancel(true).build();
-                         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                         notificationManager.notify(0, myNotify);
-                     }
-                     else if(leftTime<0&&pair.getValue().remaining_cost>0){
-                         Intent intent = new Intent(this, mainpage.class);
-                         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
-                         Notification myNotify  = new Notification.Builder(this)
-                                 .setContentTitle("İşler Güçler")
-                                 .setContentText("Task "+pair.getValue().task_name+ " ended in " + Integer.toString(Math.round(leftTime)) + " work hours ago, but is not completed yet!!!")
-                                 .setSmallIcon(R.mipmap.ic_launcher)
-                                 .setContentIntent(pIntent)
-                                 .setAutoCancel(true).build();
-                         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                         notificationManager.notify(0, myNotify);
-                     }
 
-                 }
+                 setAlarm();
                  String message = idText.getText().toString();
                 Intent intent = new Intent(this, LoggedInUser.class);
                 intent.putExtra(EXTRA_MESSAGE, message);
@@ -265,6 +227,21 @@ void readFile(){
     }
 
 
+}
+
+public void setAlarm(){
+    Calendar updateTime = Calendar.getInstance();
+    updateTime.setTimeInMillis(System.currentTimeMillis());
+    updateTime.set(Calendar.HOUR_OF_DAY, 17);
+    updateTime.set(Calendar.MINUTE, 30);
+
+    Intent downloader = new Intent(getApplicationContext(), AlarmReceiver.class);
+    PendingIntent recurringDownload = PendingIntent.getBroadcast(getApplicationContext()    ,
+            0, downloader, PendingIntent.FLAG_CANCEL_CURRENT);
+
+    AlarmManager alarms = (AlarmManager) this.getSystemService(
+            Context.ALARM_SERVICE);
+    alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, recurringDownload);
 }
 
 
