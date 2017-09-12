@@ -2,33 +2,24 @@ package com.example.gunesyurdakul.myapplication;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class addNewProjectFragment extends Fragment implements View.OnClickListener{
 
@@ -84,8 +75,20 @@ public class addNewProjectFragment extends Fragment implements View.OnClickListe
 
         done.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                if(projectName.getText().toString().trim().length()>0)
-                {
+
+                if(newProject.start_date==null){
+                    warning.setText("Starting date can not be left blank!");
+                }
+                else if(newProject.due_date==null){
+                    warning.setText("Due date can not be left blank!");
+                }
+                else if(newProject.start_date.compareTo(newProject.due_date)>0){
+                    warning.setText("Due date of the project should be later than its starting date!");
+                }
+                else if(projectName.getText().toString().trim().length()==0){
+                    warning.setText("Project name can not be left blank!");
+                }
+                else{
                     newProject.name=projectName.getText().toString();
                     Log.d("INFO","addTask");
                     int id=singleton.projectMap.size()+1;
@@ -96,21 +99,7 @@ public class addNewProjectFragment extends Fragment implements View.OnClickListe
                     FragmentTransaction ft = fm.beginTransaction();
                     ft.replace(R.id.fragment_layout,addProject);
                     //ft.addToBackStack("addProject");
-                    ft.commit();
-                }
-                else if(newProject.start_date==null){
-                    warning.setText("Starting date can not be left blank!");
-                }
-                else if(newProject.due_date==null){
-                    warning.setText("Due date can not be left blank!");
-                }
-                else if(newProject.start_date.compareTo(newProject.due_date)>0){
-                    warning.setText("Due date of the project should be later than its starting date!");
-                }
-                else{
-                    warning.setText("Project name can not be left blank!");
-                }
-
+                    ft.commit();  }
             };
         });
 

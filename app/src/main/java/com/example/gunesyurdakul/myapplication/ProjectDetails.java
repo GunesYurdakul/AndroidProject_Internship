@@ -1,20 +1,16 @@
 package com.example.gunesyurdakul.myapplication;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -25,9 +21,7 @@ import com.github.clans.fab.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 
 
 public class ProjectDetails extends Fragment implements View.OnClickListener{
@@ -145,16 +139,19 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
                 SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
                 Date today=new Date();
                 float leftTime=(Math.abs(task.due_date.getTime() - today.getTime())*8/(60*60*1000*24));
-                Drawable dr=getResources().getDrawable(R.drawable.circle);
-                mymodel.warning.setImageDrawable(dr);
+                Drawable dr=getResources().getDrawable(R.drawable.circle_green);
+                Drawable dr1=getResources().getDrawable(R.drawable.circle_red);
+                Drawable dr2=getResources().getDrawable(R.drawable.circle_orange);
 
-                if(leftTime<(float)16)
-                    mymodel.warning.setBackgroundColor(Color.parseColor("#fd7300"));
-                else if(leftTime<0){
-                    mymodel.warning.setBackgroundColor(Color.parseColor("#660718"));
+                if(leftTime<(float)16) {
+                    mymodel.warning.setBackground(dr2);
+                }else if(leftTime<0){
+                    mymodel.warning.setBackground(dr1);
+//                    mymodel.warning.setBackgroundColor(Color.parseColor("#660718"));
                 }
                 else{
-                    mymodel.warning.setBackgroundColor(Color.parseColor("#38872d"));
+                    mymodel.warning.setBackground(dr);
+                    //                  mymodel.warning.setBackgroundColor(Color.parseColor("#38872d"));
 
                 }
                 Log.d("Info",Integer.toString(Float.floatToIntBits(ratio)));
@@ -178,12 +175,11 @@ public class ProjectDetails extends Fragment implements View.OnClickListener{
 
         deleteProject.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                int size=singleton.projectMap.get(position_project).tasks.size();
+                int size=k.tasks.size();
                 Log.d("size",Integer.toString(size));
                 for (int i=0;i<size;i++) {
                     Log.d("bla",Integer.toString(i));
-                    Task toDelete=singleton.taskMap.get(singleton.projectMap.get(position_project).tasks.get(i));
-                    singleton.projectMap.get(position_project).removeTask(toDelete);
+                    singleton.taskMap.remove(k.tasks.get(i));
                 }
                 singleton.projectMap.remove(position_project);
                 ProjectFragment addProject = new ProjectFragment();

@@ -8,16 +8,12 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -182,16 +177,19 @@ public class EmployeeDetails extends Fragment implements View.OnClickListener{
                 SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
                 Date today=new Date();
                 float leftTime=(Math.abs(task.due_date.getTime() - today.getTime())*8/(60*60*1000*24));
-                Drawable dr=getResources().getDrawable(R.drawable.circle);
-                mymodel.warning.setImageDrawable(dr);
+                Drawable dr=getResources().getDrawable(R.drawable.circle_green);
+                Drawable dr1=getResources().getDrawable(R.drawable.circle_red);
+                Drawable dr2=getResources().getDrawable(R.drawable.circle_orange);
 
-                if(leftTime<(float)16)
-                    mymodel.warning.setBackgroundColor(Color.parseColor("#fd7300"));
-                else if(leftTime<0){
-                    mymodel.warning.setBackgroundColor(Color.parseColor("#660718"));
+                if(leftTime<(float)16) {
+                    mymodel.warning.setBackground(dr2);
+                }else if(leftTime<0){
+                    mymodel.warning.setBackground(dr1);
+//                    mymodel.warning.setBackgroundColor(Color.parseColor("#660718"));
                 }
                 else{
-                    mymodel.warning.setBackgroundColor(Color.parseColor("#38872d"));
+                    mymodel.warning.setBackground(dr);
+  //                  mymodel.warning.setBackgroundColor(Color.parseColor("#38872d"));
 
                 }
                 return view;

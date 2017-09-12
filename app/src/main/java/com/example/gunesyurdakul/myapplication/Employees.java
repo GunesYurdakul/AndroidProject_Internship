@@ -3,22 +3,16 @@ package com.example.gunesyurdakul.myapplication;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -31,9 +25,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class Employees extends AppCompatActivity {
@@ -79,6 +70,7 @@ public class Employees extends AppCompatActivity {
                 ft.addToBackStack("dsf");
                 ft.replace(R.id.fragment_layout, detailsFragment);
                 ft.commit();
+                return true;
             case R.id.EN:
                 String languageToLoad = "en"; // your language
                 Locale locale = new Locale(languageToLoad);
